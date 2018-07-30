@@ -10,7 +10,7 @@ namespace BotEventManagement.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventController : ControllerBase
+    public class SpeakerController : ControllerBase
     {
         [HttpGet]
         public IActionResult Get()
@@ -18,14 +18,14 @@ namespace BotEventManagement.Api.Controllers
             return Ok();
         }
 
-        [HttpGet, Route("{eventId}")]
-        public IActionResult Get([FromRoute]string eventId)
+        [HttpGet, Route("{speakerId}")]
+        public IActionResult Get([FromRoute]string speakerId)
         {
             return Ok();
         }
 
-        [HttpPut("{eventId}")]
-        public IActionResult Put([FromRoute] string eventId, [FromBody] Event @event)
+        [HttpPut("{speakerId}")]
+        public IActionResult Put([FromRoute] string speakerId, [FromBody] Speaker speaker)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -34,7 +34,7 @@ namespace BotEventManagement.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Event @event)
+        public IActionResult Post([FromBody] Speaker speaker)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -42,8 +42,8 @@ namespace BotEventManagement.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete("{eventId}")]
-        public IActionResult Delete([FromRoute] string eventId)
+        [HttpDelete("{speakerId}")]
+        public IActionResult Delete([FromRoute] string speakerId)
         {
             return Ok();
         }

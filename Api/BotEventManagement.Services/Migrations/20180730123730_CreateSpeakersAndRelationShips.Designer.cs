@@ -4,14 +4,16 @@ using BotEventManagement.Services.Model.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BotEventManagement.Services.Migrations
 {
     [DbContext(typeof(BotEventManagementContext))]
-    partial class BotEventManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20180730123730_CreateSpeakersAndRelationShips")]
+    partial class CreateSpeakersAndRelationShips
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,6 +65,8 @@ namespace BotEventManagement.Services.Migrations
 
                     b.Property<string>("EventId");
 
+                    b.Property<string>("EventParticipantsId");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("UploadedPhoto");
@@ -70,6 +74,8 @@ namespace BotEventManagement.Services.Migrations
                     b.HasKey("SpeakerId");
 
                     b.HasIndex("EventId");
+
+                    b.HasIndex("EventParticipantsId");
 
                     b.ToTable("Speaker");
                 });
@@ -100,7 +106,7 @@ namespace BotEventManagement.Services.Migrations
 
             modelBuilder.Entity("BotEventManagement.Services.Model.Database.EventParticipants", b =>
                 {
-                    b.HasOne("BotEventManagement.Services.Model.Database.Event", "Event")
+                    b.HasOne("BotEventManagement.Services.Model.Database.Event")
                         .WithMany("EventParticipants")
                         .HasForeignKey("EventId");
                 });
@@ -110,6 +116,10 @@ namespace BotEventManagement.Services.Migrations
                     b.HasOne("BotEventManagement.Services.Model.Database.Event", "Event")
                         .WithMany("Speakers")
                         .HasForeignKey("EventId");
+
+                    b.HasOne("BotEventManagement.Services.Model.Database.EventParticipants")
+                        .WithMany("Speakers")
+                        .HasForeignKey("EventParticipantsId");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,22 +10,21 @@ namespace BotEventManagement.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventController : ControllerBase
+    public class EventParticipantsController : ControllerBase
     {
         [HttpGet]
         public IActionResult Get()
         {
             return Ok();
         }
-
-        [HttpGet, Route("{eventId}")]
-        public IActionResult Get([FromRoute]string eventId)
+        [HttpGet, Route("{participantId}")]
+        public IActionResult Get([FromRoute]string participantId)
         {
             return Ok();
         }
 
-        [HttpPut("{eventId}")]
-        public IActionResult Put([FromRoute] string eventId, [FromBody] Event @event)
+        [HttpPut("{participantId}")]
+        public IActionResult Put([FromRoute] string participantId, [FromBody] EventParticipants eventParticipants)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -34,7 +33,7 @@ namespace BotEventManagement.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Event @event)
+        public IActionResult Post([FromBody] EventParticipants eventParticipants)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -42,8 +41,14 @@ namespace BotEventManagement.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete("{eventId}")]
-        public IActionResult Delete([FromRoute] string eventId)
+        [HttpDelete("{participantId}")]
+        public IActionResult Delete([FromRoute] string participantId)
+        {
+            return Ok();
+        }
+
+        [HttpPost, Route("file")]
+        public IActionResult PostFile(byte[] participantsSheet)
         {
             return Ok();
         }
