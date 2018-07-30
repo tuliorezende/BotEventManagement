@@ -20,6 +20,5 @@ namespace BotEventManagement.Services.Model.Database
         public string EventId { get; set; }
         [JsonIgnore]
         public virtual Event Event { get; set; }
-
     }
 }

@@ -7,26 +7,23 @@ using System.Text;
 
 namespace BotEventManagement.Services.Model.Database
 {
-    public class Speaker
+    public class Activity
     {
-
         [Key, JsonProperty("id")]
-        public int SpeakerId { get; set; }
+        public int ActivityId { get; set; }
+        [JsonProperty("data")]
+        public DateTime Date { get; set; }
         [JsonProperty("nome")]
         public string Name { get; set; }
-        [JsonProperty("biografia")]
-        public string Biography { get; set; }
-        [JsonProperty("foto")]
-        public string UploadedPhoto { get; set; }
-        [NotMapped]
-        public byte[] PhotoArray { get; set; }
+        [JsonProperty("descricao")]
+        public string Description { get; set; }
 
         [ForeignKey("EventId"), JsonProperty("idEvento")]
         public string EventId { get; set; }
-        [JsonIgnore]
         public virtual Event Event { get; set; }
 
-        [JsonIgnore]
-        public virtual Activity Activity { get; set; }
+        [ForeignKey("SpeakerId"), JsonIgnore]
+        public int SpeakerId { get; set; }
+        public virtual Speaker Speaker { get; set; }
     }
 }
