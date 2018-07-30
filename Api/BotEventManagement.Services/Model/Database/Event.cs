@@ -11,16 +11,16 @@ namespace BotEventManagement.Services.Model.Database
     public class Event
     {
         [Key, JsonProperty("id")]
-        public string EventId { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("nome")]
-        public string EventName { get; set; }
+        public string Name { get; set; }
         [JsonProperty("descricao")]
-        public string EventDescription { get; set; }
+        public string Description { get; set; }
         [JsonProperty("dataInicio")]
-        public DateTime EventStartDate { get; set; }
+        public DateTime StartDate { get; set; }
         [JsonProperty("dataTermino")]
-        public DateTime EventEndDate { get; set; }
+        public DateTime EndDate { get; set; }
         [JsonProperty("endereco")]
         public Address Address { get; set; }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BotEventManagement.Services.Interfaces;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,11 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
+        private IEventService _eventService;
+        public EventController(IEventService eventService)
+        {
+            _eventService = eventService;
+        }
         /// <summary>
         /// Get events
         /// </summary>
@@ -22,7 +28,7 @@ namespace BotEventManagement.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok();
+            return Ok(_eventService.GetAllEvents());
         }
 
         /// <summary>
@@ -33,20 +39,21 @@ namespace BotEventManagement.Api.Controllers
         [HttpGet, Route("{eventId}")]
         public IActionResult Get([FromRoute]string eventId)
         {
-            return Ok();
+            return Ok(_eventService.GetEventById(eventId));
         }
 
         /// <summary>
         /// Update a specific event
         /// </summary>
-        /// <param name="eventId"></param>
         /// <param name="event"></param>
         /// <returns></returns>
-        [HttpPut("{eventId}")]
-        public IActionResult Put([FromRoute] string eventId, [FromBody] Event @event)
+        [HttpPut]
+        public IActionResult Put([FromBody] Event @event)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            _eventService.UpdateEvent(@event);
 
             return Ok();
         }
@@ -62,6 +69,8 @@ namespace BotEventManagement.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            _eventService.CreateEvent(@event);
+
             return Ok();
         }
 
@@ -73,6 +82,7 @@ namespace BotEventManagement.Api.Controllers
         [HttpDelete("{eventId}")]
         public IActionResult Delete([FromRoute] string eventId)
         {
+            _eventService.DeleteEvent(eventId);
             return Ok();
         }
     }

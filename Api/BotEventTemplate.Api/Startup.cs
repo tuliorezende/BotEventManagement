@@ -43,6 +43,8 @@ namespace BotEventTemplate.Api
                 var xmlPath = Path.Combine(basePath, "BotEventManagement.Api.xml");
                 c.IncludeXmlComments(xmlPath);
             });
+
+            services.AddDbContext<BotEventManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BotEventManagementContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
