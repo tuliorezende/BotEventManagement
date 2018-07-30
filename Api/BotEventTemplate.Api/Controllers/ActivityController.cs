@@ -8,24 +8,42 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BotEventManagement.Api.Controllers
 {
+    /// <summary>
+    /// Manage activities of an event
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ActivityController : ControllerBase
     {
+        /// <summary>
+        /// Get activities of an event
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get()
         {
             return Ok();
         }
 
+        /// <summary>
+        /// Get a specific activity of an event
+        /// </summary>
+        /// <param name="activityId"></param>
+        /// <returns></returns>
         [HttpGet, Route("{activityId}")]
         public IActionResult Get([FromRoute]string activityId)
         {
             return Ok();
         }
 
+        /// <summary>
+        /// Update a specific activity of an event
+        /// </summary>
+        /// <param name="activityId"></param>
+        /// <param name="speaker"></param>
+        /// <returns></returns>
         [HttpPut("{activityId}")]
-        public IActionResult Put([FromRoute] string activityId, [FromBody] Speaker speaker)
+        public IActionResult Put([FromRoute] string activityId, [FromBody] Activity activity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -33,8 +51,13 @@ namespace BotEventManagement.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Create a specific activity of an event
+        /// </summary>
+        /// <param name="speaker"></param>
+        /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromBody] Activity speaker)
+        public IActionResult Post([FromBody] Activity activity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -42,6 +65,11 @@ namespace BotEventManagement.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Remove a specific activity of an event
+        /// </summary>
+        /// <param name="activityId"></param>
+        /// <returns></returns>
         [HttpDelete("{activityId}")]
         public IActionResult Delete([FromRoute] string activityId)
         {

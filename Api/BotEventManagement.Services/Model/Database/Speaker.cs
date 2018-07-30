@@ -18,7 +18,7 @@ namespace BotEventManagement.Services.Model.Database
         public string Biography { get; set; }
         [JsonProperty("foto")]
         public string UploadedPhoto { get; set; }
-        [NotMapped]
+        [NotMapped, JsonProperty("fotoUsuario")]
         public byte[] PhotoArray { get; set; }
 
         [ForeignKey("EventId"), JsonProperty("idEvento")]

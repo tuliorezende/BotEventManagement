@@ -20,10 +20,12 @@ namespace BotEventManagement.Services.Model.Database
 
         [ForeignKey("EventId"), JsonProperty("idEvento")]
         public string EventId { get; set; }
+        [JsonIgnore]
         public virtual Event Event { get; set; }
 
-        [ForeignKey("SpeakerId"), JsonIgnore]
+        [ForeignKey("SpeakerId"), JsonProperty("idPalestrante")]
         public int SpeakerId { get; set; }
+        [JsonIgnore]
         public virtual Speaker Speaker { get; set; }
     }
 }
