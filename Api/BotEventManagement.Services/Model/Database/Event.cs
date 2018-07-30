@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BotEventManagement.Services.CustomFormatter;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,9 +18,9 @@ namespace BotEventManagement.Services.Model.Database
         public string Name { get; set; }
         [JsonProperty("descricao")]
         public string Description { get; set; }
-        [JsonProperty("dataInicio")]
+        [JsonProperty("dataInicio"), JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy HH:mm")]
         public DateTime StartDate { get; set; }
-        [JsonProperty("dataTermino")]
+        [JsonProperty("dataTermino"), JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy HH:mm")]
         public DateTime EndDate { get; set; }
         [JsonProperty("endereco")]
         public Address Address { get; set; }
