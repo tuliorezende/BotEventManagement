@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+
 namespace BotEventTemplate.Api
 {
     public class Startup
@@ -45,8 +46,9 @@ namespace BotEventTemplate.Api
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddDbContext<BotEventManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BotEventManagementContext")));
-            services.AddScoped<IEventService, EventService>();
+            services.AddScoped<ICrudElements<Event>, EventService>();
+            services.AddScoped<IEventParticipantService<EventParticipants>, EventParticipantsService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

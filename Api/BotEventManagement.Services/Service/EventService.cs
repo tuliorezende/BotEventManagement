@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BotEventManagement.Services.Service
 {
-    public class EventService : IEventService
+    public class EventService : ICrudElements<Event>
     {
         private BotEventManagementContext _botEventManagementContext;
 
@@ -17,35 +17,35 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext = botEventManagementContext;
         }
 
-        public void CreateEvent(Event @event)
+        public void Create(Event element)
         {
-            _botEventManagementContext.Event.Add(@event);
+            _botEventManagementContext.Event.Add(element);
             _botEventManagementContext.SaveChanges();
         }
 
-        public void DeleteEvent(string eventId)
+        public void Delete(string elementId)
         {
-            Event @event = _botEventManagementContext.Event.Where(x => x.Id == eventId).First();
+            Event @event = _botEventManagementContext.Event.Where(x => x.Id == elementId).First();
             _botEventManagementContext.Event.Remove(@event);
 
             _botEventManagementContext.SaveChanges();
         }
 
-        public List<Event> GetAllEvents()
+        public List<Event> GetAll()
         {
-            List<Event> @events = _botEventManagementContext.Event.ToList();
-            return @events;
+            List<Event> elements = _botEventManagementContext.Event.ToList();
+            return elements;
         }
 
-        public Event GetEventById(string eventId)
+        public Event GetById(string elementId)
         {
-            Event @event = _botEventManagementContext.Event.Where(x => x.Id == eventId).First();
-            return @event;
+            Event element = _botEventManagementContext.Event.Where(x => x.Id == elementId).First();
+            return element;
         }
 
-        public void UpdateEvent(Event @event)
+        public void Update(Event element)
         {
-            _botEventManagementContext.Entry(@event).State = EntityState.Modified;
+            _botEventManagementContext.Entry(element).State = EntityState.Modified;
             _botEventManagementContext.SaveChanges();
         }
     }

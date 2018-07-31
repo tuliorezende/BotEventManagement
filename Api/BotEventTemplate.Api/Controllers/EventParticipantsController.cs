@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BotEventManagement.Services.Interfaces;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,11 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class EventParticipantsController : ControllerBase
     {
+        private IEventParticipantService<EventParticipants> _eventParticipantsService;
+        public EventParticipantsController(IEventParticipantService<EventParticipants> eventParticipantsService)
+        {
+            _eventParticipantsService = eventParticipantsService;
+        }
         /// <summary>
         /// Get Event Participants of an event
         /// </summary>
@@ -22,7 +28,7 @@ namespace BotEventManagement.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok();
+            return Ok(_eventParticipantsService.GetAll());
         }
 
         /// <summary>
@@ -33,7 +39,7 @@ namespace BotEventManagement.Api.Controllers
         [HttpGet, Route("{participantId}")]
         public IActionResult Get([FromRoute]string participantId)
         {
-            return Ok();
+            return Ok(_eventParticipantsService.GetById(participantId));
         }
 
         /// <summary>
@@ -47,6 +53,8 @@ namespace BotEventManagement.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            _eventParticipantsService.Update(eventParticipants);
 
             return Ok();
         }
@@ -62,6 +70,8 @@ namespace BotEventManagement.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            _eventParticipantsService.Create(eventParticipants);
+
             return Ok();
         }
         /// <summary>
@@ -72,6 +82,8 @@ namespace BotEventManagement.Api.Controllers
         [HttpDelete("{participantId}")]
         public IActionResult Delete([FromRoute] string participantId)
         {
+            _eventParticipantsService.Delete(participantId);
+
             return Ok();
         }
 

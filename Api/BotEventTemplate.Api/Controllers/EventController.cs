@@ -16,8 +16,8 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private IEventService _eventService;
-        public EventController(IEventService eventService)
+        private ICrudElements<Event> _eventService;
+        public EventController(ICrudElements<Event> eventService)
         {
             _eventService = eventService;
         }
@@ -28,7 +28,7 @@ namespace BotEventManagement.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_eventService.GetAllEvents());
+            return Ok(_eventService.GetAll());
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace BotEventManagement.Api.Controllers
         [HttpGet, Route("{eventId}")]
         public IActionResult Get([FromRoute]string eventId)
         {
-            return Ok(_eventService.GetEventById(eventId));
+            return Ok(_eventService.GetById(eventId));
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace BotEventManagement.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _eventService.UpdateEvent(@event);
+            _eventService.Update(@event);
 
             return Ok();
         }
@@ -69,7 +69,7 @@ namespace BotEventManagement.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _eventService.CreateEvent(@event);
+            _eventService.Create(@event);
 
             return Ok();
         }
@@ -82,7 +82,7 @@ namespace BotEventManagement.Api.Controllers
         [HttpDelete("{eventId}")]
         public IActionResult Delete([FromRoute] string eventId)
         {
-            _eventService.DeleteEvent(eventId);
+            _eventService.Delete(eventId);
             return Ok();
         }
     }
