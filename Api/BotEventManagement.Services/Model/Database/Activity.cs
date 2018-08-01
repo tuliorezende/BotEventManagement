@@ -10,7 +10,7 @@ namespace BotEventManagement.Services.Model.Database
     public class Activity
     {
         [Key, JsonProperty("id")]
-        public int ActivityId { get; set; }
+        public int Id { get; set; }
         [JsonProperty("data")]
         public DateTime Date { get; set; }
         [JsonProperty("nome")]

@@ -25,7 +25,7 @@ namespace BotEventManagement.Services.Service
 
         public void Delete(string elementId)
         {
-            Event @event = _botEventManagementContext.Event.Where(x => x.Id == elementId).First();
+            Event @event = _botEventManagementContext.Event.Where(x => x.EventId == elementId).First();
             _botEventManagementContext.Event.Remove(@event);
 
             _botEventManagementContext.SaveChanges();
@@ -39,7 +39,7 @@ namespace BotEventManagement.Services.Service
 
         public Event GetById(string elementId)
         {
-            Event element = _botEventManagementContext.Event.Where(x => x.Id == elementId).First();
+            Event element = _botEventManagementContext.Event.Where(x => x.EventId == elementId).First();
             return element;
         }
 

@@ -4,14 +4,16 @@ using BotEventManagement.Services.Model.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BotEventManagement.Services.Migrations
 {
     [DbContext(typeof(BotEventManagementContext))]
-    partial class BotEventManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20180801120900_ChangeIdPropertyName")]
+    partial class ChangeIdPropertyName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +49,7 @@ namespace BotEventManagement.Services.Migrations
 
             modelBuilder.Entity("BotEventManagement.Services.Model.Database.Event", b =>
                 {
-                    b.Property<string>("EventId")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description");
@@ -58,7 +60,7 @@ namespace BotEventManagement.Services.Migrations
 
                     b.Property<DateTime>("StartDate");
 
-                    b.HasKey("EventId");
+                    b.HasKey("Id");
 
                     b.ToTable("Event");
                 });
@@ -81,7 +83,7 @@ namespace BotEventManagement.Services.Migrations
 
             modelBuilder.Entity("BotEventManagement.Services.Model.Database.Speaker", b =>
                 {
-                    b.Property<int>("SpeakerId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -93,7 +95,7 @@ namespace BotEventManagement.Services.Migrations
 
                     b.Property<string>("UploadedPhoto");
 
-                    b.HasKey("SpeakerId");
+                    b.HasKey("Id");
 
                     b.HasIndex("EventId");
 

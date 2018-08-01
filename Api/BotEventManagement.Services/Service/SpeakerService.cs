@@ -31,7 +31,7 @@ namespace BotEventManagement.Services.Service
         {
             int speakerId = int.Parse(elementId);
 
-            Speaker element = _botEventManagementContext.Speaker.Where(x => x.Id == speakerId).First();
+            Speaker element = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == speakerId).First();
             _botEventManagementContext.Speaker.Remove(element);
 
             _botEventManagementContext.SaveChanges();
@@ -49,7 +49,7 @@ namespace BotEventManagement.Services.Service
         {
             int speakerId = int.Parse(elementId);
 
-            Speaker element = _botEventManagementContext.Speaker.Where(x => x.Id == speakerId).First();
+            Speaker element = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == speakerId).First();
             return element;
 
         }

@@ -93,7 +93,7 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="participantsSheet"></param>
         /// <returns></returns>
         [HttpPost, Route("file")]
-        public IActionResult PostFile(byte[] participantsSheet)
+        public IActionResult PostFile([FromBody] byte[] participantsSheet)
         {
             _eventParticipantsService.UploadEventParticipantsFile(participantsSheet);
             return Ok();

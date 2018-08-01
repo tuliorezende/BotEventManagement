@@ -12,7 +12,7 @@ namespace BotEventManagement.Services.Model.Database
     public class Event
     {
         [Key, JsonProperty("id")]
-        public string Id { get; set; }
+        public string EventId { get; set; }
 
         [JsonProperty("nome")]
         public string Name { get; set; }
