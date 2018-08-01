@@ -11,7 +11,7 @@ namespace BotEventManagement.Services.Model.Database
     {
 
         [Key, JsonProperty("id")]
-        public int SpeakerId { get; set; }
+        public int Id { get; set; }
         [JsonProperty("nome")]
         public string Name { get; set; }
         [JsonProperty("biografia")]

@@ -49,7 +49,7 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext.SaveChanges();
         }
 
-        public void CreateFile(byte[] participantsSheet)
+        public void UploadEventParticipantsFile(byte[] participantsSheet)
         {
             throw new NotImplementedException();
         }

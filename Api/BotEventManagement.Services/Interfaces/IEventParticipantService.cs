@@ -7,6 +7,6 @@ namespace BotEventManagement.Services.Interfaces
 {
     public interface IEventParticipantService<T> : ICrudElements<T>
     {
-        void CreateFile(byte[] participantsSheet);
+        void UploadEventParticipantsFile(byte[] participantsSheet);
     }
 }

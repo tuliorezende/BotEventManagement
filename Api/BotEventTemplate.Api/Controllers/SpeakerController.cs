@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BotEventManagement.Services.Interfaces;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,11 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class SpeakerController : ControllerBase
     {
+        private ICrudElements<Speaker> _speakerService;
+        public SpeakerController(ICrudElements<Speaker> speakerService)
+        {
+            _speakerService = speakerService;
+        }
         /// <summary>
         /// Get speakers of an event
         /// </summary>
@@ -22,7 +28,7 @@ namespace BotEventManagement.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok();
+            return Ok(_speakerService.GetAll());
         }
 
         /// <summary>
@@ -33,7 +39,7 @@ namespace BotEventManagement.Api.Controllers
         [HttpGet, Route("{speakerId}")]
         public IActionResult Get([FromRoute]string speakerId)
         {
-            return Ok();
+            return Ok(_speakerService.GetById(speakerId));
         }
 
         /// <summary>
@@ -47,6 +53,8 @@ namespace BotEventManagement.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            _speakerService.Update(speaker);
 
             return Ok();
         }
@@ -62,6 +70,8 @@ namespace BotEventManagement.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            _speakerService.Create(speaker);
+
             return Ok();
         }
 
@@ -73,6 +83,7 @@ namespace BotEventManagement.Api.Controllers
         [HttpDelete("{speakerId}")]
         public IActionResult Delete([FromRoute] string speakerId)
         {
+            _speakerService.Delete(speakerId);
             return Ok();
         }
     }
