@@ -1,6 +1,9 @@
 ﻿using BotEventManagement.Services.Interfaces;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +14,8 @@ namespace BotEventManagement.Services.Service
     public class SpeakerService : ICrudElements<Speaker>
     {
         private BotEventManagementContext _botEventManagementContext;
+        private readonly string _accountName;
+        private readonly string _accessKey;
 
         public SpeakerService(BotEventManagementContext botEventManagementContext)
         {
@@ -65,6 +70,26 @@ namespace BotEventManagement.Services.Service
 
         private string GetImageUrl(byte[] photoArray)
         {
+            StorageCredentials credentials = new StorageCredentials(_accountName, _accessKey);
+            CloudStorageAccount account = new CloudStorageAccount(credentials, true);
+
+            CloudBlobClient blobClient = account.CreateCloudBlobClient();
+
+            CloudBlobContainer container = blobClient.GetContainerReference("speakers");
+            container.CreateIfNotExistsAsync();
+            container.SetPermissionsAsync(new BlobContainerPermissions
+            {
+                PublicAccess = BlobContainerPublicAccessType.Blob
+            });
+
+            CloudBlockBlob cloudBlockBlob = container.GetBlockBlobReference(Guid.NewGuid().ToString());
+            cloudBlockBlob.UploadFromByteArrayAsync(photoArray, 0, photoArray.Length);
+
+            cloudBlockBlob.Properties.ContentType = "image/jpg";
+            cloudBlockBlob.SetPropertiesAsync();
+
+            return cloudBlockBlob.Uri.ToString();
+
             return string.Empty;
         }
 
