@@ -17,9 +17,11 @@ namespace BotEventManagement.Services.Service
         private readonly string _accountName;
         private readonly string _accessKey;
 
-        public SpeakerService(BotEventManagementContext botEventManagementContext)
+        public SpeakerService(BotEventManagementContext botEventManagementContext, string accountName, string accessKey)
         {
             _botEventManagementContext = botEventManagementContext;
+            _accountName = accountName;
+            _accessKey = accessKey;
         }
 
         public void Create(Speaker element)

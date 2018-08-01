@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BotEventTemplate.Api
 {
@@ -49,6 +50,13 @@ namespace BotEventTemplate.Api
             services.AddScoped<ICrudElements<Event>, EventService>();
             services.AddScoped<IEventParticipantService<EventParticipants>, EventParticipantsService>();
 
+            var sp = services.BuildServiceProvider();
+            var dbContext = sp.GetService<BotEventManagementContext>();
+
+            services.AddScoped<ICrudElements<Speaker>>(x =>
+                                                        new SpeakerService(dbContext,
+                                                                            Configuration["BlobAccountName"],
+                                                                            Configuration["BlobAccessKey"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +75,7 @@ namespace BotEventTemplate.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bot Event Management V1");
                 c.RoutePrefix = "";
             });
+
             app.UseMvc();
         }
     }
