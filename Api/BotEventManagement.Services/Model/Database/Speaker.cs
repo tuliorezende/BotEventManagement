@@ -27,6 +27,6 @@ namespace BotEventManagement.Services.Model.Database
         public virtual Event Event { get; set; }
 
         [JsonIgnore]
-        public virtual Activity Activity { get; set; }
+        public virtual List<Activity> Activity { get; set; }
     }
 }
