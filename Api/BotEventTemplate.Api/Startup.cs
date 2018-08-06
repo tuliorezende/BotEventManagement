@@ -49,6 +49,7 @@ namespace BotEventTemplate.Api
 
             services.AddScoped<ICrudElements<Event>, EventService>();
             services.AddScoped<IEventParticipantService<EventParticipants>, EventParticipantsService>();
+            services.AddScoped<ICrudElementsWIthEventFilter<Activity>, ActivityService>();
 
             var sp = services.BuildServiceProvider();
             var dbContext = sp.GetService<BotEventManagementContext>();

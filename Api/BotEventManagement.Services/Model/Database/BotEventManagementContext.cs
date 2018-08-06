@@ -10,6 +10,7 @@ namespace BotEventManagement.Services.Model.Database
         public BotEventManagementContext(DbContextOptions<BotEventManagementContext> options) : base(options)
         {
         }
+        public virtual DbSet<Activity> Activity { get; set; }
         public virtual DbSet<Event> Event { get; set; }
         public virtual DbSet<EventParticipants> EventParticipants { get; set; }
         public virtual DbSet<Speaker> Speaker { get; set; }
