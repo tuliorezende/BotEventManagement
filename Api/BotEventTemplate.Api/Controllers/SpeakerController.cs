@@ -52,10 +52,13 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="speaker"></param>
         /// <returns></returns>
         [HttpPut("{speakerId}")]
-        public IActionResult Put([FromRoute] string speakerId, [FromBody] Speaker speaker)
+        public IActionResult Put([FromRoute] int speakerId, [FromBody] Speaker speaker)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            if (speakerId != speaker.SpeakerId)
+                return BadRequest("This id doesn't correspond with object");
 
             _speakerService.Update(speaker);
 

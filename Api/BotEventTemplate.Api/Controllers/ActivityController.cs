@@ -51,10 +51,14 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="activity"></param>
         /// <returns></returns>
         [HttpPut("{activityId}")]
-        public IActionResult Put([FromRoute] string activityId, [FromBody] Activity activity)
+        public IActionResult Put([FromRoute] int activityId, [FromBody] Activity activity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            if (activityId != activity.Id)
+                return BadRequest("This id doesn't correspond with object");
+
 
             _activityService.Update(activity);
 

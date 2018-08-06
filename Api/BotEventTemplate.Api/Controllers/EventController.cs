@@ -47,11 +47,15 @@ namespace BotEventManagement.Api.Controllers
         /// </summary>
         /// <param name="event"></param>
         /// <returns></returns>
-        [HttpPut]
-        public IActionResult Put([FromBody] Event @event)
+        [HttpPut("{eventId}")]
+        public IActionResult Put([FromRoute] string eventId, [FromBody] Event @event)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            if (eventId != @event.EventId)
+                return BadRequest("This id doesn't correspond with object");
+
 
             _eventService.Update(@event);
 

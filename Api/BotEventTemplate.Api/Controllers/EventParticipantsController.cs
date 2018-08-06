@@ -57,6 +57,9 @@ namespace BotEventManagement.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            if (participantId != eventParticipants.Id)
+                return BadRequest("This id doesn't correspond with object");
+
             _eventParticipantsService.Update(eventParticipants);
 
             return Ok();
