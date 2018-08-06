@@ -5,8 +5,8 @@ using System.Text;
 
 namespace BotEventManagement.Services.Interfaces
 {
-    public interface IEventParticipantService<T> : ICrudElements<T>
+    public interface IEventParticipantService<T> : ICrudElementsWIthEventFilter<T>
     {
-        void UploadEventParticipantsFile(byte[] participantsSheet);
+        void UploadEventParticipantsFile(byte[] participantsSheet, string eventId);
     }
 }

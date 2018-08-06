@@ -21,25 +21,28 @@ namespace BotEventManagement.Api.Controllers
         {
             _eventParticipantsService = eventParticipantsService;
         }
+
         /// <summary>
         /// Get Event Participants of an event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromHeader] string eventId)
         {
-            return Ok(_eventParticipantsService.GetAll());
+            return Ok(_eventParticipantsService.GetAll(eventId));
         }
 
         /// <summary>
         /// Get a specific Event Participants of an event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <param name="participantId"></param>
         /// <returns></returns>
         [HttpGet, Route("{participantId}")]
-        public IActionResult Get([FromRoute]string participantId)
+        public IActionResult Get([FromHeader] string eventId, [FromRoute]string participantId)
         {
-            return Ok(_eventParticipantsService.GetById(participantId));
+            return Ok(_eventParticipantsService.GetById(participantId, eventId));
         }
 
         /// <summary>
@@ -90,12 +93,13 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Post a sheet to create some Event Participants
         /// </summary>
+        /// <param name="eventId"></param>
         /// <param name="participantsSheet"></param>
         /// <returns></returns>
         [HttpPost, Route("file")]
-        public IActionResult PostFile([FromBody] byte[] participantsSheet)
+        public IActionResult PostFile([FromHeader] string eventId, [FromBody] byte[] participantsSheet)
         {
-            _eventParticipantsService.UploadEventParticipantsFile(participantsSheet);
+            _eventParticipantsService.UploadEventParticipantsFile(participantsSheet, eventId);
             return Ok();
         }
     }

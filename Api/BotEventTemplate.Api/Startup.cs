@@ -53,7 +53,7 @@ namespace BotEventTemplate.Api
             var sp = services.BuildServiceProvider();
             var dbContext = sp.GetService<BotEventManagementContext>();
 
-            services.AddScoped<ICrudElements<Speaker>>(x =>
+            services.AddScoped<ICrudElementsWIthEventFilter<Speaker>>(x =>
                                                         new SpeakerService(dbContext,
                                                                             Configuration["BlobAccountName"],
                                                                             Configuration["BlobAccessKey"]));

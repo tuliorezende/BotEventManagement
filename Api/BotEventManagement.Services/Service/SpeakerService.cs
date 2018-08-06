@@ -11,7 +11,7 @@ using System.Text;
 
 namespace BotEventManagement.Services.Service
 {
-    public class SpeakerService : ICrudElements<Speaker>
+    public class SpeakerService : ICrudElementsWIthEventFilter<Speaker>
     {
         private BotEventManagementContext _botEventManagementContext;
         private readonly string _accountName;
@@ -45,18 +45,18 @@ namespace BotEventManagement.Services.Service
 
         }
 
-        public List<Speaker> GetAll()
+        public List<Speaker> GetAll(string eventId)
         {
-            List<Speaker> elements = _botEventManagementContext.Speaker.ToList();
+            List<Speaker> elements = _botEventManagementContext.Speaker.Where(x => x.EventId == eventId).ToList();
             return elements;
 
         }
 
-        public Speaker GetById(string elementId)
+        public Speaker GetById(string elementId, string eventId)
         {
             int speakerId = int.Parse(elementId);
 
-            Speaker element = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == speakerId).First();
+            Speaker element = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == speakerId && x.EventId == eventId).First();
             return element;
 
         }

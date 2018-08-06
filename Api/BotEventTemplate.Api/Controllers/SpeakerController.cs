@@ -16,30 +16,33 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class SpeakerController : ControllerBase
     {
-        private ICrudElements<Speaker> _speakerService;
-        public SpeakerController(ICrudElements<Speaker> speakerService)
+        private ICrudElementsWIthEventFilter<Speaker> _speakerService;
+        public SpeakerController(ICrudElementsWIthEventFilter<Speaker> speakerService)
         {
             _speakerService = speakerService;
         }
+
         /// <summary>
         /// Get speakers of an event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromHeader] string eventId)
         {
-            return Ok(_speakerService.GetAll());
+            return Ok(_speakerService.GetAll(eventId));
         }
 
         /// <summary>
         /// Get specific speaker of an event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <param name="speakerId"></param>
         /// <returns></returns>
         [HttpGet, Route("{speakerId}")]
-        public IActionResult Get([FromRoute]string speakerId)
+        public IActionResult Get([FromHeader] string eventId, [FromRoute]string speakerId)
         {
-            return Ok(_speakerService.GetById(speakerId));
+            return Ok(_speakerService.GetById(speakerId, eventId));
         }
 
         /// <summary>

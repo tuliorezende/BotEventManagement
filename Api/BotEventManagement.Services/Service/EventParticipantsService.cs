@@ -31,15 +31,15 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext.SaveChanges();
         }
 
-        public List<EventParticipants> GetAll()
+        public List<EventParticipants> GetAll(string eventId)
         {
-            List<EventParticipants> elements = _botEventManagementContext.EventParticipants.ToList();
+            List<EventParticipants> elements = _botEventManagementContext.EventParticipants.Where(x => x.EventId == eventId).ToList();
             return elements;
         }
 
-        public EventParticipants GetById(string elementId)
+        public EventParticipants GetById(string elementId, string eventId)
         {
-            EventParticipants element = _botEventManagementContext.EventParticipants.Where(x => x.Id == elementId).First();
+            EventParticipants element = _botEventManagementContext.EventParticipants.Where(x => x.Id == elementId && x.EventId == eventId).First();
             return element;
         }
 
@@ -49,7 +49,7 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext.SaveChanges();
         }
 
-        public void UploadEventParticipantsFile(byte[] participantsSheet)
+        public void UploadEventParticipantsFile(byte[] participantsSheet, string eventId)
         {
             throw new NotImplementedException();
         }
