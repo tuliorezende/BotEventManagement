@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.Extensions.DependencyInjection;
+using BotEventManagement.Api.Middleware;
 
 namespace BotEventTemplate.Api
 {
@@ -69,6 +70,7 @@ namespace BotEventTemplate.Api
                 app.UseHsts();
 
             app.UseHttpsRedirection();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
