@@ -31,15 +31,13 @@ namespace BotEventManagement.Api.Middleware
 
         private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var result = JsonConvert.SerializeObject(exception);
-
             if (exception is WebException webException)
                 context.Response.StatusCode = (int)((HttpWebResponse)webException.Response).StatusCode;
             else
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(result);
+            await context.Response.WriteAsync(exception.Message);
         }
     }
 }

@@ -62,7 +62,7 @@ namespace BotEventManagement.Api.Controllers
 
             _eventParticipantsService.Update(eventParticipants);
 
-            return Ok();
+            return NoContent();
         }
 
         /// <summary>

@@ -62,7 +62,7 @@ namespace BotEventManagement.Api.Controllers
 
             _speakerService.Update(speaker);
 
-            return Ok();
+            return NoContent();
         }
 
         /// <summary>

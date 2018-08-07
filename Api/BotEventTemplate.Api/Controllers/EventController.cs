@@ -59,7 +59,7 @@ namespace BotEventManagement.Api.Controllers
 
             _eventService.Update(@event);
 
-            return Ok();
+            return NoContent();
         }
 
         /// <summary>
