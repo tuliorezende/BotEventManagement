@@ -4,14 +4,16 @@ using BotEventManagement.Services.Model.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BotEventManagement.Services.Migrations
 {
     [DbContext(typeof(BotEventManagementContext))]
-    partial class BotEventManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20180807150709_ChangePrimaryKeyNameSpeaker")]
+    partial class ChangePrimaryKeyNameSpeaker
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,6 +98,8 @@ namespace BotEventManagement.Services.Migrations
                     b.Property<string>("UploadedPhoto");
 
                     b.HasKey("SpeakerId", "EventId");
+
+                    b.HasAlternateKey("SpeakerId");
 
                     b.HasIndex("EventId");
 

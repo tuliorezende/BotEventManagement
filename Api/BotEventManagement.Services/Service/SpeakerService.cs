@@ -26,9 +26,6 @@ namespace BotEventManagement.Services.Service
 
         public void Create(Speaker element)
         {
-            if (element.PhotoArray != null)
-                element.UploadedPhoto = GetImageUrl(element.PhotoArray);
-
             _botEventManagementContext.Speaker.Add(element);
             _botEventManagementContext.SaveChanges();
         }
@@ -36,9 +33,7 @@ namespace BotEventManagement.Services.Service
 
         public void Delete(string eventId, string elementId)
         {
-            int speakerId = int.Parse(elementId);
-
-            Speaker element = _botEventManagementContext.Speaker.Where(x => x.EventId == eventId && x.SpeakerId == speakerId).First();
+            Speaker element = _botEventManagementContext.Speaker.Where(x => x.EventId == eventId && x.SpeakerId == elementId).First();
             _botEventManagementContext.Speaker.Remove(element);
 
             _botEventManagementContext.SaveChanges();
@@ -54,18 +49,13 @@ namespace BotEventManagement.Services.Service
 
         public Speaker GetById(string elementId, string eventId)
         {
-            int speakerId = int.Parse(elementId);
-
-            Speaker element = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == speakerId && x.EventId == eventId).First();
+            Speaker element = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == elementId && x.EventId == eventId).First();
             return element;
 
         }
 
         public void Update(Speaker element)
         {
-            if (element.PhotoArray != null)
-                element.UploadedPhoto = GetImageUrl(element.PhotoArray);
-
             _botEventManagementContext.Entry(element).State = EntityState.Modified;
             _botEventManagementContext.SaveChanges();
         }
@@ -91,8 +81,6 @@ namespace BotEventManagement.Services.Service
             cloudBlockBlob.SetPropertiesAsync();
 
             return cloudBlockBlob.Uri.ToString();
-
-            return string.Empty;
         }
 
     }

@@ -4,14 +4,16 @@ using BotEventManagement.Services.Model.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BotEventManagement.Services.Migrations
 {
     [DbContext(typeof(BotEventManagementContext))]
-    partial class BotEventManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20180807143056_CreateActivityCompoundKey")]
+    partial class CreateActivityCompoundKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +23,7 @@ namespace BotEventManagement.Services.Migrations
 
             modelBuilder.Entity("BotEventManagement.Services.Model.Database.Activity", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id2");
 
                     b.Property<string>("EventId");
 
@@ -31,19 +33,15 @@ namespace BotEventManagement.Services.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("SpeakerEventId");
-
                     b.Property<int>("SpeakerId");
 
-                    b.Property<string>("SpeakerId1");
-
-                    b.HasKey("Id", "EventId");
+                    b.HasKey("Id2", "EventId");
 
                     b.HasIndex("EventId");
 
-                    b.HasIndex("Id", "EventId");
+                    b.HasIndex("SpeakerId");
 
-                    b.HasIndex("SpeakerId1", "SpeakerEventId");
+                    b.HasIndex("Id2", "EventId");
 
                     b.ToTable("Activity");
                 });
@@ -85,21 +83,21 @@ namespace BotEventManagement.Services.Migrations
 
             modelBuilder.Entity("BotEventManagement.Services.Model.Database.Speaker", b =>
                 {
-                    b.Property<string>("SpeakerId");
-
-                    b.Property<string>("EventId");
+                    b.Property<int>("SpeakerId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Biography");
+
+                    b.Property<string>("EventId");
 
                     b.Property<string>("Name");
 
                     b.Property<string>("UploadedPhoto");
 
-                    b.HasKey("SpeakerId", "EventId");
+                    b.HasKey("SpeakerId");
 
                     b.HasIndex("EventId");
-
-                    b.HasIndex("SpeakerId", "EventId");
 
                     b.ToTable("Speaker");
                 });
@@ -113,7 +111,8 @@ namespace BotEventManagement.Services.Migrations
 
                     b.HasOne("BotEventManagement.Services.Model.Database.Speaker", "Speaker")
                         .WithMany("Activity")
-                        .HasForeignKey("SpeakerId1", "SpeakerEventId");
+                        .HasForeignKey("SpeakerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BotEventManagement.Services.Model.Database.Event", b =>
@@ -152,8 +151,7 @@ namespace BotEventManagement.Services.Migrations
                 {
                     b.HasOne("BotEventManagement.Services.Model.Database.Event", "Event")
                         .WithMany("Speakers")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EventId");
                 });
 #pragma warning restore 612, 618
         }

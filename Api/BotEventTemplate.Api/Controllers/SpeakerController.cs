@@ -52,7 +52,7 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="speaker"></param>
         /// <returns></returns>
         [HttpPut("{speakerId}")]
-        public IActionResult Put([FromRoute] int speakerId, [FromBody] Speaker speaker)
+        public IActionResult Put([FromRoute] string speakerId, [FromBody] Speaker speaker)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -84,6 +84,7 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Remove a specific speaker of an event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <param name="speakerId"></param>
         /// <returns></returns>
         [HttpDelete("{speakerId}")]

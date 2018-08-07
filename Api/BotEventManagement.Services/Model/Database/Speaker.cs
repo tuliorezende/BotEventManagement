@@ -10,17 +10,14 @@ namespace BotEventManagement.Services.Model.Database
     public class Speaker
     {
 
-        [Key, JsonProperty("id")]
-        public int SpeakerId { get; set; }
+        [JsonProperty("id")]
+        public string SpeakerId { get; set; }
         [JsonProperty("nome")]
         public string Name { get; set; }
         [JsonProperty("biografia")]
         public string Biography { get; set; }
         [JsonProperty("foto")]
         public string UploadedPhoto { get; set; }
-        [NotMapped, JsonProperty("fotoUsuario")]
-        public byte[] PhotoArray { get; set; }
-
         [ForeignKey("EventId"), JsonProperty("idEvento")]
         public string EventId { get; set; }
         [JsonIgnore]

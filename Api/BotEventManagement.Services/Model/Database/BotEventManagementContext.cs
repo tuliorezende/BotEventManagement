@@ -28,6 +28,12 @@ namespace BotEventManagement.Services.Model.Database
             modelBuilder.Entity<EventParticipants>().HasKey(x => new { x.Id, x.EventId });
             modelBuilder.Entity<EventParticipants>().HasIndex(x => new { x.Id, x.EventId });
 
+            modelBuilder.Entity<Activity>().HasKey(x => new { x.Id, x.EventId });
+            modelBuilder.Entity<Activity>().HasIndex(x => new { x.Id, x.EventId });
+
+            modelBuilder.Entity<Speaker>().HasKey(x => new { x.SpeakerId, x.EventId });
+            modelBuilder.Entity<Speaker>().HasIndex(x => new { x.SpeakerId, x.EventId });
+
             base.OnModelCreating(modelBuilder);
         }
     }
