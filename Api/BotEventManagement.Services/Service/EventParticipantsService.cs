@@ -23,12 +23,13 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext.SaveChanges();
         }
 
-        public void Delete(string elementId)
+        public void Delete(string elementId, string eventId)
         {
-            EventParticipants element = _botEventManagementContext.EventParticipants.Where(x => x.Id == elementId).First();
+            EventParticipants element = _botEventManagementContext.EventParticipants.Where(x => x.Id == elementId && x.EventId == eventId).First();
             _botEventManagementContext.EventParticipants.Remove(element);
 
             _botEventManagementContext.SaveChanges();
+
         }
 
         public List<EventParticipants> GetAll(string eventId)

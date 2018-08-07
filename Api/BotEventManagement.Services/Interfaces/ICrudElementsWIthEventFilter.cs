@@ -9,7 +9,7 @@ namespace BotEventManagement.Services.Interfaces
         void Create(T element);
         List<T> GetAll(string eventId);
         T GetById(string elementId, string eventId);
-        void Delete(string elementId);
+        void Delete(string eventId, string elementId);
         void Update(T element);
     }
 }

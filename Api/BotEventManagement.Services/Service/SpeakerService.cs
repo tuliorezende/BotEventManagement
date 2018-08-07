@@ -34,11 +34,11 @@ namespace BotEventManagement.Services.Service
         }
 
 
-        public void Delete(string elementId)
+        public void Delete(string eventId, string elementId)
         {
             int speakerId = int.Parse(elementId);
 
-            Speaker element = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == speakerId).First();
+            Speaker element = _botEventManagementContext.Speaker.Where(x => x.EventId == eventId && x.SpeakerId == speakerId).First();
             _botEventManagementContext.Speaker.Remove(element);
 
             _botEventManagementContext.SaveChanges();

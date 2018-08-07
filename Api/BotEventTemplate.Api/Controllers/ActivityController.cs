@@ -85,12 +85,13 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Remove a specific activity of an event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <param name="activityId"></param>
         /// <returns></returns>
         [HttpDelete("{activityId}")]
-        public IActionResult Delete([FromRoute] string activityId)
+        public IActionResult Delete([FromHeader] string eventId, [FromRoute] string activityId)
         {
-            _activityService.Delete(activityId);
+            _activityService.Delete(eventId, activityId);
             return Ok();
         }
     }
