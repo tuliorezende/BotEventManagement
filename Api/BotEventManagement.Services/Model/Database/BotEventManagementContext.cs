@@ -25,6 +25,9 @@ namespace BotEventManagement.Services.Model.Database
                     sa.Property(p => p.Longitude).HasColumnName("Longitude");
                 });
 
+            modelBuilder.Entity<EventParticipants>().HasKey(x => new { x.Id, x.EventId });
+            modelBuilder.Entity<EventParticipants>().HasIndex(x => new { x.Id, x.EventId });
+
             base.OnModelCreating(modelBuilder);
         }
     }
