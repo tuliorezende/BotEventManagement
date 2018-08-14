@@ -34,6 +34,8 @@ namespace BotEventManagement.Services.Model.Database
             modelBuilder.Entity<Speaker>().HasKey(x => new { x.SpeakerId, x.EventId });
             modelBuilder.Entity<Speaker>().HasIndex(x => new { x.SpeakerId, x.EventId });
 
+            modelBuilder.HasDefaultSchema("BotEventManagement");
+
             base.OnModelCreating(modelBuilder);
         }
     }
