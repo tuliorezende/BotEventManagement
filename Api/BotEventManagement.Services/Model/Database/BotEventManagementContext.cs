@@ -14,6 +14,7 @@ namespace BotEventManagement.Services.Model.Database
         public virtual DbSet<Event> Event { get; set; }
         public virtual DbSet<EventParticipants> EventParticipants { get; set; }
         public virtual DbSet<Speaker> Speaker { get; set; }
+        public virtual DbSet<UserTalks> UserTalks { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -33,6 +34,9 @@ namespace BotEventManagement.Services.Model.Database
 
             modelBuilder.Entity<Speaker>().HasKey(x => new { x.SpeakerId, x.EventId });
             modelBuilder.Entity<Speaker>().HasIndex(x => new { x.SpeakerId, x.EventId });
+
+            modelBuilder.Entity<UserTalks>().HasKey(x => new { x.UserId, x.EventId, x.ActivityId });
+            modelBuilder.Entity<UserTalks>().HasIndex(x => new { x.UserId, x.EventId, x.ActivityId });
 
             modelBuilder.HasDefaultSchema("BotEventManagement");
 
