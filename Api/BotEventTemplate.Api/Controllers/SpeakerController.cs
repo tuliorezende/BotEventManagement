@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BotEventManagement.Services.Interfaces;
+using BotEventManagement.Services.Model.API;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +17,8 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class SpeakerController : ControllerBase
     {
-        private ICrudElementsWIthEventFilter<Speaker> _speakerService;
-        public SpeakerController(ICrudElementsWIthEventFilter<Speaker> speakerService)
+        private ISpeakerService _speakerService;
+        public SpeakerController(ISpeakerService speakerService)
         {
             _speakerService = speakerService;
         }
@@ -52,7 +53,7 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="speaker"></param>
         /// <returns></returns>
         [HttpPut("{speakerId}")]
-        public IActionResult Put([FromRoute] string speakerId, [FromBody] Speaker speaker)
+        public IActionResult Put([FromRoute] string speakerId, [FromBody] SpeakerRequest speaker)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -71,7 +72,7 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="speaker"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromBody] Speaker speaker)
+        public IActionResult Post([FromBody] SpeakerRequest speaker)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

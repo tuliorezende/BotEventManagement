@@ -1,22 +1,22 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace BotEventManagement.Services.Model.Database
+namespace BotEventManagement.Services.Model.API
 {
-    public class Speaker
+    public class SpeakerRequest
     {
-
+        [JsonProperty("id")]
         public string SpeakerId { get; set; }
+        [JsonProperty("nome")]
         public string Name { get; set; }
+        [JsonProperty("biografia")]
         public string Biography { get; set; }
+        [JsonProperty("foto")]
         public string UploadedPhoto { get; set; }
-        [ForeignKey("EventId")]
+        [JsonProperty("idEvento")]
         public string EventId { get; set; }
-        public virtual Event Event { get; set; }
-        public virtual List<Activity> Activity { get; set; }
+
     }
 }

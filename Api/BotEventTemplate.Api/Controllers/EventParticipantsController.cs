@@ -68,15 +68,16 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Create an Event Participant of an event
         /// </summary>
+        /// <param name="userId"></param>
         /// <param name="eventParticipants"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromBody] EventParticipants eventParticipants)
+        public IActionResult Post([FromHeader] string userId, [FromBody] EventParticipants eventParticipants)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _eventParticipantsService.Create(eventParticipants);
+            _eventParticipantsService.Create(userId, eventParticipants);
 
             return Ok();
         }

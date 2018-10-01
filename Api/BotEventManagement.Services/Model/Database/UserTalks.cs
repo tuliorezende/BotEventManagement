@@ -11,7 +11,6 @@ namespace BotEventManagement.Services.Model.Database
         public string UserId { get; set; }
         [ForeignKey("ActivityId")]
         public string ActivityId { get; set; }
-        [JsonIgnore]
         public virtual Activity Activity { get; set; }
     }
 }

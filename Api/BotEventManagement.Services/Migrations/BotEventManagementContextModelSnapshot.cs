@@ -32,11 +32,7 @@ namespace BotEventManagement.Services.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("SpeakerEventId");
-
-                    b.Property<int>("SpeakerId");
-
-                    b.Property<string>("SpeakerId1");
+                    b.Property<string>("SpeakerId");
 
                     b.HasKey("ActivityId", "EventId");
 
@@ -44,7 +40,7 @@ namespace BotEventManagement.Services.Migrations
 
                     b.HasIndex("ActivityId", "EventId");
 
-                    b.HasIndex("SpeakerId1", "SpeakerEventId");
+                    b.HasIndex("SpeakerId", "EventId");
 
                     b.ToTable("Activity");
                 });
@@ -137,7 +133,7 @@ namespace BotEventManagement.Services.Migrations
 
                     b.HasOne("BotEventManagement.Services.Model.Database.Speaker", "Speaker")
                         .WithMany("Activity")
-                        .HasForeignKey("SpeakerId1", "SpeakerEventId");
+                        .HasForeignKey("SpeakerId", "EventId");
                 });
 
             modelBuilder.Entity("BotEventManagement.Services.Model.Database.Event", b =>

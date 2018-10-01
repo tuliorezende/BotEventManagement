@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BotEventManagement.Services.Interfaces;
+using BotEventManagement.Services.Model.API;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +17,8 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class ActivityController : ControllerBase
     {
-        private ICrudElementsWIthEventFilter<Activity> _activityService;
-        public ActivityController(ICrudElementsWIthEventFilter<Activity> activityService)
+        private ICrudElementsWIthEventFilter<ActivityRequest> _activityService;
+        public ActivityController(ICrudElementsWIthEventFilter<ActivityRequest> activityService)
         {
             _activityService = activityService;
         }
@@ -51,7 +52,7 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="activity"></param>
         /// <returns></returns>
         [HttpPut("{activityId}")]
-        public IActionResult Put([FromRoute] string activityId, [FromBody] Activity activity)
+        public IActionResult Put([FromRoute] string activityId, [FromBody] ActivityRequest activity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -68,15 +69,16 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Create a specific activity of an event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <param name="activity"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromBody] Activity activity)
+        public IActionResult Post([FromHeader] string eventId, [FromBody] ActivityRequest activity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _activityService.Create(activity);
+            _activityService.Create(eventId, activity);
 
 
             return Ok();

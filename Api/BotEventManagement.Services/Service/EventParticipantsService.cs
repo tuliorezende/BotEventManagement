@@ -17,7 +17,7 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext = botEventManagementContext;
         }
 
-        public void Create(EventParticipants element)
+        public void Create(string eventId, EventParticipants element)
         {
             _botEventManagementContext.EventParticipants.Add(element);
             _botEventManagementContext.SaveChanges();

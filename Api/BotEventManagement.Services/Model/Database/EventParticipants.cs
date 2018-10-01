@@ -11,14 +11,11 @@ namespace BotEventManagement.Services.Model.Database
     public class EventParticipants
     {
 
-        [JsonProperty("id")]
         public string Id { get; set; }
-        [JsonProperty("nome")]
         public string Name { get; set; }
 
-        [ForeignKey("EventId"), JsonProperty("idEvento")]
+        [ForeignKey("EventId")]
         public string EventId { get; set; }
-        [JsonIgnore]
         public virtual Event Event { get; set; }
     }
 }

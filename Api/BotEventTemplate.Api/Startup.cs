@@ -18,6 +18,7 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.Extensions.DependencyInjection;
 using BotEventManagement.Api.Middleware;
+using BotEventManagement.Services.Model.API;
 
 namespace BotEventTemplate.Api
 {
@@ -50,15 +51,12 @@ namespace BotEventTemplate.Api
 
             services.AddScoped<ICrudElements<Event>, EventService>();
             services.AddScoped<IEventParticipantService<EventParticipants>, EventParticipantsService>();
-            services.AddScoped<ICrudElementsWIthEventFilter<Activity>, ActivityService>();
+            services.AddScoped<ICrudElementsWIthEventFilter<ActivityRequest>, ActivityService>();
 
             var sp = services.BuildServiceProvider();
             var dbContext = sp.GetService<BotEventManagementContext>();
 
-            services.AddScoped<ICrudElementsWIthEventFilter<Speaker>>(x =>
-                                                        new SpeakerService(dbContext,
-                                                                            Configuration["BlobAccountName"],
-                                                                            Configuration["BlobAccessKey"]));
+            services.AddScoped<ISpeakerService, SpeakerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

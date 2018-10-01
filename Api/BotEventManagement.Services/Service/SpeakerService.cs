@@ -1,4 +1,5 @@
 ﻿using BotEventManagement.Services.Interfaces;
+using BotEventManagement.Services.Model.API;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.WindowsAzure.Storage;
@@ -11,7 +12,7 @@ using System.Text;
 
 namespace BotEventManagement.Services.Service
 {
-    public class SpeakerService : ICrudElementsWIthEventFilter<Speaker>
+    public class SpeakerService : ISpeakerService
     {
         private BotEventManagementContext _botEventManagementContext;
         private readonly string _accountName;
@@ -24,9 +25,18 @@ namespace BotEventManagement.Services.Service
             _accessKey = accessKey;
         }
 
-        public void Create(Speaker element)
+        public void Create(SpeakerRequest element)
         {
-            _botEventManagementContext.Speaker.Add(element);
+            Speaker speaker = new Speaker
+            {
+                EventId = element.EventId,
+                Biography = element.Biography,
+                Name = element.Name,
+                UploadedPhoto = element.UploadedPhoto,
+                SpeakerId = Guid.NewGuid().ToString()
+            };
+
+            _botEventManagementContext.Speaker.Add(speaker);
             _botEventManagementContext.SaveChanges();
         }
 
@@ -40,48 +50,48 @@ namespace BotEventManagement.Services.Service
 
         }
 
-        public List<Speaker> GetAll(string eventId)
+        public List<SpeakerRequest> GetAll(string eventId)
         {
-            List<Speaker> elements = _botEventManagementContext.Speaker.Where(x => x.EventId == eventId).ToList();
-            return elements;
+            List<SpeakerRequest> speakersRequests = new List<SpeakerRequest>();
 
+            foreach (var item in _botEventManagementContext.Speaker.Where(x => x.EventId == eventId).ToList())
+            {
+                speakersRequests.Add(new SpeakerRequest
+                {
+                    Biography=item.Biography,
+                    EventId=item.EventId,
+                    Name=item.Name,
+                    SpeakerId=item.SpeakerId,
+                    UploadedPhoto=item.UploadedPhoto
+                });
+            }
+
+            return speakersRequests;
         }
 
-        public Speaker GetById(string elementId, string eventId)
+        public SpeakerRequest GetById(string elementId, string eventId)
         {
             Speaker element = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == elementId && x.EventId == eventId).First();
-            return element;
-
+            return new SpeakerRequest
+            {
+                Biography = element.Biography,
+                Name = element.Name,
+                SpeakerId = element.SpeakerId,
+                UploadedPhoto = element.UploadedPhoto,
+                EventId = element.EventId
+            };
         }
 
-        public void Update(Speaker element)
+        public void Update(SpeakerRequest element)
         {
-            _botEventManagementContext.Entry(element).State = EntityState.Modified;
+            var speaker = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == element.SpeakerId && x.EventId == element.EventId).FirstOrDefault();
+
+            speaker.UploadedPhoto = element.UploadedPhoto;
+            speaker.Name = element.Name;
+            speaker.Biography = element.Biography;
+
+            _botEventManagementContext.Entry(speaker).State = EntityState.Modified;
             _botEventManagementContext.SaveChanges();
         }
-
-        private string GetImageUrl(byte[] photoArray)
-        {
-            StorageCredentials credentials = new StorageCredentials(_accountName, _accessKey);
-            CloudStorageAccount account = new CloudStorageAccount(credentials, true);
-
-            CloudBlobClient blobClient = account.CreateCloudBlobClient();
-
-            CloudBlobContainer container = blobClient.GetContainerReference("speakers");
-            container.CreateIfNotExistsAsync();
-            container.SetPermissionsAsync(new BlobContainerPermissions
-            {
-                PublicAccess = BlobContainerPublicAccessType.Blob
-            });
-
-            CloudBlockBlob cloudBlockBlob = container.GetBlockBlobReference(Guid.NewGuid().ToString());
-            cloudBlockBlob.UploadFromByteArrayAsync(photoArray, 0, photoArray.Length);
-
-            cloudBlockBlob.Properties.ContentType = "image/jpg";
-            cloudBlockBlob.SetPropertiesAsync();
-
-            return cloudBlockBlob.Uri.ToString();
-        }
-
     }
 }
