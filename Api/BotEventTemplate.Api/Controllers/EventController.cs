@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BotEventManagement.Services.Interfaces;
+using BotEventManagement.Services.Model.API;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +17,8 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private ICrudElements<Event> _eventService;
-        public EventController(ICrudElements<Event> eventService)
+        private IEventService _eventService;
+        public EventController(IEventService eventService)
         {
             _eventService = eventService;
         }
@@ -48,14 +49,13 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="event"></param>
         /// <returns></returns>
         [HttpPut("{eventId}")]
-        public IActionResult Put([FromRoute] string eventId, [FromBody] Event @event)
+        public IActionResult Put([FromRoute] string eventId, [FromBody] EventRequest @event)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (eventId != @event.EventId)
+            if (eventId != @event.Id)
                 return BadRequest("This id doesn't correspond with object");
-
 
             _eventService.Update(@event);
 
@@ -68,7 +68,7 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="event"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromBody] Event @event)
+        public IActionResult Post([FromBody] EventRequest @event)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

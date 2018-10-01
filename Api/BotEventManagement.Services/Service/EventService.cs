@@ -1,4 +1,5 @@
 ﻿using BotEventManagement.Services.Interfaces;
+using BotEventManagement.Services.Model.API;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace BotEventManagement.Services.Service
 {
-    public class EventService : ICrudElements<Event>
+    public class EventService : IEventService
     {
         private BotEventManagementContext _botEventManagementContext;
 
@@ -17,9 +18,19 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext = botEventManagementContext;
         }
 
-        public void Create(Event element)
+        public void Create(EventRequest element)
         {
-            _botEventManagementContext.Event.Add(element);
+            Event @event = new Event
+            {
+                Address = element.Address,
+                Description = element.Description,
+                EndDate = element.EndDate,
+                EventId = Guid.NewGuid().ToString(),
+                Name = element.Name,
+                StartDate = element.StartDate,
+            };
+
+            _botEventManagementContext.Event.Add(@event);
             _botEventManagementContext.SaveChanges();
         }
 
@@ -31,21 +42,49 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext.SaveChanges();
         }
 
-        public List<Event> GetAll()
+        public List<EventRequest> GetAll()
         {
-            List<Event> elements = _botEventManagementContext.Event.ToList();
-            return elements;
+            List<EventRequest> eventRequests = new List<EventRequest>();
+            foreach (var item in _botEventManagementContext.Event.ToList())
+            {
+                eventRequests.Add(new EventRequest
+                {
+                    Address = item.Address,
+                    Description = item.Description,
+                    EndDate = item.EndDate,
+                    Name = item.Name,
+                    StartDate = item.StartDate
+                });
+            }
+            return eventRequests;
         }
 
-        public Event GetById(string elementId)
+        public EventRequest GetById(string elementId)
         {
             Event element = _botEventManagementContext.Event.Where(x => x.EventId == elementId).First();
-            return element;
+
+            return new EventRequest
+            {
+                Id = element.EventId,
+                Address = element.Address,
+                Description = element.Description,
+                EndDate = element.EndDate,
+                StartDate = element.StartDate,
+                Name = element.Name
+            };
         }
 
-        public void Update(Event element)
+        public void Update(EventRequest element)
         {
-            _botEventManagementContext.Entry(element).State = EntityState.Modified;
+            Event @event = _botEventManagementContext.Event.Where(x => x.EventId == element.Id).FirstOrDefault();
+
+            @event.StartDate = element.StartDate;
+            @event.EndDate = element.EndDate;
+            @event.Name = element.Name;
+            @event.Description = element.Description;
+            @event.Address = element.Address;
+
+            _botEventManagementContext.Entry(@event).State = EntityState.Modified;
             _botEventManagementContext.SaveChanges();
         }
     }

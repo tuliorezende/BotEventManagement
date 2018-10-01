@@ -17,8 +17,8 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class ActivityController : ControllerBase
     {
-        private ICrudElementsWIthEventFilter<ActivityRequest> _activityService;
-        public ActivityController(ICrudElementsWIthEventFilter<ActivityRequest> activityService)
+        private IActivityService _activityService;
+        public ActivityController(IActivityService activityService)
         {
             _activityService = activityService;
         }

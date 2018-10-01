@@ -9,7 +9,7 @@ using System.Text;
 
 namespace BotEventManagement.Services.Service
 {
-    public class ActivityService : ICrudElementsWIthEventFilter<ActivityRequest>
+    public class ActivityService : IActivityService
     {
         private BotEventManagementContext _botEventManagementContext;
 

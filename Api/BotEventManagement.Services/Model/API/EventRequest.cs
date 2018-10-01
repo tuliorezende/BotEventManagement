@@ -9,6 +9,8 @@ namespace BotEventManagement.Services.Model.API
 {
     public class EventRequest
     {
+        [JsonProperty("id")]
+        public string Id { get; set; }
         [JsonProperty("nome")]
         public string Name { get; set; }
         [JsonProperty("descricao")]
