@@ -1,4 +1,5 @@
 ﻿using BotEventManagement.Services.Interfaces;
+using BotEventManagement.Services.Model.API;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace BotEventManagement.Services.Service
 {
-    public class EventParticipantsService : IEventParticipantService<EventParticipants>
+    public class EventParticipantsService : IEventParticipantService
     {
         private BotEventManagementContext _botEventManagementContext;
 
@@ -17,9 +18,16 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext = botEventManagementContext;
         }
 
-        public void Create(string eventId, EventParticipants element)
+        public void Create(string eventId, EventParticipantsRequest element)
         {
-            _botEventManagementContext.EventParticipants.Add(element);
+            EventParticipants eventParticipants = new EventParticipants
+            {
+                EventId = eventId,
+                Id = Guid.NewGuid().ToString(),
+                Name = element.Name
+            };
+
+            _botEventManagementContext.EventParticipants.Add(eventParticipants);
             _botEventManagementContext.SaveChanges();
         }
 
@@ -32,21 +40,39 @@ namespace BotEventManagement.Services.Service
 
         }
 
-        public List<EventParticipants> GetAll(string eventId)
+        public List<EventParticipantsRequest> GetAll(string eventId)
         {
-            List<EventParticipants> elements = _botEventManagementContext.EventParticipants.Where(x => x.EventId == eventId).ToList();
-            return elements;
+            List<EventParticipantsRequest> participantsRequests = new List<EventParticipantsRequest>();
+
+            foreach (var item in _botEventManagementContext.EventParticipants.Where(x => x.EventId == eventId))
+            {
+                participantsRequests.Add(new EventParticipantsRequest
+                {
+                    Id = item.Id,
+                    Name = item.Name
+                });
+            }
+
+            return participantsRequests;
         }
 
-        public EventParticipants GetById(string elementId, string eventId)
+        public EventParticipantsRequest GetById(string elementId, string eventId)
         {
             EventParticipants element = _botEventManagementContext.EventParticipants.Where(x => x.Id == elementId && x.EventId == eventId).First();
-            return element;
+            return new EventParticipantsRequest
+            {
+                Id = element.Id,
+                Name = element.Name
+            };
         }
 
-        public void Update(EventParticipants element)
+        public void Update(string eventId, EventParticipantsRequest element)
         {
-            _botEventManagementContext.Entry(element).State = EntityState.Modified;
+            var eventParticipants = _botEventManagementContext.EventParticipants.Where(x => x.Id == element.Id && x.EventId == eventId).FirstOrDefault();
+
+            eventParticipants.Name = element.Name;
+
+            _botEventManagementContext.Entry(eventParticipants).State = EntityState.Modified;
             _botEventManagementContext.SaveChanges();
         }
 

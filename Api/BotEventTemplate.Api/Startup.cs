@@ -50,7 +50,7 @@ namespace BotEventTemplate.Api
             });
 
             services.AddScoped<ICrudElements<Event>, EventService>();
-            services.AddScoped<IEventParticipantService<EventParticipants>, EventParticipantsService>();
+            services.AddScoped<IEventParticipantService, EventParticipantsService>();
             services.AddScoped<ICrudElementsWIthEventFilter<ActivityRequest>, ActivityService>();
 
             var sp = services.BuildServiceProvider();

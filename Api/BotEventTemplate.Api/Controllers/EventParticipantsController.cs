@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BotEventManagement.Services.Interfaces;
+using BotEventManagement.Services.Model.API;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +17,8 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class EventParticipantsController : ControllerBase
     {
-        private IEventParticipantService<EventParticipants> _eventParticipantsService;
-        public EventParticipantsController(IEventParticipantService<EventParticipants> eventParticipantsService)
+        private IEventParticipantService _eventParticipantsService;
+        public EventParticipantsController(IEventParticipantService eventParticipantsService)
         {
             _eventParticipantsService = eventParticipantsService;
         }
@@ -52,7 +53,7 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="eventParticipants"></param>
         /// <returns></returns>
         [HttpPut("{participantId}")]
-        public IActionResult Put([FromRoute] string participantId, [FromBody] EventParticipants eventParticipants)
+        public IActionResult Put([FromHeader] string eventId, [FromRoute] string participantId, [FromBody] EventParticipantsRequest eventParticipants)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -60,7 +61,7 @@ namespace BotEventManagement.Api.Controllers
             if (participantId != eventParticipants.Id)
                 return BadRequest("This id doesn't correspond with object");
 
-            _eventParticipantsService.Update(eventParticipants);
+            _eventParticipantsService.Update(eventId, eventParticipants);
 
             return NoContent();
         }
@@ -72,7 +73,7 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="eventParticipants"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromHeader] string userId, [FromBody] EventParticipants eventParticipants)
+        public IActionResult Post([FromHeader] string userId, [FromBody] EventParticipantsRequest eventParticipants)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
