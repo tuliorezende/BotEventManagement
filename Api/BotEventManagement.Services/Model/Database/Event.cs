@@ -29,6 +29,8 @@ namespace BotEventManagement.Services.Model.Database
         public virtual List<Speaker> Speakers { get; set; }
         [JsonIgnore]
         public virtual List<EventParticipants> EventParticipants { get; set; }
+        [JsonIgnore]
+        public virtual List<UserTalks> UserTalks { get; set; }
     }
     [ComplexType]
     public class Address

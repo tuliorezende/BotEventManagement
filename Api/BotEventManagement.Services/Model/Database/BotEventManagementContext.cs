@@ -29,14 +29,14 @@ namespace BotEventManagement.Services.Model.Database
             modelBuilder.Entity<EventParticipants>().HasKey(x => new { x.Id, x.EventId });
             modelBuilder.Entity<EventParticipants>().HasIndex(x => new { x.Id, x.EventId });
 
-            modelBuilder.Entity<Activity>().HasKey(x => new { x.Id, x.EventId });
-            modelBuilder.Entity<Activity>().HasIndex(x => new { x.Id, x.EventId });
+            modelBuilder.Entity<Activity>().HasKey(x => new { x.ActivityId, x.EventId });
+            modelBuilder.Entity<Activity>().HasIndex(x => new { x.ActivityId, x.EventId });
 
             modelBuilder.Entity<Speaker>().HasKey(x => new { x.SpeakerId, x.EventId });
             modelBuilder.Entity<Speaker>().HasIndex(x => new { x.SpeakerId, x.EventId });
 
-            modelBuilder.Entity<UserTalks>().HasKey(x => new { x.UserId, x.EventId, x.ActivityId });
-            modelBuilder.Entity<UserTalks>().HasIndex(x => new { x.UserId, x.EventId, x.ActivityId });
+            modelBuilder.Entity<UserTalks>().HasKey(x => new { x.UserId, x.ActivityId });
+            modelBuilder.Entity<UserTalks>().HasIndex(x => new { x.UserId, x.ActivityId });
 
             modelBuilder.HasDefaultSchema("BotEventManagement");
 

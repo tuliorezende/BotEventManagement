@@ -10,7 +10,7 @@ namespace BotEventManagement.Services.Model.Database
     public class Activity
     {
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string ActivityId { get; set; }
         [JsonProperty("data")]
         public DateTime Date { get; set; }
         [JsonProperty("nome")]
@@ -27,5 +27,8 @@ namespace BotEventManagement.Services.Model.Database
         public int SpeakerId { get; set; }
         [JsonIgnore]
         public virtual Speaker Speaker { get; set; }
+        [JsonIgnore]
+        public virtual List<UserTalks> UserTalks { get; set; }
+
     }
 }

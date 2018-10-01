@@ -56,7 +56,7 @@ namespace BotEventManagement.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (activityId != activity.Id)
+            if (activityId != activity.ActivityId)
                 return BadRequest("This id doesn't correspond with object");
 
 
