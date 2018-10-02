@@ -15,8 +15,5 @@ namespace BotEventManagement.Services.Model.API
         public string Biography { get; set; }
         [JsonProperty("foto")]
         public string UploadedPhoto { get; set; }
-        [JsonProperty("idEvento")]
-        public string EventId { get; set; }
-
     }
 }

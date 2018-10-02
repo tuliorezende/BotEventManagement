@@ -15,14 +15,10 @@ namespace BotEventManagement.Services.Service
     public class SpeakerService : ISpeakerService
     {
         private BotEventManagementContext _botEventManagementContext;
-        private readonly string _accountName;
-        private readonly string _accessKey;
 
-        public SpeakerService(BotEventManagementContext botEventManagementContext, string accountName, string accessKey)
+        public SpeakerService(BotEventManagementContext botEventManagementContext)
         {
             _botEventManagementContext = botEventManagementContext;
-            _accountName = accountName;
-            _accessKey = accessKey;
         }
 
         public void Create(SpeakerRequest element)

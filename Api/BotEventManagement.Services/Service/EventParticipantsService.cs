@@ -49,7 +49,8 @@ namespace BotEventManagement.Services.Service
                 participantsRequests.Add(new EventParticipantsRequest
                 {
                     Id = item.Id,
-                    Name = item.Name
+                    Name = item.Name,
+                    EventId = item.EventId
                 });
             }
 
@@ -62,7 +63,8 @@ namespace BotEventManagement.Services.Service
             return new EventParticipantsRequest
             {
                 Id = element.Id,
-                Name = element.Name
+                Name = element.Name,
+                EventId = element.EventId
             };
         }
 

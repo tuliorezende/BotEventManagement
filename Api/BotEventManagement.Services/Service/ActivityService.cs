@@ -57,7 +57,8 @@ namespace BotEventManagement.Services.Service
                     Date = item.Date,
                     Description = item.Description,
                     Name = item.Name,
-                    SpeakerId = item.SpeakerId
+                    SpeakerId = item.SpeakerId,
+                    EventId = item.EventId
                 });
             }
 
@@ -73,7 +74,8 @@ namespace BotEventManagement.Services.Service
                 Date = element.Date,
                 Description = element.Description,
                 Name = element.Name,
-                SpeakerId = element.SpeakerId
+                SpeakerId = element.SpeakerId,
+                EventId = element.EventId
             };
         }
 
