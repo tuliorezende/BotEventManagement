@@ -53,7 +53,9 @@ namespace BotEventManagement.Services.Service
                     Description = item.Description,
                     EndDate = item.EndDate,
                     Name = item.Name,
-                    StartDate = item.StartDate
+                    StartDate = item.StartDate,
+                    Id = item.EventId
+
                 });
             }
             return eventRequests;
