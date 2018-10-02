@@ -7,7 +7,7 @@ namespace BotEventManagement.Services.Interfaces
 {
     public interface IActivityService
     {
-        void Create(string eventId, ActivityRequest element);
+        void Create(ActivityRequest element);
         List<ActivityRequest> GetAll(string eventId);
         ActivityRequest GetById(string elementId, string eventId);
         void Delete(string eventId, string elementId);

@@ -18,11 +18,11 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext = botEventManagementContext;
         }
 
-        public void Create(string eventId, EventParticipantsRequest element)
+        public void Create(EventParticipantsRequest element)
         {
             EventParticipants eventParticipants = new EventParticipants
             {
-                EventId = eventId,
+                EventId = element.EventId,
                 Id = Guid.NewGuid().ToString(),
                 Name = element.Name
             };

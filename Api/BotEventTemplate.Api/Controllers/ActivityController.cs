@@ -69,16 +69,15 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Create a specific activity of an event
         /// </summary>
-        /// <param name="eventId"></param>
         /// <param name="activity"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromHeader] string eventId, [FromBody] ActivityRequest activity)
+        public IActionResult Post([FromBody] ActivityRequest activity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _activityService.Create(eventId, activity);
+            _activityService.Create(activity);
 
 
             return Ok();

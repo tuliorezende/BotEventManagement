@@ -8,7 +8,7 @@ namespace BotEventManagement.Services.Interfaces
 {
     public interface IEventParticipantService
     {
-        void Create(string eventId, EventParticipantsRequest element);
+        void Create(EventParticipantsRequest element);
         List<EventParticipantsRequest> GetAll(string eventId);
         EventParticipantsRequest GetById(string elementId, string eventId);
         void Delete(string eventId, string elementId);
