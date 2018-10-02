@@ -9,6 +9,7 @@ namespace BotEventManagement.Services.Model.Database
 {
     public class Activity
     {
+        [Key]
         public string ActivityId { get; set; }
         public DateTime Date { get; set; }
         public string Name { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BotEventManagement.Services.Interfaces;
+using BotEventManagement.Services.Model.API;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,7 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="userTalks"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Create([FromBody] UserTalks userTalks)
+        public IActionResult Create([FromBody] UserTalksRequest userTalks)
         {
             _userTalksService.Create(userTalks);
             return Ok();

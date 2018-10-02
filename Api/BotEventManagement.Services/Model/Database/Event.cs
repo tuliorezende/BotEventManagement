@@ -18,8 +18,6 @@ namespace BotEventManagement.Services.Model.Database
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public Address Address { get; set; }
-
-        public virtual List<Speaker> Speakers { get; set; }
         public virtual List<EventParticipants> EventParticipants { get; set; }
         public virtual List<UserTalks> UserTalks { get; set; }
     }

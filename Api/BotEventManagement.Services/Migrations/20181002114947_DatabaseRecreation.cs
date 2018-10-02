@@ -30,6 +30,21 @@ namespace BotEventManagement.Services.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Speaker",
+                schema: "BotEventManagement",
+                columns: table => new
+                {
+                    SpeakerId = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Biography = table.Column<string>(nullable: true),
+                    UploadedPhoto = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Speaker", x => x.SpeakerId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EventParticipants",
                 schema: "BotEventManagement",
                 columns: table => new
@@ -51,29 +66,6 @@ namespace BotEventManagement.Services.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Speaker",
-                schema: "BotEventManagement",
-                columns: table => new
-                {
-                    SpeakerId = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Biography = table.Column<string>(nullable: true),
-                    UploadedPhoto = table.Column<string>(nullable: true),
-                    EventId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Speaker", x => new { x.SpeakerId, x.EventId });
-                    table.ForeignKey(
-                        name: "FK_Speaker_Event_EventId",
-                        column: x => x.EventId,
-                        principalSchema: "BotEventManagement",
-                        principalTable: "Event",
-                        principalColumn: "EventId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Activity",
                 schema: "BotEventManagement",
                 columns: table => new
@@ -82,25 +74,25 @@ namespace BotEventManagement.Services.Migrations
                     Date = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    EventId = table.Column<string>(nullable: false),
+                    EventId = table.Column<string>(nullable: true),
                     SpeakerId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Activity", x => new { x.ActivityId, x.EventId });
+                    table.PrimaryKey("PK_Activity", x => x.ActivityId);
                     table.ForeignKey(
                         name: "FK_Activity_Event_EventId",
                         column: x => x.EventId,
                         principalSchema: "BotEventManagement",
                         principalTable: "Event",
                         principalColumn: "EventId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Activity_Speaker_SpeakerId_EventId",
-                        columns: x => new { x.SpeakerId, x.EventId },
+                        name: "FK_Activity_Speaker_SpeakerId",
+                        column: x => x.SpeakerId,
                         principalSchema: "BotEventManagement",
                         principalTable: "Speaker",
-                        principalColumns: new[] { "SpeakerId", "EventId" },
+                        principalColumn: "SpeakerId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -111,26 +103,24 @@ namespace BotEventManagement.Services.Migrations
                 {
                     UserId = table.Column<string>(nullable: false),
                     ActivityId = table.Column<string>(nullable: false),
-                    ActivityId1 = table.Column<string>(nullable: true),
-                    ActivityEventId = table.Column<string>(nullable: true),
                     EventId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserTalks", x => new { x.UserId, x.ActivityId });
                     table.ForeignKey(
+                        name: "FK_UserTalks_Activity_ActivityId",
+                        column: x => x.ActivityId,
+                        principalSchema: "BotEventManagement",
+                        principalTable: "Activity",
+                        principalColumn: "ActivityId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_UserTalks_Event_EventId",
                         column: x => x.EventId,
                         principalSchema: "BotEventManagement",
                         principalTable: "Event",
                         principalColumn: "EventId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserTalks_Activity_ActivityId1_ActivityEventId",
-                        columns: x => new { x.ActivityId1, x.ActivityEventId },
-                        principalSchema: "BotEventManagement",
-                        principalTable: "Activity",
-                        principalColumns: new[] { "ActivityId", "EventId" },
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -141,16 +131,10 @@ namespace BotEventManagement.Services.Migrations
                 column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Activity_ActivityId_EventId",
+                name: "IX_Activity_SpeakerId",
                 schema: "BotEventManagement",
                 table: "Activity",
-                columns: new[] { "ActivityId", "EventId" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Activity_SpeakerId_EventId",
-                schema: "BotEventManagement",
-                table: "Activity",
-                columns: new[] { "SpeakerId", "EventId" });
+                column: "SpeakerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EventParticipants_EventId",
@@ -165,28 +149,16 @@ namespace BotEventManagement.Services.Migrations
                 columns: new[] { "Id", "EventId" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Speaker_EventId",
+                name: "IX_UserTalks_ActivityId",
                 schema: "BotEventManagement",
-                table: "Speaker",
-                column: "EventId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Speaker_SpeakerId_EventId",
-                schema: "BotEventManagement",
-                table: "Speaker",
-                columns: new[] { "SpeakerId", "EventId" });
+                table: "UserTalks",
+                column: "ActivityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserTalks_EventId",
                 schema: "BotEventManagement",
                 table: "UserTalks",
                 column: "EventId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserTalks_ActivityId1_ActivityEventId",
-                schema: "BotEventManagement",
-                table: "UserTalks",
-                columns: new[] { "ActivityId1", "ActivityEventId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserTalks_UserId_ActivityId",
@@ -210,11 +182,11 @@ namespace BotEventManagement.Services.Migrations
                 schema: "BotEventManagement");
 
             migrationBuilder.DropTable(
-                name: "Speaker",
+                name: "Event",
                 schema: "BotEventManagement");
 
             migrationBuilder.DropTable(
-                name: "Event",
+                name: "Speaker",
                 schema: "BotEventManagement");
         }
     }

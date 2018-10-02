@@ -29,7 +29,6 @@ namespace BotEventManagement.Services.Service
         {
             Speaker speaker = new Speaker
             {
-                EventId = element.EventId,
                 Biography = element.Biography,
                 Name = element.Name,
                 UploadedPhoto = element.UploadedPhoto,
@@ -43,7 +42,7 @@ namespace BotEventManagement.Services.Service
 
         public void Delete(string eventId, string elementId)
         {
-            Speaker element = _botEventManagementContext.Speaker.Where(x => x.EventId == eventId && x.SpeakerId == elementId).First();
+            Speaker element = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == elementId).First();
             _botEventManagementContext.Speaker.Remove(element);
 
             _botEventManagementContext.SaveChanges();
@@ -54,15 +53,14 @@ namespace BotEventManagement.Services.Service
         {
             List<SpeakerRequest> speakersRequests = new List<SpeakerRequest>();
 
-            foreach (var item in _botEventManagementContext.Speaker.Where(x => x.EventId == eventId).ToList())
+            foreach (var item in _botEventManagementContext.Speaker.Include(x => x.Activity).Where(x => x.Activity.Where(y => y.EventId == eventId).Count() > 0).ToList())
             {
                 speakersRequests.Add(new SpeakerRequest
                 {
-                    Biography=item.Biography,
-                    EventId=item.EventId,
-                    Name=item.Name,
-                    SpeakerId=item.SpeakerId,
-                    UploadedPhoto=item.UploadedPhoto
+                    Biography = item.Biography,
+                    Name = item.Name,
+                    SpeakerId = item.SpeakerId,
+                    UploadedPhoto = item.UploadedPhoto
                 });
             }
 
@@ -71,20 +69,19 @@ namespace BotEventManagement.Services.Service
 
         public SpeakerRequest GetById(string elementId, string eventId)
         {
-            Speaker element = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == elementId && x.EventId == eventId).First();
+            Speaker element = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == elementId).First();
             return new SpeakerRequest
             {
                 Biography = element.Biography,
                 Name = element.Name,
                 SpeakerId = element.SpeakerId,
                 UploadedPhoto = element.UploadedPhoto,
-                EventId = element.EventId
             };
         }
 
         public void Update(SpeakerRequest element)
         {
-            var speaker = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == element.SpeakerId && x.EventId == element.EventId).FirstOrDefault();
+            var speaker = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == element.SpeakerId).FirstOrDefault();
 
             speaker.UploadedPhoto = element.UploadedPhoto;
             speaker.Name = element.Name;

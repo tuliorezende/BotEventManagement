@@ -46,6 +46,7 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Update a specific event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <param name="event"></param>
         /// <returns></returns>
         [HttpPut("{eventId}")]

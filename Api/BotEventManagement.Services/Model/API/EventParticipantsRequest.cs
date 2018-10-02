@@ -11,5 +11,8 @@ namespace BotEventManagement.Services.Model.API
         public string Id { get; set; }
         [JsonProperty("nome")]
         public string Name { get; set; }
+        [JsonProperty("idEvento")]
+        public string EventId { get; set; }
+
     }
 }

@@ -49,6 +49,7 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Update a specific Event Participant of an event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <param name="participantId"></param>
         /// <param name="eventParticipants"></param>
         /// <returns></returns>
