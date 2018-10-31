@@ -10,7 +10,7 @@ services:
     ports:
     - "1401:1433"
     environment: 
-      - SA_PASSWORD=.4\LSPAeh
+      - SA_PASSWORD=.3\LSPAeh
       - ACCEPT_EULA=Y
 
     
