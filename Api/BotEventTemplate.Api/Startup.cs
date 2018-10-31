@@ -27,7 +27,7 @@ namespace BotEventTemplate.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<BotEventManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BotEventManagementContext")));
+            services.AddDbContext<BotEventManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
@@ -59,6 +59,8 @@ namespace BotEventTemplate.Api
             app.UseHttpsRedirection();
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
+            UpdateDatabase(app);
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -67,6 +69,19 @@ namespace BotEventTemplate.Api
             });
 
             app.UseMvc();
+        }
+
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<BotEventManagementContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }

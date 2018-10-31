@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+    boteventmanagement.api:
+      environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      ports:
+      - "20001:80"
+
+      sql.database:
+      -ports:
+      - "14001:1433",
+      environment:
+        - SA_PASSWORD=.4\LSPAehX
+        - ACCEPT_EULA=Y
