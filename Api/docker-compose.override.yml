@@ -6,11 +6,12 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
+
   sql.database:
     ports:
-    - "1401:1433"
+      - "1401:1433"
     environment: 
-      - SA_PASSWORD=.3\LSPAeh
-      - ACCEPT_EULA=Y
+      SA_PASSWORD: .3\LSPAeh9
+      ACCEPT_EULA: Y
 
     
