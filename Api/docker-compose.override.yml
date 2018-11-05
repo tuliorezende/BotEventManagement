@@ -9,10 +9,8 @@ services:
       - "20002:80"
 
   sql.database:
-    ports:
-      - "1401:1433"
     environment: 
       SA_PASSWORD: .3\\LSPAeh9
       ACCEPT_EULA: Y
-
-    
+    ports:
+      - "1401:1433"
