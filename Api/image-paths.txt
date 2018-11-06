@@ -1,2 +1,2 @@
-boteventmanagement.api
+tuliorezende/boteventmanagement.api
 sql.database
