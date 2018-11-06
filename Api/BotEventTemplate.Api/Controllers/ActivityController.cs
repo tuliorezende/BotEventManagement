@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BotEventManagement.Api.Controllers
 {
     /// <summary>
-    /// Manage activities of an event
+    /// Manage activities of an specific event
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
