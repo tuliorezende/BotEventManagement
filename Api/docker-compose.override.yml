@@ -10,7 +10,7 @@ services:
 
   sql.database:
     environment: 
-      SA_PASSWORD: .3\\LSPAeh9
-      ACCEPT_EULA: Y
+      SA_PASSWORD: ".3\\LSPAeh9"
+      ACCEPT_EULA: "Y"
     ports:
       - "1401:1433"
