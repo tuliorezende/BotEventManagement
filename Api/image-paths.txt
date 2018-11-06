@@ -1,2 +1,2 @@
 tuliorezende/boteventmanagement.api
-sql.database
+tuliorezende/sql.database
