@@ -7,7 +7,7 @@ networks:
 services:
 
   boteventmanagement.api:
-    image: boteventmanagement.api
+    image: tuliorezende/boteventmanagement.api
     build:
       context: .
       dockerfile: BotEventTemplate.Api/Dockerfile
