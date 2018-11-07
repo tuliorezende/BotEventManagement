@@ -1,14 +1,14 @@
 version: '3.4'
 
 services:
-  boteventmanagement.api:
+  boteventmanagement-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings:DefaultConnection=Server=sql.database;Initial Catalog=BotEventManagementDb;User Id=sa;Password=.3\\LSPAeh9;Trusted_Connection=false
+      - ConnectionStrings:DefaultConnection=Server=sql-database;Initial Catalog=BotEventManagementDb;User Id=sa;Password=.3\\LSPAeh9;Trusted_Connection=false
     ports:
       - "20002:80"
 
-  sql.database:
+  sql-database:
     environment: 
       SA_PASSWORD: ".3\\LSPAeh9"
       ACCEPT_EULA: "Y"

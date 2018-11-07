@@ -6,19 +6,19 @@ networks:
 
 services:
 
-  boteventmanagement.api:
-    image: tuliorezende/boteventmanagement.api
+  boteventmanagement-api:
+    image: tuliorezende/boteventmanagement-api
     build:
       context: .
       dockerfile: BotEventTemplate.Api/Dockerfile
     ports:
     - "20000:80"
     depends_on: 
-      - sql.database
+      - sql-database
     networks: 
       - dockersql-network
 
-  sql.database:
+  sql-database:
     image: microsoft/mssql-server-linux:2017-latest
     ports: 
       - "1401:1433"
