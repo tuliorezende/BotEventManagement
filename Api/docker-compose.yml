@@ -1,9 +1,5 @@
 version: '3.4'
 
-networks: 
-  dockersql-network:
-    driver: bridge
-
 services:
 
   boteventmanagement-api:
@@ -11,16 +7,18 @@ services:
     build:
       context: .
       dockerfile: BotEventTemplate.Api/Dockerfile
+    environment:
+     ASPNETCORE_ENVIRONMENT: Production
+     DefaultConnection: sql-database;Initial Catalog=BotEventManagementDb;User Id=sa;Password=.4\\LSPAehX;Trusted_Connection=false
     ports:
     - "20000:80"
     depends_on: 
       - sql-database
-    networks: 
-      - dockersql-network
 
   sql-database:
     image: microsoft/mssql-server-linux:2017-latest
     ports: 
       - "1401:1433"
-    networks: 
-      - dockersql-network
+    environment:
+      SA_PASSWORD: ".4\\LSPAehX"
+      ACCEPT_EULA: "Y"
