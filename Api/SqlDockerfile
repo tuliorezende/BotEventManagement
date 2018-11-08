@@ -5,10 +5,14 @@
 # Base OS layer: Latest Ubuntu LTS.
 FROM ubuntu:16.04
 
+ENV SA_PASSWORD ".4\\LSPAehX"
+ENV ACCEPT_EULA "Y"
+
 # Default SQL Server TCP/Port.
 EXPOSE 1433
 
 # Copy all SQL Server runtime files from build drop into image.
+WORKDIR /
 COPY ./install /
 
 # Run SQL Server process.
