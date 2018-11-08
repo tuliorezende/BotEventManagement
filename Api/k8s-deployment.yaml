@@ -19,7 +19,7 @@ items:
     strategy: {}
     template:
         metadata:
-            label: boteventmanagement-api
+            name: boteventmanagement-api
         spec:
           containers:
           - name: boteventmanagement-api
