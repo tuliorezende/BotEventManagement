@@ -13,6 +13,7 @@ EXPOSE 1433
 
 # Copy all SQL Server runtime files from build drop into image.
 WORKDIR /
+CMD ["ls"]
 COPY ./install /
 
 # Run SQL Server process.
