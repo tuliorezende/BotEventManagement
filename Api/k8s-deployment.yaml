@@ -9,13 +9,13 @@ items:
       targetPort: 80
   status:
     loadBalancer: {}
-- apiVersion: extensions/v1beta1
+- apiVersion: v1
   kind: Deployment
   spec:
     strategy: {}
     template:
         metadata:
-            label:boteventmanagement-api
+            label: boteventmanagement-api
         spec:
           containers:
           - name: boteventmanagement-api
@@ -30,6 +30,6 @@ items:
             - containerPort: 80
             resources: {}
           restartPolicy: Always
-        status: {}
+  status: {}
 kind: List
 metadata: {}
