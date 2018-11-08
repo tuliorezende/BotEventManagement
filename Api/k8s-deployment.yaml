@@ -11,24 +11,25 @@ items:
     loadBalancer: {}
 - apiVersion: extensions/v1beta1
   kind: Deployment
-    labels:
-	    name: boteventmanagement-api
   spec:
     strategy: {}
-      spec:
-        containers:
-          env:
-			- name: ASPNETCORE_ENVIRONMENT
-			  value: Production
-			- name: DefaultConnection
-			  value: sql-database;Initial Catalog=BotEventManagementDb;User Id=sa;Password=.4\\LSPAehX;Trusted_Connection=false
-          image: tuliorezende/boteventmanagement-api
-          name: boteventmanagement-api
-		  args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection)"]
-          ports:
-          - containerPort: 80
-          resources: {}
-        restartPolicy: Always
-  status: {}
+    template:
+        metadata:
+            label:boteventmanagement-api
+        spec:
+          containers:
+          - name: boteventmanagement-api
+            image: tuliorezende/boteventmanagement-api
+            env:
+                - name: ASPNETCORE_ENVIRONMENT
+                  value: Production
+                - name: DefaultConnection
+                  value: sql-database;Initial Catalog=BotEventManagementDb;User Id=sa;Password=.4\\LSPAehX;Trusted_Connection=false
+            args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection)"]
+            ports:
+            - containerPort: 80
+            resources: {}
+          restartPolicy: Always
+        status: {}
 kind: List
 metadata: {}
