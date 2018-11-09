@@ -33,7 +33,7 @@ items:
                 - name: ASPNETCORE_ENVIRONMENT
                   value: Production
                 - name: DefaultConnection
-                  value: "Server=tcp:#{k8s.dbservername}#.database.windows.net,1433;Initial Catalog=#{k8s.dbdatabasename};Persist Security Info=False;User ID=#{k8s.dbusername};Password=#{k8s.dbpassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+                  value: "Server=tcp:#{k8s.dbservername}#.database.windows.net,1433;Initial Catalog=#{k8s.dbdatabasename}#;Persist Security Info=False;User ID=#{k8s.dbusername}#;Password=#{k8s.dbpassword}#;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
             args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection)"]
             ports:
             - containerPort: 80
