@@ -4,11 +4,8 @@ items:
   kind: Service
   metadata:
     name: boteventmanagement-api
-  spec:
-    ports:
-    - name: "20000"
-      port: 20000
-      targetPort: 80
+    labels:
+      app: boteventmanagement-api
   status:
     loadBalancer: {}
 - apiVersion: apps/v1beta2
