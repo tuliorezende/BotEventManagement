@@ -10,7 +10,7 @@ items:
     ports:
     - name: "80"
       port: 80
-      targetPort: 80
+      nodePort: 80
   status: {}
 - apiVersion: apps/v1beta2
   kind: Deployment
