@@ -23,6 +23,8 @@ items:
     template:
         metadata:
           name: boteventmanagement-api
+          labels:
+            app: boteventmanagement-api
         spec:
           containers:
           - name: boteventmanagement-api
