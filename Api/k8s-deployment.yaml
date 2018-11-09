@@ -11,8 +11,7 @@ items:
     - name: "80"
       port: 80
       targetPort: 80
-  status:
-    loadBalancer: {}
+  status: {}
 - apiVersion: apps/v1beta2
   kind: Deployment
   metadata:
