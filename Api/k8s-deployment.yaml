@@ -4,6 +4,8 @@ items:
   kind: Service
   metadata:
     name: boteventmanagement-api
+  labels:
+    app: boteventmanagement-api
   spec:
     ports:
     - name: "20000"
@@ -17,9 +19,12 @@ items:
     name: boteventmanagement-api
   spec:
     strategy: {}
+    selector:
+      matchLabels:
+        app: boteventmanagement-api
     template:
         metadata:
-            name: boteventmanagement-api
+          name: boteventmanagement-api
         spec:
           containers:
           - name: boteventmanagement-api
