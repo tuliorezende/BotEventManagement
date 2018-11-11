@@ -11,7 +11,7 @@ items:
     - name: "80"
       port: 80
       nodePort: 80
-  type: "LoadBalancer"
+    type: "LoadBalancer"
   status: {}
 - apiVersion: apps/v1beta2
   kind: Deployment
