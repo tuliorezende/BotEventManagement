@@ -39,6 +39,7 @@ items:
             args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection)"]
             ports:
             - containerPort: 80
+			type: "LoadBalancer"
             resources: {}
           restartPolicy: Always
   status: {}
