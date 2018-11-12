@@ -8,15 +8,16 @@ items:
       app: boteventmanagement-api
   spec:
     ports:
-    - name: "80"
+    - name: http
       port: 80
-      targetPort: 80
-    type: "LoadBalancer"
+      targetPort: http
+      protocol: TCP
+    type: LoadBalancer
   status: {}
 - apiVersion: apps/v1beta2
   kind: Deployment
   metadata:
-    name: boteventmanagement-api
+    name: boteventmanagement-api-deployment
   spec:
     strategy: {}
     selector:
@@ -38,7 +39,8 @@ items:
                   value: "Server=tcp:#{k8s.dbservername}#.database.windows.net,1433;Initial Catalog=#{k8s.dbdatabasename}#;Persist Security Info=False;User ID=#{k8s.dbusername}#;Password=#{k8s.dbpassword}#;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
             args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection)"]
             ports:
-            - containerPort: 80
+            - name: http
+              containerPort: 15200
             resources: {}
           restartPolicy: Always
   status: {}
