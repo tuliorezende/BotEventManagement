@@ -13,10 +13,7 @@ items:
       targetPort: http
       protocol: TCP
     type: LoadBalancer
-  status:
-    loadBalancer:
-      ingress:
-        - ip: http://40.117.121.85
+  status: {}
 - apiVersion: apps/v1beta2
   kind: Deployment
   metadata:
