@@ -40,7 +40,7 @@ items:
             args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection)"]
             ports:
             - name: http
-              containerPort: 15200
+              containerPort: 80
             resources: {}
           restartPolicy: Always
   status: {}
