@@ -4,6 +4,8 @@ items:
   kind: Service
   metadata:
     name: boteventmanagement-api
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     labels:
       app: boteventmanagement-api
   spec:
