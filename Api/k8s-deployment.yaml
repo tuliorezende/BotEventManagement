@@ -13,7 +13,6 @@ items:
       targetPort: http
       protocol: TCP
     type: LoadBalancer
-    externalTrafficPolicy: Local
   status: {}
 - apiVersion: apps/v1beta2
   kind: Deployment
