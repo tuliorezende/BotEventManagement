@@ -20,6 +20,7 @@ namespace BotEventManagement.Api.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            Console.WriteLine("Health Controller - Before Health return");
             return Ok("success");
         }
     }
