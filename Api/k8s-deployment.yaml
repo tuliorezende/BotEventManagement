@@ -1,3 +1,7 @@
+kind: List
+metadata: {}
+apiVersion: v1
+items:
 - apiVersion: v1
   kind: Service
   metadata:
@@ -9,7 +13,7 @@
     - port: 80
     type: LoadBalancer
 
-- apiVersion: apps/v1beta2
+- apiVersion: apps/v1beta1
   kind: Deployment
   metadata:
     name: boteventmanagement-api-deployment
