@@ -16,7 +16,6 @@ items:
   metadata:
     name: boteventmanagement-api-deployment
   spec:
-    strategy: {}
     selector:
       matchLabels:
         app: boteventmanagement-api
@@ -37,4 +36,3 @@ items:
             args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection)"]
             ports:
             - containerPort: 80
-  status: {}
