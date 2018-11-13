@@ -9,7 +9,7 @@ namespace BotEventManagement.Api.Controllers
     /// <summary>
     /// Controller to validate api health
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("/healthz")]
     public class HealthController : Controller
     {
 
