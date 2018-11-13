@@ -8,11 +8,9 @@ items:
       app: boteventmanagement-api
   spec:
     ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 9376
+    - port: 80
     type: LoadBalancer
-  status: {}
+
 - apiVersion: apps/v1beta2
   kind: Deployment
   metadata:
@@ -39,8 +37,4 @@ items:
             args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection)"]
             ports:
             - containerPort: 80
-            resources: {}
-          restartPolicy: Always
   status: {}
-kind: List
-metadata: {}
