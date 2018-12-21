@@ -2,13 +2,16 @@ kind: List
 metadata: {}
 apiVersion: v1
 items:
+
 - apiVersion: v1
   kind: Service
   metadata:
-    name: boteventmanagement-api
+    name: boteventmanagement-api_service
     labels:
-      app: boteventmanagement-api
+      version: test
   spec:
+    selector:
+        app: boteventmanagement-api
     ports:
     - port: 80
     type: LoadBalancer
@@ -18,13 +21,10 @@ items:
   metadata:
     name: boteventmanagement-api-deployment
   spec:
+    replicas: 2
     strategy: {}
-    selector:
-      matchLabels:
-        app: boteventmanagement-api
     template:
         metadata:
-          name: boteventmanagement-api
           labels:
             app: boteventmanagement-api
         spec:
