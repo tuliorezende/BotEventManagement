@@ -6,7 +6,7 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: boteventmanagement-api_service
+    name: boteventmanagement-api-service
     labels:
       version: test
   spec:
