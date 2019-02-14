@@ -83,7 +83,7 @@ namespace BotEventManagement.Services.Service
         {
             var activity = _botEventManagementContext.Activity.Where(x => x.SpeakerId == element.SpeakerId && x.ActivityId == element.ActivityId).FirstOrDefault();
 
-            if (element.Date != activity.Date)
+            if (element.Date != DateTime.MinValue && element.Date != activity.Date)
                 activity.Date = element.Date;
 
             if (element.Description != activity.Description)

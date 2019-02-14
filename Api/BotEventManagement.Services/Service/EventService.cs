@@ -80,19 +80,19 @@ namespace BotEventManagement.Services.Service
         {
             Event @event = _botEventManagementContext.Event.Where(x => x.EventId == element.Id).FirstOrDefault();
 
-            if (@event.StartDate != element.StartDate)
+            if (element.StartDate != DateTime.MinValue && @event.StartDate != element.StartDate)
                 @event.StartDate = element.StartDate;
 
-            if (@event.EndDate != element.EndDate)
+            if (element.EndDate != DateTime.MinValue && @event.EndDate != element.EndDate)
                 @event.EndDate = element.EndDate;
 
-            if (@event.Name != element.Name)
+            if (element.Name != null && @event.Name != element.Name)
                 @event.Name = element.Name;
 
-            if (@event.Description != element.Description)
+            if (element.Description != null && @event.Description != element.Description)
                 @event.Description = element.Description;
 
-            if (@event.Address != element.Address)
+            if (element.Address != null && @event.Address != element.Address)
                 @event.Address = element.Address;
 
             _botEventManagementContext.Entry(@event).State = EntityState.Modified;
