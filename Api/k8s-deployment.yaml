@@ -36,8 +36,8 @@ items:
                   value: Production
                 - name: DefaultConnection
                   valueFrom:
-                   configMapKeyRef:
-                    name:configmap-eventmanagement
+                   secretKeyRef:
+                    name:secret-eventmanagement
                     key:DEFAULTCONNECTION
             args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection)"]
             ports:
