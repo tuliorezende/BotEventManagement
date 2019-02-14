@@ -79,9 +79,15 @@ namespace BotEventManagement.Services.Service
         {
             var speaker = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == element.SpeakerId).FirstOrDefault();
 
-            speaker.UploadedPhoto = element.UploadedPhoto;
-            speaker.Name = element.Name;
-            speaker.Biography = element.Biography;
+            if (element.Name != speaker.Name)
+                speaker.Name = element.Name;
+
+            if (element.UploadedPhoto != speaker.UploadedPhoto)
+                speaker.UploadedPhoto = element.Name;
+
+            if (element.Biography != speaker.Biography)
+                speaker.Biography = element.Name;
+
 
             _botEventManagementContext.Entry(speaker).State = EntityState.Modified;
             _botEventManagementContext.SaveChanges();

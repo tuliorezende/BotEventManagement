@@ -72,7 +72,8 @@ namespace BotEventManagement.Services.Service
         {
             var eventParticipants = _botEventManagementContext.EventParticipants.Where(x => x.Id == element.Id && x.EventId == eventId).FirstOrDefault();
 
-            eventParticipants.Name = element.Name;
+            if (element.Name != eventParticipants.Name)
+                eventParticipants.Name = element.Name;
 
             _botEventManagementContext.Entry(eventParticipants).State = EntityState.Modified;
             _botEventManagementContext.SaveChanges();

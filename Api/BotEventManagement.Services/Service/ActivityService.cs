@@ -83,10 +83,17 @@ namespace BotEventManagement.Services.Service
         {
             var activity = _botEventManagementContext.Activity.Where(x => x.SpeakerId == element.SpeakerId && x.ActivityId == element.ActivityId).FirstOrDefault();
 
-            activity.Date = element.Date;
-            activity.Description = element.Description;
-            activity.Name = element.Name;
-            activity.SpeakerId = element.SpeakerId;
+            if (element.Date != activity.Date)
+                activity.Date = element.Date;
+
+            if (element.Description != activity.Description)
+                activity.Description = element.Description;
+
+            if (element.Name != activity.Name)
+                activity.Name = element.Name;
+
+            if (element.SpeakerId != activity.SpeakerId)
+                activity.SpeakerId = element.SpeakerId;
 
             _botEventManagementContext.Entry(activity).State = EntityState.Modified;
             _botEventManagementContext.SaveChanges();
