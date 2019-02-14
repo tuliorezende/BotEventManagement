@@ -37,8 +37,8 @@ items:
                 - name: DefaultConnection
                   valueFrom:
                    secretKeyRef:
-                    name:secret-eventmanagement
-                    key:DEFAULTCONNECTION
+                    name: secret-eventmanagement
+                    key: DEFAULTCONNECTION
             args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection)"]
             ports:
             - containerPort: 80
