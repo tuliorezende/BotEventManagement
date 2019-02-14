@@ -92,6 +92,7 @@ namespace BotEventTemplate.Api
             Console.WriteLine("Configure Services - Before Swagger Json Configuration");
 
             app.UseSwagger();
+
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bot Event Management V1");
@@ -100,7 +101,6 @@ namespace BotEventTemplate.Api
 
             app.UseHealthChecks("/status", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
             {
-
                 ResponseWriter = WriteResponse
             });
             app.UseMvc();
