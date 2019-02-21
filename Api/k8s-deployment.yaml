@@ -47,6 +47,8 @@ items:
   kind: Ingress
   metadata:
     name: boteventmanagement-api-ingress
+    annotations:
+        kubernetes.io/ingress.class: nginx
   spec:
     rules:
     - http:
