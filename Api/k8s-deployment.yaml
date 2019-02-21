@@ -43,7 +43,7 @@ items:
             - containerPort: 80
             resources: {}
 
-- apiVersion: v1
+- apiVersion: extensions/v1beta1
   kind: Ingress
   metadata:
     name: boteventmanagement-api-ingress
