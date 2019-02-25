@@ -13,8 +13,9 @@ items:
     selector:
         app: boteventmanagement-api
     ports:
-    - port: 80
-    type: NodePort
+    - port: 8088
+      targetPort: 80
+    type: ClusterIP
 
 - apiVersion: apps/v1beta1
   kind: Deployment
@@ -49,8 +50,8 @@ items:
   metadata:
     name: boteventmanagement-api-ingress
     annotations:
-        kubernetes.io/ingress.class: nginx
-        nginx.ingress.kubernetes.io/rewrite-target: /
+        kubernetes.io/ingress.class: "nginx"
+        nginx.ingress.kubernetes.io/rewrite-target: "/"
         nginx.ingress.kubernetes.io/ssl-redirect: "false"
   spec:
     rules:
@@ -59,5 +60,5 @@ items:
         - path: /api
           backend:
             serviceName: boteventmanagement-api-service.default
-            servicePort: 80
+            servicePort: 8088
   status: {}
