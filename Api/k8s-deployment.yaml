@@ -3,6 +3,19 @@ metadata: {}
 apiVersion: v1
 items:
 
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: boteventmanagement-api-service
+    labels:
+      version: test
+  spec:
+    selector:
+        app: boteventmanagement-api
+    ports:
+    - port: 80
+    type: LoadBalancer
+
 - apiVersion: apps/v1beta1
   kind: Deployment
   metadata:
@@ -28,37 +41,6 @@ items:
                     key: DEFAULTCONNECTION
             args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection)"]
             ports:
-            - containerPort: 5678
+            - containerPort: 80
             resources: {}
-
-- apiVersion: v1
-  kind: Service
-  metadata:
-    name: boteventmanagement-api-service
-    labels:
-      version: test
-  spec:
-    selector:
-        app: boteventmanagement-api
-    ports:
-    - port: 80
-      targetPort: 5678
-    type: ClusterIP
-
-- apiVersion: extensions/v1beta1
-  kind: Ingress
-  metadata:
-    name: boteventmanagement-api-ingress
-    annotations:
-        kubernetes.io/ingress.class: nginx
-        certmanager.k8s.io/cluster-issuer: letsencrypt-prod
-  spec:
-    tls:
-      - secretName: letsencrypt-prod
-    rules:
-    - http:
-        paths:
-        - backend:
-            serviceName: boteventmanagement-api-service
-            servicePort: 8088
   status: {}
