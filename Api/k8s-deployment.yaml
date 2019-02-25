@@ -57,6 +57,6 @@ items:
         paths:
         - path: /api
           backend:
-            serviceName: boteventmanagement-api-service
+            serviceName: boteventmanagement-api-service.default
             servicePort: 80
   status: {}
