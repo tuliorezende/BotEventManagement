@@ -81,7 +81,7 @@ namespace BotEventTemplate.Api
             else
                 app.UseHsts();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             Console.WriteLine("Configure Services - Before Middleware Configuration");
             app.UseMiddleware<ErrorHandlingMiddleware>();
