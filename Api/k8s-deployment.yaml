@@ -55,7 +55,7 @@ items:
         certmanager.k8s.io/cluster-issuer: letsencrypt-prod
   spec:
     tls:
-      secretName: letsencrypt-prod
+      - secretName: letsencrypt-prod
     rules:
     - http:
         paths:
