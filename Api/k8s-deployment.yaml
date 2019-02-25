@@ -57,7 +57,7 @@ items:
     rules:
     - http:
         paths:
-        - path: /api
+        - path: /testapi
           backend:
             serviceName: boteventmanagement-api-service
             servicePort: 8088
