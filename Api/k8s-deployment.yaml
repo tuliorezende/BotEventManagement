@@ -59,7 +59,7 @@ items:
     rules:
     - http:
         paths:
-		- path: /api
+        - path: /api
           backend:
             serviceName: boteventmanagement-api-service
             servicePort: 80
