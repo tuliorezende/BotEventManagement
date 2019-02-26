@@ -51,6 +51,7 @@ items:
     annotations:
         kubernetes.io/ingress.class: nginx
         certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/rewrite-target: /
         kubernetes.io/tls-acme: "true"
   spec:
     tls:
@@ -58,7 +59,8 @@ items:
     rules:
     - http:
         paths:
-        - backend:
+		- path: /api
+          backend:
             serviceName: boteventmanagement-api-service
             servicePort: 80
   status: {}
