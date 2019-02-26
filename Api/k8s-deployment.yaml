@@ -62,9 +62,9 @@ items:
         - backend:
             serviceName: boteventmanagement-api-service
             servicePort: 80
-          path: /testapi
+          path: /
         - backend:
             serviceName: boteventmanagement-api-service
             servicePort: 80
-          path: /
+          path: /testapi
   status: {}
