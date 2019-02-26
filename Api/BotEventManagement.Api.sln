@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8499EA5B-8E84-42AF-A15E-8FFA660EA825}"
 	ProjectSection(SolutionItems) = preProject
 		image-paths.txt = image-paths.txt
+		Instalação NGINX.txt = Instalação NGINX.txt
 		k8s-deployment.yaml = k8s-deployment.yaml
 	EndProjectSection
 EndProject

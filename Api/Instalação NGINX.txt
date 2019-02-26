@@ -1,0 +1,35 @@
+Instação do NGINX
+
+1) Seguir STEPS de permissão e instalação contidos no site https://kubernetes.github.io/ingress-nginx/deploy/
+
+1.1) Rodar o comando kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml para definição das permissões
+
+1.2) Rodar o comando kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml para a criação do controller NGINX
+
+2) Executar a criação de um secret contendo as configurações de certificado
+
+2.1) Executar o comando openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=<nome_do_servico>/O=<nome_do_servico>" para a criação do certificado
+
+2.2) Executar o comando kubectl create secret tls tls-secret --key tls.key --cert tls.crt para a criação do segredo
+
+3) Executar a criação de um arquivo de ClusterIssuer (gerenciador de certificados agnostico de namespaces).
+
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: ClusterIssuer
+metadata:
+ name: letsencrypt-prod
+spec:
+ acme:
+   # The ACME server URL
+   server: https://acme-staging-v02.api.letsencrypt.org/directory
+   # Email address used for ACME registration
+   email: <email>
+   # Name of a secret used to store the ACME account private key
+   privateKeySecretRef:
+     name: tls-secret
+   # Enable the HTTP-01 challenge provider
+   http01: {}
+
+4) Criação do Ingress, colocando como anotação, o nome do cluster issuer utilizado
+
+        certmanager.k8s.io/cluster-issuer: letsencrypt-prod
