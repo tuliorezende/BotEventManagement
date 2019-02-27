@@ -76,6 +76,7 @@ namespace BotEventTemplate.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseForwardedHeaders();
+            app.UsePathBase("/testapi");
 
             var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -97,6 +98,9 @@ namespace BotEventTemplate.Api
                 // Connection: RemoteIp
                 logger.Information("Request RemoteIp: {REMOTE_IP_ADDRESS}",
                     context.Connection.RemoteIpAddress);
+
+                context.Request.PathBase = new PathString("/testapi");
+                context.Request.Scheme = "https";
 
                 await next();
             });
