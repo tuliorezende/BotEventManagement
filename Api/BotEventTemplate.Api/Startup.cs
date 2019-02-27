@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace BotEventTemplate.Api
 {
@@ -76,6 +77,30 @@ namespace BotEventTemplate.Api
         {
             app.UseForwardedHeaders();
 
+            var logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                 .WriteTo.Console()
+                 .CreateLogger();
+
+            app.Use(async (context, next) =>
+            {
+                logger.Information("Log Requisition Informations!!");
+
+                // Request method, scheme, and path
+                logger.Information("Request Method: {METHOD}", context.Request.Method);
+                logger.Information("Request Scheme: {SCHEME}", context.Request.Scheme);
+                logger.Information("Request Path: {PATH}", context.Request.Path);
+                // Headers
+                foreach (var header in context.Request.Headers)
+                    logger.Information("Header: {KEY}: {VALUE}", header.Key, header.Value);
+
+                // Connection: RemoteIp
+                logger.Information("Request RemoteIp: {REMOTE_IP_ADDRESS}",
+                    context.Connection.RemoteIpAddress);
+
+                await next();
+            });
+
             Console.WriteLine("Configure Services - Before Environment Configuration");
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
@@ -101,7 +126,7 @@ namespace BotEventTemplate.Api
             app.UseHealthChecks("/status", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
             {
                 ResponseWriter = WriteResponse
-            });
+            });          
 
             app.UseMvc();
         }
