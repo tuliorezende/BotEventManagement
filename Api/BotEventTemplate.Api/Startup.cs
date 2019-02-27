@@ -74,7 +74,8 @@ namespace BotEventTemplate.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //app.UseForwardedHeaders();
+            app.UseForwardedHeaders();
+            app.UsePathBase("/testapi");
 
             Console.WriteLine("Configure Services - Before Environment Configuration");
             if (env.IsDevelopment())
