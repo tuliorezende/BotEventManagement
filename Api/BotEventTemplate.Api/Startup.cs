@@ -70,6 +70,12 @@ namespace BotEventTemplate.Api
             services.AddScoped<ISpeakerService, SpeakerService>();
 
             services.AddHealthChecks().AddSqlServer(Configuration["DefaultConnection"]);
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
         }
 
 
@@ -84,15 +90,6 @@ namespace BotEventTemplate.Api
                  .WriteTo.Console()
                  .CreateLogger();
 
-            //app.UseForwardedHeaders(new ForwardedHeadersOptions
-            //{
-            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-            //});
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
-
             app.Use(async (context, next) =>
             {
                 logger.Information("Log Requisition Informations!!");
@@ -101,6 +98,7 @@ namespace BotEventTemplate.Api
                 logger.Information("Request Method: {METHOD}", context.Request.Method);
                 logger.Information("Request Scheme: {SCHEME}", context.Request.Scheme);
                 logger.Information("Request Path: {PATH}", context.Request.Path);
+                logger.Information("Request Path Base: {PATHBASE}", context.Request.PathBase);
                 // Headers
                 foreach (var header in context.Request.Headers)
                     logger.Information("Header: {KEY}: {VALUE}", header.Key, header.Value);
@@ -109,6 +107,7 @@ namespace BotEventTemplate.Api
                 logger.Information("Request RemoteIp: {REMOTE_IP_ADDRESS}",
                     context.Connection.RemoteIpAddress);
 
+                context.Request.Scheme = "https";
                 await next();
             });
 
