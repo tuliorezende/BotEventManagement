@@ -33,3 +33,7 @@ spec:
 4) Criação do Ingress, colocando como anotação, o nome do cluster issuer utilizado
 
         certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+
+-------------------
+usando Helm
+https://microservices.rclapp.com/category/02_install_helm.html

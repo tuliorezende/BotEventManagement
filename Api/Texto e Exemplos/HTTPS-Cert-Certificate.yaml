@@ -1,0 +1,18 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: acme-crt
+  namespace: kube-system
+spec:
+  secretName: acme-crt-secret
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  dnsNames:
+  - eventmanager.eastus.cloudapp.azure.com
+  acme:
+   config:
+    - http01:
+        ingressClass: nginx
+      domains:
+      - eventmanager.eastus.cloudapp.azure.com
