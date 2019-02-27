@@ -75,7 +75,6 @@ namespace BotEventTemplate.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseForwardedHeaders();
-            app.UsePathBase("/testapi");
 
             Console.WriteLine("Configure Services - Before Environment Configuration");
             if (env.IsDevelopment())
@@ -103,11 +102,7 @@ namespace BotEventTemplate.Api
             {
                 ResponseWriter = WriteResponse
             });
-            app.Use((context, next) =>
-            {
-                context.Request.PathBase = new PathString("/testapi");
-                return next();
-            });
+
             app.UseMvc();
         }
 
