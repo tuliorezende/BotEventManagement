@@ -103,6 +103,11 @@ namespace BotEventTemplate.Api
             {
                 ResponseWriter = WriteResponse
             });
+            app.Use((context, next) =>
+            {
+                context.Request.PathBase = new PathString("/testapi");
+                return next();
+            });
             app.UseMvc();
         }
 
