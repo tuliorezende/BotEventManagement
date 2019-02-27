@@ -18,6 +18,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using Newtonsoft.Json;
 using Serilog;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace BotEventTemplate.Api
 {
@@ -83,6 +84,15 @@ namespace BotEventTemplate.Api
                  .WriteTo.Console()
                  .CreateLogger();
 
+            //app.UseForwardedHeaders(new ForwardedHeadersOptions
+            //{
+            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            //});
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             app.Use(async (context, next) =>
             {
                 logger.Information("Log Requisition Informations!!");
@@ -98,9 +108,6 @@ namespace BotEventTemplate.Api
                 // Connection: RemoteIp
                 logger.Information("Request RemoteIp: {REMOTE_IP_ADDRESS}",
                     context.Connection.RemoteIpAddress);
-
-                context.Request.PathBase = new PathString("/testapi");
-                context.Request.Scheme = "https";
 
                 await next();
             });
