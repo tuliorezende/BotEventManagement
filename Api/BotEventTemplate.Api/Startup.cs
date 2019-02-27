@@ -19,6 +19,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Serilog;
 using Microsoft.AspNetCore.HttpOverrides;
+using System.Net;
 
 namespace BotEventTemplate.Api
 {
@@ -39,7 +40,7 @@ namespace BotEventTemplate.Api
         public void ConfigureServices(IServiceCollection services)
         {
             Console.WriteLine("Configure Services - Begin");
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             Console.WriteLine("Configure Services - Before Database Configuration");
             services.AddDbContext<BotEventManagementContext>(options => options.UseSqlServer(Configuration["DefaultConnection"]));
@@ -75,6 +76,11 @@ namespace BotEventTemplate.Api
             {
                 options.ForwardedHeaders =
                     ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                //options.KnownNetworks(new IPNetwork(IPAddress.Parse("::ffff:10.244.0.0"), 16));
+                //options.KnownNetworks.Add(new IPNetwork(IPAddress.Parse("::ffff:10.244.0.0"), 16));
+
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
             });
         }
 
@@ -83,7 +89,7 @@ namespace BotEventTemplate.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseForwardedHeaders();
-            app.UsePathBase("/testapi");
+            app.UsePathBase(@"/testapi");
 
             var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -111,19 +117,14 @@ namespace BotEventTemplate.Api
                 await next();
             });
 
-            Console.WriteLine("Configure Services - Before Environment Configuration");
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
             else
                 app.UseHsts();
 
-            Console.WriteLine("Configure Services - Before Middleware Configuration");
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
-            Console.WriteLine("Configure Services - Before Update Database Configuration");
             UpdateDatabase(app);
-
-            Console.WriteLine("Configure Services - Before Swagger Json Configuration");
 
             app.UseSwagger();
 
@@ -136,13 +137,14 @@ namespace BotEventTemplate.Api
             app.UseHealthChecks("/status", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
             {
                 ResponseWriter = WriteResponse
-            });          
+            });
 
             app.UseMvc();
+
+            Console.WriteLine("After configure all services");
         }
 
-        private static Task WriteResponse(HttpContext httpContext,
-    HealthReport result)
+        private static Task WriteResponse(HttpContext httpContext, HealthReport result)
         {
             httpContext.Response.ContentType = "application/json";
 
