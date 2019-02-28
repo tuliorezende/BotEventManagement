@@ -76,11 +76,6 @@ namespace BotEventTemplate.Api
             {
                 options.ForwardedHeaders =
                     ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-                //options.KnownNetworks(new IPNetwork(IPAddress.Parse("::ffff:10.244.0.0"), 16));
-                //options.KnownNetworks.Add(new IPNetwork(IPAddress.Parse("::ffff:10.244.0.0"), 16));
-
-                options.KnownNetworks.Clear();
-                options.KnownProxies.Clear();
             });
         }
 
@@ -89,6 +84,8 @@ namespace BotEventTemplate.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseForwardedHeaders();
+            app.UseStaticFiles();
+
             app.UsePathBase(@"/testapi");
 
             var logger = new LoggerConfiguration()
@@ -113,7 +110,6 @@ namespace BotEventTemplate.Api
                 logger.Information("Request RemoteIp: {REMOTE_IP_ADDRESS}",
                     context.Connection.RemoteIpAddress);
 
-                context.Request.Scheme = "https";
                 await next();
             });
 
