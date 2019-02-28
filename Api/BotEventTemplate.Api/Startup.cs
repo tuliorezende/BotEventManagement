@@ -76,6 +76,11 @@ namespace BotEventTemplate.Api
             {
                 options.ForwardedHeaders =
                     ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+                options.ForwardedForHeaderName = "X-Forwarded-For-My-Custom-Header-Name";
+                options.RequireHeaderSymmetry = false;
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
             });
         }
 
@@ -85,8 +90,6 @@ namespace BotEventTemplate.Api
         {
             app.UseForwardedHeaders();
             app.UseStaticFiles();
-
-            app.UsePathBase(@"/testapi");
 
             var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -128,6 +131,7 @@ namespace BotEventTemplate.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bot Event Management V1");
                 c.RoutePrefix = "";
+                c.EnableValidator(null);
             });
 
             app.UseHealthChecks("/status", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
