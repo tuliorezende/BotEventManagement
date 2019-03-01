@@ -64,4 +64,8 @@ items:
             serviceName: boteventmanagement-api-service
             servicePort: 80
           path: /validateapi
+        - backend:
+            serviceName: boteventmanagement-api-service
+            servicePort: 80
+          path: /
   status: {}
