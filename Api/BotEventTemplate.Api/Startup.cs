@@ -20,6 +20,7 @@ using Newtonsoft.Json;
 using Serilog;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace BotEventTemplate.Api
 {
@@ -95,9 +96,7 @@ namespace BotEventTemplate.Api
                 .MinimumLevel.Debug()
                  .WriteTo.Console()
                  .CreateLogger();
-
-            app.UsePathBase("/");
-
+          
             app.Use(async (context, next) =>
             {
                 logger.Information("Log Requisition Informations!!");

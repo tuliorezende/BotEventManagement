@@ -52,14 +52,16 @@ items:
         kubernetes.io/ingress.class: addon-http-application-routing
   spec:
     rules:
-    - http:
+    - host: api.eventmanager.eastus.cloudapp.azure.com
+      http:
         paths:
         - backend:
             serviceName: boteventmanagement-api-service
             servicePort: 80
-          path: /testapi
+    - host: front.eventmanager.eastus.cloudapp.azure.com
+      http:
+        paths:
         - backend:
             serviceName: boteventmanagement-api-service
             servicePort: 80
-          path: /
   status: {}
