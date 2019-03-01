@@ -72,24 +72,24 @@ namespace BotEventTemplate.Api
 
             services.AddHealthChecks().AddSqlServer(Configuration["DefaultConnection"]);
 
-            services.Configure<ForwardedHeadersOptions>(options =>
-            {
-                options.ForwardedHeaders =
-                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            //services.Configure<ForwardedHeadersOptions>(options =>
+            //{
+            //    options.ForwardedHeaders =
+            //        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 
-                options.ForwardedForHeaderName = "X-Forwarded-For-My-Custom-Header-Name";
-                options.RequireHeaderSymmetry = false;
-                options.KnownNetworks.Clear();
-                options.KnownProxies.Clear();
-            });
+            //    options.ForwardedForHeaderName = "X-Forwarded-For-My-Custom-Header-Name";
+            //    options.RequireHeaderSymmetry = false;
+            //    options.KnownNetworks.Clear();
+            //    options.KnownProxies.Clear();
+            //});
         }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseForwardedHeaders();
-            app.UseStaticFiles();
+            //app.UseForwardedHeaders();
+            //app.UseStaticFiles();
 
             var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -131,7 +131,6 @@ namespace BotEventTemplate.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bot Event Management V1");
                 c.RoutePrefix = "";
-                c.EnableValidator(null);
             });
 
             app.UseHealthChecks("/status", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()

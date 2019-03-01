@@ -49,7 +49,7 @@ items:
   metadata:
     name: boteventmanagement-api-ingress
     annotations:
-        kubernetes.io/ingress.class: nginx
+        kubernetes.io/ingress.class: addon-http-application-routing
   spec:
     rules:
     - http:
