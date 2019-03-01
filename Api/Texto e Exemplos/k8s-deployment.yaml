@@ -49,16 +49,11 @@ items:
   metadata:
     name: boteventmanagement-api-ingress
     annotations:
-        kubernetes.io/ingress.class: addon-http-application-routing
+        kubernetes.io/ingress.class: nginx
+        ingress.kubernetes.io/rewrite-target: /
   spec:
     rules:
-    - host: api.eventmanager.eastus.cloudapp.azure.com
-      http:
-        paths:
-        - backend:
-            serviceName: boteventmanagement-api-service
-            servicePort: 80
-    - host: front.eventmanager.eastus.cloudapp.azure.com
+    - host: eventmanager.eastus.cloudapp.azure.com
       http:
         paths:
         - backend:
