@@ -21,7 +21,7 @@ items:
   metadata:
     name: boteventmanagement-api-deployment
   spec:
-    replicas: 2
+    replicas: 1
     strategy: {}
     template:
         metadata:

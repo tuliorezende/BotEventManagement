@@ -96,6 +96,8 @@ namespace BotEventTemplate.Api
                  .WriteTo.Console()
                  .CreateLogger();
 
+            app.UsePathBase("/");
+
             app.Use(async (context, next) =>
             {
                 logger.Information("Log Requisition Informations!!");
