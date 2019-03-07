@@ -89,7 +89,7 @@ namespace BotEventTemplate.Api
         {
             //app.UseStaticFiles();
             app.UseForwardedHeaders();
-            app.UsePathBase("/testapi");
+            //app.UsePathBase("/testapi");
 
             var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
