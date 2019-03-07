@@ -129,8 +129,8 @@ namespace BotEventTemplate.Api
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/testapi/swagger/v1/swagger.json", "Bot Event Management V1");
-                c.RoutePrefix = "testapi";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bot Event Management V1");
+                c.RoutePrefix = "";
             });
 
             app.UseHealthChecks("/status", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
