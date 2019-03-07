@@ -89,7 +89,7 @@ namespace BotEventTemplate.Api
         {
             //app.UseStaticFiles();
             app.UseForwardedHeaders();
-            //app.UsePathBase("/testapi");
+            app.UsePathBase("/testapi");
 
             var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -125,12 +125,13 @@ namespace BotEventTemplate.Api
 
             UpdateDatabase(app);
 
-            app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bot Event Management V1");
-                c.RoutePrefix = "testapi";
+                c.SwaggerEndpoint("./swagger/v1/swagger.json", "Bot Event Management V1");
+                c.RoutePrefix = "";
             });
+
+            app.UseSwagger();
 
             app.UseHealthChecks("/status", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
             {
