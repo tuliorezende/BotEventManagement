@@ -73,30 +73,29 @@ namespace BotEventTemplate.Api
 
             services.AddHealthChecks().AddSqlServer(Configuration["DefaultConnection"]);
 
-            //services.Configure<ForwardedHeadersOptions>(options =>
-            //{
-            //    options.ForwardedHeaders =
-            //        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 
-            //    options.ForwardedForHeaderName = "X-Forwarded-For-My-Custom-Header-Name";
-            //    options.RequireHeaderSymmetry = false;
-            //    options.KnownNetworks.Clear();
-            //    options.KnownProxies.Clear();
-            //});
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+
+            });
         }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //app.UseForwardedHeaders();
-            //app.UseStaticFiles();
+            app.UseStaticFiles();
+            app.UseForwardedHeaders();
 
             var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                  .WriteTo.Console()
                  .CreateLogger();
-          
+
             app.Use(async (context, next) =>
             {
                 logger.Information("Log Requisition Informations!!");
