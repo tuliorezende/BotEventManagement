@@ -30,7 +30,7 @@ items:
         spec:
           containers:
           - name: boteventmanagement-api
-            image: tuliorezende/boteventmanagement-api:#{$(Build.BuildId)}#
+            image: tuliorezende/boteventmanagement-api:#{Build.BuildId}#
             env:
                 - name: ASPNETCORE_ENVIRONMENT
                   value: Production
