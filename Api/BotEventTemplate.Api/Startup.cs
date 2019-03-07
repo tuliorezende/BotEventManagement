@@ -80,7 +80,6 @@ namespace BotEventTemplate.Api
 
                 options.KnownNetworks.Clear();
                 options.KnownProxies.Clear();
-
             });
         }
 
@@ -90,6 +89,7 @@ namespace BotEventTemplate.Api
         {
             app.UseStaticFiles();
             app.UseForwardedHeaders();
+            app.UsePathBase("/testapi");
 
             var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
