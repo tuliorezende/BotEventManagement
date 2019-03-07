@@ -129,7 +129,7 @@ namespace BotEventTemplate.Api
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bot Event Management V1");
+                c.SwaggerEndpoint("testapi/swagger/v1/swagger.json", "Bot Event Management V1");
                 c.RoutePrefix = "testapi";
             });
 
