@@ -30,16 +30,18 @@ items:
         spec:
           containers:
           - name: boteventmanagement-api
-            image: tuliorezende/boteventmanagement-api
+            image: tuliorezende/boteventmanagement-api:#{Build.BuildId}#
             env:
                 - name: ASPNETCORE_ENVIRONMENT
                   value: Production
+                - name: BasePath
+                  value: /testapi
                 - name: DefaultConnection
                   valueFrom:
                    secretKeyRef:
                     name: secret-eventmanagement
                     key: DEFAULTCONNECTION
-            args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection)"]
+            args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection) $(BasePath)"]
             ports:
             - containerPort: 80
             resources: {}
