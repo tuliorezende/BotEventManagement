@@ -51,13 +51,10 @@ namespace BotEventTemplate.Api
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            Console.WriteLine("Configure Services - Begin");
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            Console.WriteLine("Configure Services - Before Database Configuration");
             services.AddDbContext<BotEventManagementContext>(options => options.UseSqlServer(Configuration["DefaultConnection"]));
 
-            Console.WriteLine("Configure Services - Before Swagger Configuration");
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
@@ -69,12 +66,8 @@ namespace BotEventTemplate.Api
                 var basePath = AppContext.BaseDirectory;
                 var xmlPath = Path.Combine(basePath, "BotEventManagement.Api.xml");
 
-                Console.WriteLine($"Configure Services - Directory: {xmlPath}");
-
                 c.IncludeXmlComments(xmlPath);
             });
-
-            Console.WriteLine("Configure Services - Before Dependency Injection Configuration");
 
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IEventParticipantService, EventParticipantsService>();
@@ -152,8 +145,6 @@ namespace BotEventTemplate.Api
             });
 
             app.UseMvc();
-
-            Console.WriteLine("After configure all services");
         }
 
         private static Task WriteResponse(HttpContext httpContext, HealthReport result)
