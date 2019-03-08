@@ -49,7 +49,11 @@ namespace BotEventManagement.Services.Service
         {
             List<SpeakerRequest> speakersRequests = new List<SpeakerRequest>();
 
-            foreach (var item in _botEventManagementContext.Speaker.Include(x => x.Activity).Where(x => x.Activity.Count(y => y.EventId == eventId) > 0).ToList())
+            foreach (var item in _botEventManagementContext.Speaker
+                .Include(x => x.Activity)
+                .Where(x => x.Activity
+                .Any(y => y.EventId == eventId))
+                .ToList())
             {
                 speakersRequests.Add(new SpeakerRequest
                 {

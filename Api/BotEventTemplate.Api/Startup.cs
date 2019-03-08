@@ -19,13 +19,13 @@ using System.Linq;
 using Newtonsoft.Json;
 using Serilog;
 using Microsoft.AspNetCore.HttpOverrides;
-using System.Net;
-using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 namespace BotEventTemplate.Api
 {
     public class Startup
     {
+        private readonly string _statusEndpoint = "/status";
         public Startup(IHostingEnvironment environment)
         {
             Configuration = new ConfigurationBuilder()
@@ -132,7 +132,7 @@ namespace BotEventTemplate.Api
 
             app.UseSwagger();
 
-            app.UseHealthChecks("/status", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
+            app.UseHealthChecks(_statusEndpoint, new HealthCheckOptions()
             {
                 ResponseWriter = WriteResponse
             });
