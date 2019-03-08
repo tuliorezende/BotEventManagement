@@ -54,9 +54,10 @@ namespace BotEventManagement.Web.Controllers
         }
 
         // GET: Event/Edit/5
-        public ActionResult Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            var specificEvent = await _eventManagerApi.GetSpecificEvent(id);
+            return View(specificEvent);
         }
 
         // POST: Event/Edit/5

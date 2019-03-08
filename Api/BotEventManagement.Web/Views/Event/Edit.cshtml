@@ -1,0 +1,47 @@
+﻿@model BotEventManagement.Models.API.EventRequest
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar Evento</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @*<label asp-for="Id" class="control-label"></label>*@
+                <input type="hidden" asp-for="Id" class="form-control" />
+                @*<span asp-validation-for="Id" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="font-weight-bold"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="font-weight-bold"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="font-weight-bold"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="font-weight-bold"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-info" asp-area="" asp-controller="Event" asp-action="Index">Voltar a Lista</a>
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
