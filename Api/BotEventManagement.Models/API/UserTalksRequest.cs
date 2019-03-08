@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace BotEventManagement.Services.Model.API
+namespace BotEventManagement.Models.API
 {
     public class UserTalksRequest
     {

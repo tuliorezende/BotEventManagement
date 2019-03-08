@@ -95,7 +95,9 @@ namespace BotEventTemplate.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseForwardedHeaders();
-            app.UsePathBase(Configuration["BasePath"]);
+
+            if (!string.IsNullOrEmpty(Configuration["BasePath"]))
+                app.UsePathBase(Configuration["BasePath"]);
 
             var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()

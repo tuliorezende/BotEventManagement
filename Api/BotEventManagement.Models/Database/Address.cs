@@ -1,10 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace BotEventManagement.Services.Model.Database
+namespace BotEventManagement.Models.Database
 {
     [ComplexType]
     public class Address

@@ -15,4 +15,8 @@
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BotEventManagement.Models\BotEventManagement.Models.csproj" />
+  </ItemGroup>
+
 </Project>

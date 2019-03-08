@@ -6,6 +6,7 @@ FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
 COPY BotEventTemplate.Api/BotEventManagement.Api.csproj BotEventTemplate.Api/
 COPY BotEventManagement.Services/BotEventManagement.Services.csproj BotEventManagement.Services/
+COPY BotEventManagement.Services/BotEventManagement.Models.csproj BotEventManagement.Models/
 RUN dotnet restore BotEventTemplate.Api/BotEventManagement.Api.csproj
 COPY . .
 WORKDIR /src/BotEventTemplate.Api

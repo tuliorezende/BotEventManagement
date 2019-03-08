@@ -1,11 +1,11 @@
 ﻿using BotEventManagement.Services.Interfaces;
-using BotEventManagement.Services.Model.API;
+using BotEventManagement.Models.API;
 using BotEventManagement.Services.Model.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using BotEventManagement.Models.Database;
 
 namespace BotEventManagement.Services.Service
 {

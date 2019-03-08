@@ -1,7 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BotEventManagement.Models.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace BotEventManagement.Services.Model.Database
 {

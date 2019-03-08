@@ -1,7 +1,5 @@
-﻿using BotEventManagement.Services.Model.API;
-using System;
+﻿using BotEventManagement.Models.API;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BotEventManagement.Services.Interfaces
 {

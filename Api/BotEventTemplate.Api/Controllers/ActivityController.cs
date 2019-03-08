@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BotEventManagement.Services.Interfaces;
-using BotEventManagement.Services.Model.API;
-using BotEventManagement.Services.Model.Database;
-using Microsoft.AspNetCore.Http;
+﻿using BotEventManagement.Services.Interfaces;
+using BotEventManagement.Models.API;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BotEventManagement.Api.Controllers

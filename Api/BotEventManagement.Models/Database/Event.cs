@@ -1,12 +1,9 @@
-﻿using BotEventManagement.Services.CustomFormatter;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace BotEventManagement.Services.Model.Database
+namespace BotEventManagement.Models.Database
 {
     [Table("Event")]
     public class Event
