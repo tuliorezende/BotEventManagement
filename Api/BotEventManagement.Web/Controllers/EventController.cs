@@ -24,9 +24,10 @@ namespace BotEventManagement.Web.Controllers
         }
 
         // GET: Event/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string id)
         {
-            return View();
+            var specificEvent = await _eventManagerApi.GetSpecificEvent(id);
+            return View(specificEvent);
         }
 
         // GET: Event/Create
@@ -53,7 +54,7 @@ namespace BotEventManagement.Web.Controllers
         }
 
         // GET: Event/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
             return View();
         }
@@ -61,7 +62,7 @@ namespace BotEventManagement.Web.Controllers
         // POST: Event/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(string id, IFormCollection collection)
         {
             try
             {
@@ -76,7 +77,7 @@ namespace BotEventManagement.Web.Controllers
         }
 
         // GET: Event/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
             return View();
         }
@@ -84,7 +85,7 @@ namespace BotEventManagement.Web.Controllers
         // POST: Event/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(string id, IFormCollection collection)
         {
             try
             {

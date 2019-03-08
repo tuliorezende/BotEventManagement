@@ -3,8 +3,8 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<p style="text-align:right">
+<h1>Eventos</h1>
+<p class="align-right">
     <a class="btn btn-primary" asp-action="Create">Inserir Novo Evento</a>
 </p>
 <table class="table">
@@ -36,9 +36,9 @@
                     @Html.DisplayFor(modelItem => item.EndDate)
                 </td>
                 <td>
-                    <a class="btn btn-success" asp-area="" asp-controller="Event" asp-action="Edit" asp-route-Id="@item.Id">Editar</a>
-                    <a class="btn btn-warning" asp-area="" asp-controller="Event" asp-action="Details" asp-route-Id="@item.Id">Detalhes</a>
-                    <a class="btn btn-danger" asp-area="" asp-controller="Event" asp-action="Delete" asp-route-Id="@item.Id">Excluir</a>
+                    <a class="btn btn-success" asp-area="" asp-controller="Event" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                    <a class="btn btn-warning" asp-area="" asp-controller="Event" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    <a class="btn btn-danger" asp-area="" asp-controller="Event" asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
                 </td>
             </tr>
         }

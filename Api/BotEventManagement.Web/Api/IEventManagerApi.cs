@@ -11,5 +11,8 @@ namespace BotEventManagement.Web.Api
     {
         [Get("/api/Event")]
         Task<List<EventRequest>> GetAllEvents();
+        [Get("/api/Event/{eventId}")]
+        Task<EventRequest> GetSpecificEvent([Path] string eventId);
+
     }
 }
