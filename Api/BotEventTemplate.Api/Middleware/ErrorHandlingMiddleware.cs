@@ -8,15 +8,27 @@ using System.Threading.Tasks;
 
 namespace BotEventManagement.Api.Middleware
 {
+    /// <summary>
+    /// Middleware to handle APi errors and return correct status codes
+    /// </summary>
     public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate next;
 
+        /// <summary>
+        /// Constructor of Error Handling Middleware
+        /// </summary>
+        /// <param name="next"></param>
         public ErrorHandlingMiddleware(RequestDelegate next)
         {
             this.next = next;
         }
 
+        /// <summary>
+        /// Default invoke method
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             try

@@ -18,6 +18,10 @@ namespace BotEventManagement.Api.Controllers
     public class EventParticipantsController : ControllerBase
     {
         private readonly IEventParticipantService _eventParticipantsService;
+        /// <summary>
+        /// Constructor for Event Participants Controller
+        /// </summary>
+        /// <param name="eventParticipantsService"></param>
         public EventParticipantsController(IEventParticipantService eventParticipantsService)
         {
             _eventParticipantsService = eventParticipantsService;

@@ -23,9 +23,17 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 namespace BotEventTemplate.Api
 {
+    /// <summary>
+    /// Startup class
+    /// </summary>
     public class Startup
     {
         private readonly string _statusEndpoint = "/status";
+
+        /// <summary>
+        /// Startup constructor
+        /// </summary>
+        /// <param name="environment"></param>
         public Startup(IHostingEnvironment environment)
         {
             Configuration = new ConfigurationBuilder()
@@ -35,9 +43,12 @@ namespace BotEventTemplate.Api
 
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             Console.WriteLine("Configure Services - Begin");
@@ -83,8 +94,11 @@ namespace BotEventTemplate.Api
             });
         }
 
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseForwardedHeaders();

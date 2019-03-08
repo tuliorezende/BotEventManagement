@@ -16,6 +16,11 @@ namespace BotEventManagement.Api.Controllers
     public class UserTalksController : Controller
     {
         private readonly IUserTalksService _userTalksService;
+
+        /// <summary>
+        /// Constructor for User Talks Controller
+        /// </summary>
+        /// <param name="userTalksService"></param>
         public UserTalksController(IUserTalksService userTalksService)
         {
             _userTalksService = userTalksService;
