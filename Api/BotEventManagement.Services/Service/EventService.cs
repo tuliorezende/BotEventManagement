@@ -11,7 +11,7 @@ namespace BotEventManagement.Services.Service
 {
     public class EventService : IEventService
     {
-        private BotEventManagementContext _botEventManagementContext;
+        private readonly BotEventManagementContext _botEventManagementContext;
 
         public EventService(BotEventManagementContext botEventManagementContext)
         {

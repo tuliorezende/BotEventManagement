@@ -11,7 +11,7 @@ namespace BotEventManagement.Services.Service
 {
     public class UserTalksService : IUserTalksService
     {
-        private BotEventManagementContext _botEventManagementContext;
+        private readonly BotEventManagementContext _botEventManagementContext;
 
         public UserTalksService(BotEventManagementContext botEventManagementContext)
         {

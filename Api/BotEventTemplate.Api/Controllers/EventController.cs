@@ -17,7 +17,7 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private IEventService _eventService;
+        private readonly IEventService _eventService;
         public EventController(IEventService eventService)
         {
             _eventService = eventService;

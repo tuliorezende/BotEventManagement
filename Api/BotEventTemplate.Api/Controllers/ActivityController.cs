@@ -17,7 +17,7 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class ActivityController : ControllerBase
     {
-        private IActivityService _activityService;
+        private readonly IActivityService _activityService;
         public ActivityController(IActivityService activityService)
         {
             _activityService = activityService;

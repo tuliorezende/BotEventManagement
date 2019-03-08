@@ -14,7 +14,7 @@ namespace BotEventManagement.Services.Service
 {
     public class SpeakerService : ISpeakerService
     {
-        private BotEventManagementContext _botEventManagementContext;
+        private readonly BotEventManagementContext _botEventManagementContext;
 
         public SpeakerService(BotEventManagementContext botEventManagementContext)
         {
@@ -49,7 +49,7 @@ namespace BotEventManagement.Services.Service
         {
             List<SpeakerRequest> speakersRequests = new List<SpeakerRequest>();
 
-            foreach (var item in _botEventManagementContext.Speaker.Include(x => x.Activity).Where(x => x.Activity.Where(y => y.EventId == eventId).Count() > 0).ToList())
+            foreach (var item in _botEventManagementContext.Speaker.Include(x => x.Activity).Where(x => x.Activity.Count(y => y.EventId == eventId) > 0).ToList())
             {
                 speakersRequests.Add(new SpeakerRequest
                 {

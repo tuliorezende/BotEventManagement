@@ -11,7 +11,7 @@ namespace BotEventManagement.Services.Service
 {
     public class EventParticipantsService : IEventParticipantService
     {
-        private BotEventManagementContext _botEventManagementContext;
+        private readonly BotEventManagementContext _botEventManagementContext;
 
         public EventParticipantsService(BotEventManagementContext botEventManagementContext)
         {
@@ -31,7 +31,7 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext.SaveChanges();
         }
 
-        public void Delete(string elementId, string eventId)
+        public void Delete(string eventId, string elementId)
         {
             EventParticipants element = _botEventManagementContext.EventParticipants.Where(x => x.Id == elementId && x.EventId == eventId).First();
             _botEventManagementContext.EventParticipants.Remove(element);

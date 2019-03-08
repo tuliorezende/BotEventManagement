@@ -17,7 +17,7 @@ namespace BotEventManagement.Api.Controllers
     [ApiController]
     public class SpeakerController : ControllerBase
     {
-        private ISpeakerService _speakerService;
+        private readonly ISpeakerService _speakerService;
         public SpeakerController(ISpeakerService speakerService)
         {
             _speakerService = speakerService;
