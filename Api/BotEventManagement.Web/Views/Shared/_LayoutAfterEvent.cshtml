@@ -1,6 +1,4 @@
-﻿@model BotEventManagement.Models.API.EventRequest
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -31,10 +29,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Event" asp-action="Index" asp-route-id="@Model.Id">Palestras do Evento</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Event" asp-action="Index" asp-route-id="@TempData["EventId"]">Palestras do Evento</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Event" asp-action="Index" asp-route-id="@Model.Id">Palestrantes do Evento</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Speaker" asp-action="Index" asp-route-id="@TempData["EventId"]">Palestrantes do Evento</a>
                         </li>
                     </ul>
                 </div>

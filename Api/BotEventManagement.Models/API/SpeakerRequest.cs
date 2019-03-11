@@ -1,16 +1,17 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace BotEventManagement.Models.API
 {
     public class SpeakerRequest
     {
-        [JsonProperty("id")]
+        [JsonProperty("id"), Display(Name = "Id")]
         public string SpeakerId { get; set; }
-        [JsonProperty("nome")]
+        [JsonProperty("nome"), Display(Name = "Nome")]
         public string Name { get; set; }
-        [JsonProperty("biografia")]
+        [JsonProperty("biografia"), Display(Name = "Biografia")]
         public string Biography { get; set; }
-        [JsonProperty("foto")]
+        [JsonProperty("foto"), Display(Name = "Foto")]
         public string UploadedPhoto { get; set; }
     }
 }

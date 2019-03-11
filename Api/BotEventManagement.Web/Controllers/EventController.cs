@@ -28,6 +28,10 @@ namespace BotEventManagement.Web.Controllers
         public async Task<ActionResult> Details(string id)
         {
             var specificEvent = await _eventManagerApi.GetSpecificEventAsync(id);
+
+            TempData["EventId"] = id;
+            TempData.Keep("EventId");
+
             return View(specificEvent);
         }
 

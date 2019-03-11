@@ -59,5 +59,15 @@ body {
 }
 
 .align-right {
-    text-align: right
+    text-align: right;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.image-size {
+    width: 40%;
+    height: 100%;
+    float: left
 }

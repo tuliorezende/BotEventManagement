@@ -1,0 +1,37 @@
+﻿@model IEnumerable<BotEventManagement.Models.API.SpeakerRequest>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAfterEvent.cshtml";
+}
+
+<h1>Lista de Palestrantes</h1>
+
+<p class="align-right">
+    <a class="btn btn-primary" asp-action="Create">Inserir Novo Palestrante</a>
+</p>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a class="btn btn-success" asp-area="" asp-controller="Speaker" asp-action="Edit" asp-route-id="@item.SpeakerId">Editar</a>
+                    <a class="btn btn-warning" asp-area="" asp-controller="Speaker" asp-action="Details" asp-route-id="@item.SpeakerId">Detalhes</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
