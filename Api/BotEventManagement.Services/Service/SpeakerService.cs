@@ -18,14 +18,15 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext = botEventManagementContext;
         }
 
-        public void Create(SpeakerRequest element)
+        public void Create(SpeakerRequest element, string eventId)
         {
             Speaker speaker = new Speaker
             {
                 Biography = element.Biography,
                 Name = element.Name,
                 UploadedPhoto = element.UploadedPhoto,
-                SpeakerId = Guid.NewGuid().ToString()
+                SpeakerId = Guid.NewGuid().ToString(),
+                EventId = eventId
             };
 
             _botEventManagementContext.Speaker.Add(speaker);
@@ -47,9 +48,7 @@ namespace BotEventManagement.Services.Service
             List<SpeakerRequest> speakersRequests = new List<SpeakerRequest>();
 
             foreach (var item in _botEventManagementContext.Speaker
-                .Include(x => x.Activity)
-                .Where(x => x.Activity
-                .Any(y => y.EventId == eventId))
+                .Where(x => x.EventId == eventId)
                 .ToList())
             {
                 speakersRequests.Add(new SpeakerRequest
@@ -76,9 +75,11 @@ namespace BotEventManagement.Services.Service
             };
         }
 
-        public void Update(SpeakerRequest element)
+        public void Update(SpeakerRequest element, string eventId)
         {
-            var speaker = _botEventManagementContext.Speaker.Where(x => x.SpeakerId == element.SpeakerId).FirstOrDefault();
+            var speaker = _botEventManagementContext.Speaker
+                .Where(x => x.SpeakerId == element.SpeakerId && x.EventId == eventId)
+                .FirstOrDefault();
 
             if (element.Name != speaker.Name)
                 speaker.Name = element.Name;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BotEventManagement.Models.Database
 {
@@ -11,5 +12,9 @@ namespace BotEventManagement.Models.Database
         public string Biography { get; set; }
         public string UploadedPhoto { get; set; }
         public virtual List<Activity> Activity { get; set; }
+        [ForeignKey("EventId")]
+        public string EventId { get; set; }
+        public virtual Event Event { get; set; }
+
     }
 }

@@ -47,11 +47,12 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Update a specific speaker of an event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <param name="speakerId"></param>
         /// <param name="speaker"></param>
         /// <returns></returns>
         [HttpPut("{speakerId}")]
-        public IActionResult Put([FromRoute] string speakerId, [FromBody] SpeakerRequest speaker)
+        public IActionResult Put([FromHeader] string eventId, [FromRoute] string speakerId, [FromBody] SpeakerRequest speaker)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -59,7 +60,7 @@ namespace BotEventManagement.Api.Controllers
             if (speakerId != speaker.SpeakerId)
                 return BadRequest("This id doesn't correspond with object");
 
-            _speakerService.Update(speaker);
+            _speakerService.Update(speaker, eventId);
 
             return NoContent();
         }
@@ -67,15 +68,16 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Create a specific speaker of an event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <param name="speaker"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromBody] SpeakerRequest speaker)
+        public IActionResult Post([FromHeader] string eventId, [FromBody] SpeakerRequest speaker)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _speakerService.Create(speaker);
+            _speakerService.Create(speaker, eventId);
 
             return Ok();
         }
