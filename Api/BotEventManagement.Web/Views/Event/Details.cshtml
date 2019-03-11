@@ -1,10 +1,10 @@
 ﻿@model BotEventManagement.Models.API.EventRequest
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Detalhes de Evento</h1>
+<h1>Detalhes do Evento</h1>
 
 <div>
     <hr />
@@ -38,6 +38,24 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt class="col-sm-2 align-right">
+            @Html.DisplayNameFor(model => model.Address.Street)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.Street)
+        </dd>
+        <dt class="col-sm-2 align-right">
+            @Html.DisplayNameFor(model => model.Address.Latitude)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.Latitude)
+        </dd>
+        <dt class="col-sm-2 align-right">
+            @Html.DisplayNameFor(model => model.Address.Longitude)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.Longitude)
         </dd>
     </dl>
 </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BotEventManagement.Models.API;
 using BotEventManagement.Web.Api;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,32 +20,30 @@ namespace BotEventManagement.Web.Controllers
         // GET: Event
         public async Task<ActionResult> Index()
         {
-            var events = await _eventManagerApi.GetAllEvents();
+            var events = await _eventManagerApi.GetAllEventsAsync();
             return View(events);
         }
 
         // GET: Event/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            var specificEvent = await _eventManagerApi.GetSpecificEvent(id);
+            var specificEvent = await _eventManagerApi.GetSpecificEventAsync(id);
             return View(specificEvent);
         }
 
-        // GET: Event/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Event/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(EventRequest eventRequest)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                await _eventManagerApi.CreateAnEventAsync(eventRequest);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -56,42 +55,18 @@ namespace BotEventManagement.Web.Controllers
         // GET: Event/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
-            var specificEvent = await _eventManagerApi.GetSpecificEvent(id);
+            var specificEvent = await _eventManagerApi.GetSpecificEventAsync(id);
             return View(specificEvent);
         }
 
         // POST: Event/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id, IFormCollection collection)
+        public async Task<ActionResult> Edit(string id, EventRequest eventRequest)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Event/Delete/5
-        public ActionResult Delete(string id)
-        {
-            return View();
-        }
-
-        // POST: Event/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
+                await _eventManagerApi.UpdateAnEventAsync(id, eventRequest);
                 return RedirectToAction(nameof(Index));
             }
             catch

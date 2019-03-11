@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BotEventManagement.Models.Database
@@ -6,7 +7,7 @@ namespace BotEventManagement.Models.Database
     [ComplexType]
     public class Address
     {
-        [JsonProperty("rua")]
+        [JsonProperty("rua"), Display(Name = "Rua")]
         public string Street { get; set; }
         [JsonProperty("latitude")]
         public double Latitude { get; set; }

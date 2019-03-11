@@ -9,10 +9,17 @@ namespace BotEventManagement.Web.Api
 {
     public interface IEventManagerApi
     {
+        #region Events
+
         [Get("/api/Event")]
-        Task<List<EventRequest>> GetAllEvents();
+        Task<List<EventRequest>> GetAllEventsAsync();
         [Get("/api/Event/{eventId}")]
-        Task<EventRequest> GetSpecificEvent([Path] string eventId);
+        Task<EventRequest> GetSpecificEventAsync([Path] string eventId);
+        [Put("/api/Event/{eventId}")]
+        Task<EventRequest> UpdateAnEventAsync([Path] string eventId, [Body] EventRequest @event);
+        [Post("/api/Event")]
+        Task<EventRequest> CreateAnEventAsync([Body] EventRequest @event);
+        #endregion
 
     }
 }
