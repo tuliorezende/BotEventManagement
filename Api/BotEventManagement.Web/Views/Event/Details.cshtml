@@ -1,20 +1,16 @@
 ﻿@model BotEventManagement.Models.API.EventRequest
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_LayoutAfterEvent.cshtml";
 }
 
 <h1>Detalhes do Evento</h1>
 
 <div>
     <hr />
+    <input asp-for="Id" type="hidden" class="form-control" />
     <dl class="row">
-        <dt class="col-sm-2 align-right">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
         <dt class="col-sm-2 align-right">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -60,6 +56,6 @@
     </dl>
 </div>
 <div>
-    <a class="btn btn-success" asp-area="" asp-controller="Event" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+    <a class="btn btn-success" asp-area="" asp-controller="Event" asp-action="Edit" asp-route-id="@Model.Id">Editar Evento</a>
     <a class="btn btn-info" asp-area="" asp-controller="Event" asp-action="Index">Voltar a Lista</a>
 </div>
