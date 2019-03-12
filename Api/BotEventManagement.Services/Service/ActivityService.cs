@@ -45,35 +45,37 @@ namespace BotEventManagement.Services.Service
 
         }
 
-        public List<ActivityRequest> GetAll(string eventId)
+        public List<ActivityResponse> GetAll(string eventId)
         {
-            List<ActivityRequest> activityRequests = new List<ActivityRequest>();
+            List<ActivityResponse> activityRequests = new List<ActivityResponse>();
 
-            foreach (var item in _botEventManagementContext.Activity.Where(x => x.EventId == eventId).ToList())
+            foreach (var item in _botEventManagementContext.Activity.Where(x => x.EventId == eventId).Include(x => x.Speaker).ToList())
             {
-                activityRequests.Add(new ActivityRequest
+                activityRequests.Add(new ActivityResponse
                 {
                     ActivityId = item.ActivityId,
                     Date = item.Date,
                     Description = item.Description,
                     Name = item.Name,
-                    SpeakerId = item.SpeakerId
+                    SpeakerId = item.SpeakerId,
+                    SpeakerName = item.Speaker.Name
                 });
             }
 
             return activityRequests;
         }
 
-        public ActivityRequest GetById(string elementId, string eventId)
+        public ActivityResponse GetById(string elementId, string eventId)
         {
-            Activity element = _botEventManagementContext.Activity.Where(x => x.ActivityId == elementId && x.EventId == eventId).First();
-            return new ActivityRequest
+            Activity element = _botEventManagementContext.Activity.Where(x => x.ActivityId == elementId && x.EventId == eventId).Include(x => x.Speaker).First();
+            return new ActivityResponse
             {
                 ActivityId = element.ActivityId,
                 Date = element.Date,
                 Description = element.Description,
                 Name = element.Name,
-                SpeakerId = element.SpeakerId
+                SpeakerId = element.SpeakerId,
+                SpeakerName = element.Speaker.Name
             };
         }
 

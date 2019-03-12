@@ -16,9 +16,9 @@ namespace BotEventManagement.Web.Api
         [Get("/api/Event/{eventId}")]
         Task<EventRequest> GetSpecificEventAsync([Path] string eventId);
         [Put("/api/Event/{eventId}")]
-        Task<EventRequest> UpdateAnEventAsync([Path] string eventId, [Body] EventRequest @event);
+        Task UpdateAnEventAsync([Path] string eventId, [Body] EventRequest @event);
         [Post("/api/Event")]
-        Task<EventRequest> CreateAnEventAsync([Body] EventRequest @event);
+        Task CreateAnEventAsync([Body] EventRequest @event);
         #endregion
 
         #region Speaker
@@ -27,24 +27,24 @@ namespace BotEventManagement.Web.Api
         [Get("/api/Speaker/{speakerId}")]
         Task<SpeakerRequest> GetASpeakerOfAnEventAsync([Header("eventId")] string eventId, [Path] string speakerId);
         [Post("/api/Speaker")]
-        Task<SpeakerRequest> CreateSpeakerOfAnEventAsync([Header("eventId")] string eventId, [Body] SpeakerRequest speakerRequest);
+        Task CreateSpeakerOfAnEventAsync([Header("eventId")] string eventId, [Body] SpeakerRequest speakerRequest);
         [Put("/api/Speaker/{speakerId}")]
-        Task<SpeakerRequest> UpdateASpeakersOfAnEventAsync([Header("eventId")] string eventId, [Path] string speakerId, [Body] SpeakerRequest speakerRequest);
+        Task UpdateASpeakersOfAnEventAsync([Header("eventId")] string eventId, [Path] string speakerId, [Body] SpeakerRequest speakerRequest);
         [Delete("/api/Speaker/{speakerId}")]
-        Task<SpeakerRequest> DeleteSpeakersOfAnEventAsync([Header("eventId")] string eventId, [Path] string speakerId);
+        Task DeleteSpeakersOfAnEventAsync([Header("eventId")] string eventId, [Path] string speakerId);
         #endregion
 
         #region Activity
         [Get("/api/Activity")]
-        Task<List<ActivityRequest>> GetAllActivitiesOfAnEventsAsync([Header("eventId")] string eventId);
+        Task<List<ActivityResponse>> GetAllActivitiesOfAnEventsAsync([Header("eventId")] string eventId);
         [Get("/api/Activity/{activityId}")]
-        Task<ActivityRequest> GetAnActivityOfAnEventAsync([Header("eventId")] string eventId, [Path] string activityId);
+        Task<ActivityResponse> GetAnActivityOfAnEventAsync([Header("eventId")] string eventId, [Path] string activityId);
         [Post("/api/Activity")]
-        Task<ActivityRequest> CreateActivityOfAnEventAsync([Header("eventId")] string eventId, [Body] ActivityRequest activityRequest);
+        Task CreateActivityOfAnEventAsync([Header("eventId")] string eventId, [Body] ActivityRequest activityRequest);
         [Put("/api/Activity/{activityId}")]
-        Task<ActivityRequest> UpdateActivityOfAnEventAsync([Header("eventId")] string eventId, [Path] string activityId, [Body] ActivityRequest activityRequest);
+        Task UpdateActivityOfAnEventAsync([Header("eventId")] string eventId, [Path] string activityId, [Body] ActivityRequest activityRequest);
         [Delete("/api/Activity/{activityId}")]
-        Task<ActivityRequest> DeleteActivityOfAnEventAsync([Header("eventId")] string eventId, [Path] string activityId);
+        Task DeleteActivityOfAnEventAsync([Header("eventId")] string eventId, [Path] string activityId);
         #endregion
     }
 }

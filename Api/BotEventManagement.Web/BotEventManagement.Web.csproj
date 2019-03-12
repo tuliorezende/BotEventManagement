@@ -19,9 +19,4 @@
     <ProjectReference Include="..\BotEventManagement.Services\BotEventManagement.Services.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-  </ItemGroup>
-
 </Project>

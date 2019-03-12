@@ -1,6 +1,7 @@
 ﻿using BotEventManagement.Models.CustomFormatter;
 using Newtonsoft.Json;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BotEventManagement.Models.API
 {
@@ -8,11 +9,11 @@ namespace BotEventManagement.Models.API
     {
         [JsonProperty("id")]
         public string ActivityId { get; set; }
-        [JsonProperty("data"), JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy HH:mm")]
+        [JsonProperty("dataHoraInicio"), JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy HH:mm"), Display(Name = "Horário de Início"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
         public DateTime Date { get; set; }
-        [JsonProperty("nome")]
+        [JsonProperty("nome"), Display(Name = "Nome")]
         public string Name { get; set; }
-        [JsonProperty("descricao")]
+        [JsonProperty("descricao"), Display(Name = "Descrição")]
         public string Description { get; set; }
         [JsonProperty("idPalestrante")]
         public string SpeakerId { get; set; }
