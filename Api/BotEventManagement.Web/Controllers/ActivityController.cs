@@ -6,6 +6,7 @@ using BotEventManagement.Models.API;
 using BotEventManagement.Web.Api;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BotEventManagement.Web.Controllers
 {
@@ -40,8 +41,9 @@ namespace BotEventManagement.Web.Controllers
         }
 
         // GET: Speaker/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            await CreateSpeakerDropDown();
             return View();
         }
 
@@ -59,6 +61,7 @@ namespace BotEventManagement.Web.Controllers
             }
             catch
             {
+                await CreateSpeakerDropDown();
                 return View();
             }
         }
@@ -67,6 +70,7 @@ namespace BotEventManagement.Web.Controllers
         public async Task<ActionResult> Edit(string id)
         {
             var details = await _eventManagerApi.GetAnActivityOfAnEventAsync(TempData.Peek("EventId").ToString(), id);
+            await CreateSpeakerDropDown();
 
             return View(details);
         }
@@ -81,10 +85,16 @@ namespace BotEventManagement.Web.Controllers
                 await _eventManagerApi.UpdateActivityOfAnEventAsync(TempData.Peek("EventId").ToString(), id, activityRequest);
                 return RedirectToAction(nameof(Index), "Activity", new { id = TempData.Peek("EventId").ToString() });
             }
-            catch
+            catch (Exception ex)
             {
+                await CreateSpeakerDropDown();
                 return View();
             }
+        }
+
+        private async Task CreateSpeakerDropDown()
+        {
+            ViewBag.SpeakerId = new SelectList(await _eventManagerApi.GetAllSpeakersOfAnEventsAsync(TempData.Peek("EventId").ToString()), "SpeakerId", "Name");
         }
     }
 }

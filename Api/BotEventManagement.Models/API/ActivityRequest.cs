@@ -15,7 +15,7 @@ namespace BotEventManagement.Models.API
         public string Name { get; set; }
         [JsonProperty("descricao"), Display(Name = "Descrição")]
         public string Description { get; set; }
-        [JsonProperty("idPalestrante")]
+        [JsonProperty("idPalestrante"), Display(Name = "Palestrante")]
         public string SpeakerId { get; set; }
     }
 }

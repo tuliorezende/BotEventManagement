@@ -9,7 +9,7 @@ namespace BotEventManagement.Models.API
 {
     public class ActivityResponse : ActivityRequest
     {
-        [JsonProperty("nomePalestrante"), Display(Name = "Nome Palestrante")]
+        [JsonProperty("nomePalestrante"), Display(Name = "Palestrante")]
         public string SpeakerName { get; set; }
 
     }
