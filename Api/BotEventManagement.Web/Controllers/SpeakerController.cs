@@ -67,21 +67,29 @@ namespace BotEventManagement.Web.Controllers
         }
 
         // GET: Speaker/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            var details = await _eventManagerApi.GetASpeakerOfAnEventAsync(TempData["EventId"].ToString(), id);
+
+            TempData["EventId"] = TempData["EventId"].ToString();
+            TempData.Keep("EventId");
+
+            return View(details);
         }
 
         // POST: Speaker/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(string id, SpeakerRequest speakerRequest)
         {
             try
             {
-                // TODO: Add update logic here
+                await _eventManagerApi.UpdateASpeakersOfAnEventAsync(TempData["EventId"].ToString(), id, speakerRequest);
 
-                return RedirectToAction(nameof(Index));
+                TempData["EventId"] = TempData["EventId"].ToString();
+                TempData.Keep("EventId");
+
+                return RedirectToAction(nameof(Index), "Speaker", new { id = TempData["EventId"].ToString() });
             }
             catch
             {

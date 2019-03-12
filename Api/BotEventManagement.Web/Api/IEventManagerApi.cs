@@ -27,9 +27,9 @@ namespace BotEventManagement.Web.Api
         [Get("/api/Speaker/{speakerId}")]
         Task<SpeakerRequest> GetASpeakerOfAnEventAsync([Header("eventId")] string eventId, [Path] string speakerId);
         [Post("/api/Speaker")]
-        Task<SpeakerRequest> CreateSpeakerOfAnEventAsync([Header("eventId")] string eventId);
+        Task<SpeakerRequest> CreateSpeakerOfAnEventAsync([Header("eventId")] string eventId, [Body] SpeakerRequest speakerRequest);
         [Put("/api/Speaker/{speakerId}")]
-        Task<SpeakerRequest> UpdateASpeakersOfAnEventAsync([Header("eventId")] string eventId, [Path] string speakerId);
+        Task<SpeakerRequest> UpdateASpeakersOfAnEventAsync([Header("eventId")] string eventId, [Path] string speakerId, [Body] SpeakerRequest speakerRequest);
         [Delete("/api/Speaker/{speakerId}")]
         Task<SpeakerRequest> DeleteSpeakersOfAnEventAsync([Header("eventId")] string eventId, [Path] string speakerId);
         #endregion  

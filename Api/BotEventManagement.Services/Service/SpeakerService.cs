@@ -88,7 +88,7 @@ namespace BotEventManagement.Services.Service
                 speaker.UploadedPhoto = element.Name;
 
             if (element.Biography != speaker.Biography)
-                speaker.Biography = element.Name;
+                speaker.Biography = element.Biography;
 
 
             _botEventManagementContext.Entry(speaker).State = EntityState.Modified;
