@@ -57,7 +57,7 @@ namespace BotEventManagement.Web.Controllers
                 // TODO: Add insert logic here
                 await _eventManagerApi.CreateActivityOfAnEventAsync(TempData.Peek("EventId").ToString(), activityRequest);
 
-                return RedirectToAction(nameof(Index), "Speaker", new { id = TempData.Peek("EventId").ToString() });
+                return RedirectToAction(nameof(Index), "Activity", new { id = TempData.Peek("EventId").ToString() });
             }
             catch
             {
