@@ -46,11 +46,12 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Update a specific activity of an event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <param name="activityId"></param>
         /// <param name="activity"></param>
         /// <returns></returns>
         [HttpPut("{activityId}")]
-        public IActionResult Put([FromRoute] string activityId, [FromBody] ActivityRequest activity)
+        public IActionResult Put([FromHeader] string eventId, [FromRoute] string activityId, [FromBody] ActivityRequest activity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -59,7 +60,7 @@ namespace BotEventManagement.Api.Controllers
                 return BadRequest("This id doesn't correspond with object");
 
 
-            _activityService.Update(activity);
+            _activityService.Update(activity, eventId);
 
             return NoContent();
         }
@@ -67,15 +68,16 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Create a specific activity of an event
         /// </summary>
+        /// <param name="eventId"></param>
         /// <param name="activity"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromBody] ActivityRequest activity)
+        public IActionResult Post([FromHeader] string eventId, [FromBody] ActivityRequest activity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _activityService.Create(activity);
+            _activityService.Create(activity, eventId);
 
 
             return Ok();

@@ -18,14 +18,14 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext = botEventManagementContext;
         }
 
-        public void Create(ActivityRequest element)
+        public void Create(ActivityRequest element, string eventId)
         {
             Activity activity = new Activity
             {
                 ActivityId = Guid.NewGuid().ToString(),
                 Date = element.Date,
                 Description = element.Description,
-                EventId = element.EventId,
+                EventId = eventId,
                 Name = element.Name,
                 SpeakerId = element.SpeakerId,
 
@@ -57,8 +57,7 @@ namespace BotEventManagement.Services.Service
                     Date = item.Date,
                     Description = item.Description,
                     Name = item.Name,
-                    SpeakerId = item.SpeakerId,
-                    EventId = item.EventId
+                    SpeakerId = item.SpeakerId
                 });
             }
 
@@ -74,14 +73,13 @@ namespace BotEventManagement.Services.Service
                 Date = element.Date,
                 Description = element.Description,
                 Name = element.Name,
-                SpeakerId = element.SpeakerId,
-                EventId = element.EventId
+                SpeakerId = element.SpeakerId
             };
         }
 
-        public void Update(ActivityRequest element)
+        public void Update(ActivityRequest element, string eventId)
         {
-            var activity = _botEventManagementContext.Activity.Where(x => x.SpeakerId == element.SpeakerId && x.ActivityId == element.ActivityId).FirstOrDefault();
+            var activity = _botEventManagementContext.Activity.Where(x => x.ActivityId == element.ActivityId && x.EventId == eventId).FirstOrDefault();
 
             if (element.Date != DateTime.MinValue && element.Date != activity.Date)
                 activity.Date = element.Date;

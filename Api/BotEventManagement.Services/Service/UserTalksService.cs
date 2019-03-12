@@ -52,7 +52,6 @@ namespace BotEventManagement.Services.Service
                         Date = item.Activity.Date,
                         Description = item.Activity.Description,
                         Name = item.Activity.Name,
-                        EventId = item.Activity.EventId,
                         SpeakerId = item.Activity.SpeakerId
                     }
                 });
