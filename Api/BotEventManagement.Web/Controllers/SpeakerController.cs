@@ -46,19 +46,26 @@ namespace BotEventManagement.Web.Controllers
         // GET: Speaker/Create
         public ActionResult Create()
         {
+            TempData["EventId"] = TempData["EventId"].ToString();
+            TempData.Keep("EventId");
+
             return View();
         }
 
         // POST: Speaker/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(SpeakerRequest speakerRequest)
         {
             try
             {
                 // TODO: Add insert logic here
+                await _eventManagerApi.CreateSpeakerOfAnEventAsync(TempData["EventId"].ToString(), speakerRequest);
 
-                return RedirectToAction(nameof(Index));
+                TempData["EventId"] = TempData["EventId"].ToString();
+                TempData.Keep("EventId");
+
+                return RedirectToAction(nameof(Index), "Speaker", new { id = TempData["EventId"].ToString() });
             }
             catch
             {
@@ -90,29 +97,6 @@ namespace BotEventManagement.Web.Controllers
                 TempData.Keep("EventId");
 
                 return RedirectToAction(nameof(Index), "Speaker", new { id = TempData["EventId"].ToString() });
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Speaker/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Speaker/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
             }
             catch
             {
