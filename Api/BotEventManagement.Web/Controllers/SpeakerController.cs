@@ -35,20 +35,13 @@ namespace BotEventManagement.Web.Controllers
         // GET: Speaker/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            var details = await _eventManagerApi.GetASpeakerOfAnEventAsync(TempData["EventId"].ToString(), id);
-
-            TempData["EventId"] = TempData["EventId"].ToString();
-            TempData.Keep("EventId");
-
+            var details = await _eventManagerApi.GetASpeakerOfAnEventAsync(TempData.Peek("EventId").ToString(), id);
             return View(details);
         }
 
         // GET: Speaker/Create
         public ActionResult Create()
         {
-            TempData["EventId"] = TempData["EventId"].ToString();
-            TempData.Keep("EventId");
-
             return View();
         }
 
@@ -60,12 +53,9 @@ namespace BotEventManagement.Web.Controllers
             try
             {
                 // TODO: Add insert logic here
-                await _eventManagerApi.CreateSpeakerOfAnEventAsync(TempData["EventId"].ToString(), speakerRequest);
+                await _eventManagerApi.CreateSpeakerOfAnEventAsync(TempData.Peek("EventId").ToString(), speakerRequest);
 
-                TempData["EventId"] = TempData["EventId"].ToString();
-                TempData.Keep("EventId");
-
-                return RedirectToAction(nameof(Index), "Speaker", new { id = TempData["EventId"].ToString() });
+                return RedirectToAction(nameof(Index), "Speaker", new { id = TempData.Peek("EventId").ToString() });
             }
             catch
             {
@@ -76,10 +66,7 @@ namespace BotEventManagement.Web.Controllers
         // GET: Speaker/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
-            var details = await _eventManagerApi.GetASpeakerOfAnEventAsync(TempData["EventId"].ToString(), id);
-
-            TempData["EventId"] = TempData["EventId"].ToString();
-            TempData.Keep("EventId");
+            var details = await _eventManagerApi.GetASpeakerOfAnEventAsync(TempData.Peek("EventId").ToString(), id);
 
             return View(details);
         }
@@ -91,12 +78,8 @@ namespace BotEventManagement.Web.Controllers
         {
             try
             {
-                await _eventManagerApi.UpdateASpeakersOfAnEventAsync(TempData["EventId"].ToString(), id, speakerRequest);
-
-                TempData["EventId"] = TempData["EventId"].ToString();
-                TempData.Keep("EventId");
-
-                return RedirectToAction(nameof(Index), "Speaker", new { id = TempData["EventId"].ToString() });
+                await _eventManagerApi.UpdateASpeakersOfAnEventAsync(TempData.Peek("EventId").ToString(), id, speakerRequest);
+                return RedirectToAction(nameof(Index), "Speaker", new { id = TempData.Peek("EventId").ToString() });
             }
             catch
             {

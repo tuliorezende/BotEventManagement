@@ -30,7 +30,6 @@ namespace BotEventManagement.Web.Controllers
             var specificEvent = await _eventManagerApi.GetSpecificEventAsync(id);
 
             TempData["EventId"] = id;
-            TempData.Keep("EventId");
 
             return View(specificEvent);
         }

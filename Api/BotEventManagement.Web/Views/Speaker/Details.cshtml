@@ -35,5 +35,5 @@
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.SpeakerId }) |
         <a asp-action="Index">Back to List</a>*@
     <a class="btn btn-success" asp-area="" asp-controller="Speaker" asp-action="Edit" asp-route-id="@Model.SpeakerId">Editar Palestrante</a>
-    <a class="btn btn-info" asp-area="" asp-controller="Speaker" asp-action="Index" asp-route-id="@TempData["EventId"]">Voltar a Lista</a>
+    <a class="btn btn-info" asp-area="" asp-controller="Speaker" asp-action="Index" asp-route-id="@TempData.Peek("EventId").ToString()">Voltar a Lista</a>
 </div>

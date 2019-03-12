@@ -30,7 +30,7 @@
                 <span asp-validation-for="UploadedPhoto" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <a class="btn btn-info" asp-area="" asp-controller="Speaker" asp-action="Index" asp-route-id="@TempData["EventId"]">Voltar a Lista</a>
+                <a class="btn btn-info" asp-area="" asp-controller="Speaker" asp-action="Index" asp-route-id="@TempData.Peek("EventId").ToString()">Voltar a Lista</a>
                 <input type="submit" value="Salvar" class="btn btn-primary" />
             </div>
         </form>
