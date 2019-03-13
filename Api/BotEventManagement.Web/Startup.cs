@@ -38,9 +38,9 @@ namespace BotEventManagement.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            Console.WriteLine($"URL de API: {Configuration["EventMangerApiUrl"]}");
+            Console.WriteLine($"URL de API: {Configuration["EventManagerApiUrl"]}");
 
-            services.AddSingleton(RestEase.RestClient.For<IEventManagerApi>(Configuration["EventMangerApiUrl"]));
+            services.AddSingleton(RestEase.RestClient.For<IEventManagerApi>(Configuration["EventManagerApiUrl"]));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
