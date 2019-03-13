@@ -38,10 +38,10 @@ namespace BotEventManagement.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            Console.WriteLine($"URL de API: {Configuration["EventManagerApiUrl"]}");
+            var apiUrl = $"http://{Configuration["EventManagerApiUrl"]}";
+            Console.WriteLine($"URL de API: {apiUrl}");
 
-            services.AddSingleton(RestEase.RestClient.For<IEventManagerApi>(Configuration["EventManagerApiUrl"]));
-
+            services.AddSingleton(RestEase.RestClient.For<IEventManagerApi>(apiUrl));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.Configure<ForwardedHeadersOptions>(options =>
