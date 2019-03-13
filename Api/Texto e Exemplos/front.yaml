@@ -13,7 +13,7 @@ items:
     selector:
         app: boteventmanagement-ui
     ports:
-    - port: 8080
+    - port: 80
     type: ClusterIP
 
 - apiVersion: apps/v1beta1
@@ -29,7 +29,7 @@ items:
             app: boteventmanagement-ui
         spec:
           containers:
-          - name: boteventmanagement-front
+          - name: boteventmanagement-ui
             image: tuliorezende/boteventmanagement-ui:#{Build.BuildId}#
             env:
                 - name: ASPNETCORE_ENVIRONMENT
@@ -40,7 +40,7 @@ items:
                   value: boteventmanagement-api-service
             args: ["$(ASPNETCORE_ENVIRONMENT) $(BasePath) $(EventManagerApiUrl)"]
             ports:
-            - containerPort: 8080
+            - containerPort: 80
             resources: {}
 
 - apiVersion: extensions/v1beta1
@@ -56,6 +56,6 @@ items:
         paths:
         - backend:
             serviceName: boteventmanagement-ui-service
-            servicePort: 8080
+            servicePort: 80
           path: /ui
   status: {}
