@@ -18,7 +18,8 @@ namespace BotEventManagement.Web
     {
         public Startup(IHostingEnvironment environment)
         {
-            //Configuration = configuration;
+
+            //Put Configurations to read values from Environment variables
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
