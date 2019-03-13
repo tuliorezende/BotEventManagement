@@ -35,7 +35,7 @@ items:
                 - name: ASPNETCORE_ENVIRONMENT
                   value: Production
                 - name: BasePath
-                  value: /testapi
+                  value: /eventapi
                 - name: DefaultConnection
                   valueFrom:
                    secretKeyRef:
@@ -60,5 +60,5 @@ items:
         - backend:
             serviceName: boteventmanagement-api-service
             servicePort: 80
-          path: /testapi
+          path: /eventapi
   status: {}
