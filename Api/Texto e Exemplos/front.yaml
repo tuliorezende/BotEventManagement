@@ -55,7 +55,7 @@ items:
       http:
         paths:
         - backend:
-            serviceName: boteventmanagement-api-service
+            serviceName: boteventmanagement-ui-service
             servicePort: 8080
           path: /ui
   status: {}
