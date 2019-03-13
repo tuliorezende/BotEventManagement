@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 namespace BotEventManagement.Web
 {
@@ -61,6 +62,31 @@ namespace BotEventManagement.Web
 
             if (!string.IsNullOrEmpty(Configuration["BasePath"]))
                 app.UsePathBase(Configuration["BasePath"]);
+
+            var logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                 .WriteTo.Console()
+                 .CreateLogger();
+
+            app.Use(async (context, next) =>
+            {
+                logger.Information("WEBVIEW - Log Requisition Informations!!");
+
+                // Request method, scheme, and path
+                logger.Information("Request Method: {METHOD}", context.Request.Method);
+                logger.Information("Request Scheme: {SCHEME}", context.Request.Scheme);
+                logger.Information("Request Path: {PATH}", context.Request.Path);
+                logger.Information("Request Path Base: {PATHBASE}", context.Request.PathBase);
+                // Headers
+                foreach (var header in context.Request.Headers)
+                    logger.Information("Header: {KEY}: {VALUE}", header.Key, header.Value);
+
+                // Connection: RemoteIp
+                logger.Information("Request RemoteIp: {REMOTE_IP_ADDRESS}",
+                    context.Connection.RemoteIpAddress);
+
+                await next();
+            });
 
             if (env.IsDevelopment())
             {

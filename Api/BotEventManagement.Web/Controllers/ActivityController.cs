@@ -85,7 +85,7 @@ namespace BotEventManagement.Web.Controllers
                 await _eventManagerApi.UpdateActivityOfAnEventAsync(TempData.Peek("EventId").ToString(), id, activityRequest);
                 return RedirectToAction(nameof(Index), "Activity", new { id = TempData.Peek("EventId").ToString() });
             }
-            catch (Exception ex)
+            catch
             {
                 await CreateSpeakerDropDown();
                 return View();
