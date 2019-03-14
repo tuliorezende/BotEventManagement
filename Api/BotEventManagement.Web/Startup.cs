@@ -42,6 +42,11 @@ namespace BotEventManagement.Web
             var apiUrl = $"http://{Configuration["EventManagerApiUrl"]}";
             Console.WriteLine($"URL de API: {apiUrl}");
 
+            services.AddDataProtection(options =>
+            {
+                options.ApplicationDiscriminator = "eventmanager.ui";
+            });
+
             services.AddSingleton(RestEase.RestClient.For<IEventManagerApi>(apiUrl));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
