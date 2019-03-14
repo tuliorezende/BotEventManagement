@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BotEventManagement.Services.Model.Database;
 using BotEventManagement.Web.Api;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -12,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using StackExchange.Redis;
 
 namespace BotEventManagement.Web
 {
@@ -42,10 +45,19 @@ namespace BotEventManagement.Web
             var apiUrl = $"http://{Configuration["EventManagerApiUrl"]}";
             Console.WriteLine($"URL de API: {apiUrl}");
 
-            services.AddDataProtection(options =>
+            if (!string.IsNullOrEmpty(Configuration["RedisDatabaseUrl"]) &&
+                !string.IsNullOrEmpty(Configuration["RedisDatabasePort"]) &&
+                !string.IsNullOrEmpty(Configuration["RedisDatabasePassword"]))
             {
-                options.ApplicationDiscriminator = "eventmanager.ui";
-            });
+                Console.WriteLine("Configuring REDIS Connection");
+
+                var redisStringConnection = $"{Configuration["RedisDatabaseUrl"]}:{Configuration["RedisDatabasePort"]},password={Configuration["RedisDatabasePassword"]},ssl=True,abortConnect=False";
+
+                var redis = ConnectionMultiplexer.Connect("eventmanager.redis.cache.windows.net:6380,password=Ad46i5bZX+VgpWHtMJyLO+mMFFTA5GvIvxlY9T4X2+Y=,ssl=True,abortConnect=False");
+                services.AddDataProtection().PersistKeysToStackExchangeRedis(redis, "DataProtection-Keys");
+
+                Console.WriteLine("After Configure REDIS Connection");
+            }
 
             services.AddSingleton(RestEase.RestClient.For<IEventManagerApi>(apiUrl));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -105,7 +117,7 @@ namespace BotEventManagement.Web
             }
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            //app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {
