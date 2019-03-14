@@ -58,7 +58,7 @@ namespace BotEventManagement.Web
 
                 var redisStringConnection = $"{Configuration["RedisDatabaseUrl"]}:{Configuration["RedisDatabasePort"]},password={Configuration["RedisDatabasePassword"]},ssl=True,abortConnect=False";
 
-                var redis = ConnectionMultiplexer.Connect("eventmanager.redis.cache.windows.net:6380,password=Ad46i5bZX+VgpWHtMJyLO+mMFFTA5GvIvxlY9T4X2+Y=,ssl=True,abortConnect=False");
+                var redis = ConnectionMultiplexer.Connect(redisStringConnection);
                 services.AddDataProtection().PersistKeysToStackExchangeRedis(redis, "DataProtection-Keys");
 
                 Console.WriteLine("After Configure REDIS Connection");

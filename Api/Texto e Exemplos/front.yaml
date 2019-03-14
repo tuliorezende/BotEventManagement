@@ -38,11 +38,11 @@ items:
                   value: /ui
                 - name: EventManagerApiUrl
                   value: boteventmanagement-api-service
-                - name: RedisDatabaseUri
+                - name: RedisDatabaseUrl
                   valueFrom:
                    secretKeyRef:
                     name: secret-eventmanagement-ui
-                    key: RedisDatabaseUri
+                    key: RedisDatabaseUrl
                 - name: RedisDatabasePort
                   valueFrom:
                    secretKeyRef:
@@ -53,7 +53,7 @@ items:
                    secretKeyRef:
                     name: secret-eventmanagement-ui
                     key: RedisDatabasePassword
-            args: ["$(ASPNETCORE_ENVIRONMENT) $(BasePath) $(EventManagerApiUrl) $(RedisDatabaseUri) $(RedisDatabasePort) $(RedisDatabasePassword)"]
+            args: ["$(ASPNETCORE_ENVIRONMENT) $(BasePath) $(EventManagerApiUrl) $(RedisDatabaseUrl) $(RedisDatabasePort) $(RedisDatabasePassword)"]
             ports:
             - containerPort: 80
             resources: {}
