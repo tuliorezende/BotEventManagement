@@ -45,6 +45,11 @@ namespace BotEventManagement.Web
             var apiUrl = $"http://{Configuration["EventManagerApiUrl"]}";
             Console.WriteLine($"URL de API: {apiUrl}");
 
+            Console.WriteLine($"Configuring REDIS URL: {Configuration["RedisDatabaseUrl"]}");
+            Console.WriteLine($"Configuring REDIS Port: {Configuration["RedisDatabasePort"]}");
+            Console.WriteLine($"Configuring REDIS PWD: {Configuration["RedisDatabasePassword"]}");
+
+
             if (!string.IsNullOrEmpty(Configuration["RedisDatabaseUrl"]) &&
                 !string.IsNullOrEmpty(Configuration["RedisDatabasePort"]) &&
                 !string.IsNullOrEmpty(Configuration["RedisDatabasePassword"]))
@@ -117,7 +122,6 @@ namespace BotEventManagement.Web
             }
 
             app.UseStaticFiles();
-            //app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {
