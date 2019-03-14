@@ -49,6 +49,7 @@ namespace BotEventManagement.Web
             Console.WriteLine($"Configuring REDIS Port: {Configuration["RedisDatabasePort"]}");
             Console.WriteLine($"Configuring REDIS PWD: {Configuration["RedisDatabasePassword"]}");
 
+            Console.WriteLine($"Machine Name: {Environment.MachineName}");
 
             if (!string.IsNullOrEmpty(Configuration["RedisDatabaseUrl"]) &&
                 !string.IsNullOrEmpty(Configuration["RedisDatabasePort"]) &&
@@ -59,7 +60,7 @@ namespace BotEventManagement.Web
                 var redisStringConnection = $"{Configuration["RedisDatabaseUrl"]}:{Configuration["RedisDatabasePort"]},password={Configuration["RedisDatabasePassword"]},ssl=True,abortConnect=False";
 
                 var redis = ConnectionMultiplexer.Connect(redisStringConnection);
-                services.AddDataProtection().PersistKeysToStackExchangeRedis(redis);
+                services.AddDataProtection().PersistKeysToStackExchangeRedis(redis, $"DataProtection-Keys_{Environment.MachineName}");
 
                 Console.WriteLine("After Configure REDIS Connection");
             }
