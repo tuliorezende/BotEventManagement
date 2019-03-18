@@ -19,6 +19,11 @@ using System.Linq;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using AutoMapper;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using BotEventManagement.Models.Map;
 
 namespace BotEventTemplate.Api
 {
@@ -52,6 +57,9 @@ namespace BotEventTemplate.Api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            Mapper.Initialize(m => m.AddProfile<AutoMapperProfile>());
+            services.AddAutoMapper();
+
             services.AddDbContext<BotEventManagementContext>(options => options.UseSqlServer(Configuration["DefaultConnection"]));
 
             services.AddSwaggerGen(c =>
@@ -67,12 +75,47 @@ namespace BotEventTemplate.Api
 
                 c.IncludeXmlComments(xmlPath);
             });
-
+            services.AddSingleton(Configuration);
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IEventParticipantService, EventParticipantsService>();
             services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<IUserTalksService, UserTalksService>();
             services.AddScoped<ISpeakerService, SpeakerService>();
+            services.AddScoped<IUserService, UserService>();
+
+            var key = Encoding.ASCII.GetBytes(Configuration["Secret"]);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                        var userId = context.Principal.Identity.Name;
+                        var user = userService.GetById(userId);
+                        if (user == null)
+                        {
+                            // return unauthorized if user no longer exists
+                            context.Fail("Unauthorized");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             services.AddHealthChecks().AddSqlServer(Configuration["DefaultConnection"]);
 
@@ -97,7 +140,7 @@ namespace BotEventTemplate.Api
 
             if (!string.IsNullOrEmpty(Configuration["BasePath"]))
                 app.UsePathBase(Configuration["BasePath"]);
-           
+
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
             else

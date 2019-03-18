@@ -13,6 +13,7 @@ namespace BotEventManagement.Services.Model.Database
         public virtual DbSet<EventParticipants> EventParticipants { get; set; }
         public virtual DbSet<Speaker> Speaker { get; set; }
         public virtual DbSet<UserTalks> UserTalks { get; set; }
+        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

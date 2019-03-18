@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20180727202433_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190318133703_CreateUserTable.cs" />
+    <Compile Remove="Migrations\20190318140326_ChangeUserIdType.cs" />
+    <Compile Remove="Migrations\20190318142409_DropUserIdColumn.cs" />
   </ItemGroup>
 
   <ItemGroup>

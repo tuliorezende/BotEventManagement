@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BotEventManagement.Services.Exceptions;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -40,12 +41,12 @@ namespace BotEventManagement.Api.Middleware
 
         private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            if (exception is WebException webException)
-                context.Response.StatusCode = (int)((HttpWebResponse)webException.Response).StatusCode;
+            if (exception is HttpStatusCodeException webException)
+                context.Response.StatusCode = webException.StatusCode;
             else
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            context.Response.ContentType = "application/json";
+            context.Response.ContentType = "text/plain";
             await context.Response.WriteAsync(exception.Message);
         }
     }
