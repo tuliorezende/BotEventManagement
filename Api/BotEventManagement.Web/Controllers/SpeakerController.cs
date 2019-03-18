@@ -35,7 +35,8 @@ namespace BotEventManagement.Web.Controllers
         // GET: Speaker/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            var details = await _eventManagerApi.GetASpeakerOfAnEventAsync(TempData.Peek("EventId").ToString(), id);
+            var details = await GetDetailedSpeakerInformation(id);
+
             return View(details);
         }
 
@@ -52,7 +53,6 @@ namespace BotEventManagement.Web.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
                 await _eventManagerApi.CreateSpeakerOfAnEventAsync(TempData.Peek("EventId").ToString(), speakerRequest);
 
                 return RedirectToAction(nameof(Index), "Speaker", new { id = TempData.Peek("EventId").ToString() });
@@ -66,7 +66,7 @@ namespace BotEventManagement.Web.Controllers
         // GET: Speaker/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
-            var details = await _eventManagerApi.GetASpeakerOfAnEventAsync(TempData.Peek("EventId").ToString(), id);
+            var details = await GetDetailedSpeakerInformation(id);
 
             return View(details);
         }
@@ -85,6 +85,12 @@ namespace BotEventManagement.Web.Controllers
             {
                 return View();
             }
+        }
+
+        private async Task<SpeakerRequest> GetDetailedSpeakerInformation(string speakerId)
+        {
+            var details = await _eventManagerApi.GetASpeakerOfAnEventAsync(TempData.Peek("EventId").ToString(), speakerId);
+            return details;
         }
     }
 }

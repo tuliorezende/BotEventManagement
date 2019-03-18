@@ -45,7 +45,6 @@ namespace BotEventManagement.Web.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
                 await _eventManagerApi.CreateAnEventAsync(eventRequest);
                 return RedirectToAction(nameof(Index));
             }

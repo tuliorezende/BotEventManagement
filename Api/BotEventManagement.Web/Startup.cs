@@ -20,6 +20,7 @@ namespace BotEventManagement.Web
 {
     public class Startup
     {
+        private readonly string _errorDefaultPath = "/Home/Error";
         public Startup(IHostingEnvironment environment)
         {
 
@@ -118,7 +119,7 @@ namespace BotEventManagement.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler(_errorDefaultPath);
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

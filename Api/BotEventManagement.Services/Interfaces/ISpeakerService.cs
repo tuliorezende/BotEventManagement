@@ -5,7 +5,7 @@ namespace BotEventManagement.Services.Interfaces
 {
     public interface ISpeakerService
     {
-        void Create(SpeakerRequest element, string eventid);
+        void Create(SpeakerRequest element, string eventId);
         void Delete(string eventId, string elementId);
         List<SpeakerRequest> GetAll(string eventId);
         SpeakerRequest GetById(string elementId, string eventId);
