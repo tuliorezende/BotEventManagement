@@ -19,10 +19,10 @@ namespace BotEventManagement.Services.Service
 
         public void Create(UserTalksRequest userTalks)
         {
-            _botEventManagementContext.UserTalks.Add(new UserTalks
+            _botEventManagementContext.UserTalks.Add(new GuestUserTalks
             {
                 ActivityId = userTalks.ActivityId,
-                UserId = userTalks.UserId
+                GuestId = userTalks.UserId
             });
 
             _botEventManagementContext.SaveChanges();
@@ -30,7 +30,7 @@ namespace BotEventManagement.Services.Service
 
         public void Delete(string userId, string activityId)
         {
-            UserTalks userTalks = _botEventManagementContext.UserTalks.Where(x => x.UserId == userId && x.ActivityId == activityId).FirstOrDefault();
+            GuestUserTalks userTalks = _botEventManagementContext.UserTalks.Where(x => x.GuestId == userId && x.ActivityId == activityId).FirstOrDefault();
 
             _botEventManagementContext.UserTalks.Remove(userTalks);
 
@@ -41,11 +41,11 @@ namespace BotEventManagement.Services.Service
         {
             List<UserTalksResponse> userTalksResponses = new List<UserTalksResponse>();
 
-            foreach (var item in _botEventManagementContext.UserTalks.Include(x => x.Activity).Where(x => x.UserId == userId && x.Activity.EventId == eventId).ToList())
+            foreach (var item in _botEventManagementContext.UserTalks.Include(x => x.Activity).Where(x => x.GuestId == userId && x.Activity.EventId == eventId).ToList())
             {
                 userTalksResponses.Add(new UserTalksResponse
                 {
-                    UserId = item.UserId,
+                    UserId = item.GuestId,
                     Activity = new ActivityRequest
                     {
                         ActivityId = item.Activity.ActivityId,

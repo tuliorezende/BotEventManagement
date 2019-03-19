@@ -16,6 +16,7 @@ namespace BotEventManagement.Models.Database
         public DateTime EndDate { get; set; }
         public Address Address { get; set; }
         public virtual List<EventParticipants> EventParticipants { get; set; }
-        public virtual List<UserTalks> UserTalks { get; set; }
+        public virtual List<GuestUserTalks> UserTalks { get; set; }
+        public virtual List<UserEvents> UserEvents { get; set; }
     }
 }

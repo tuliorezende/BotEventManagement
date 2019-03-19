@@ -9,6 +9,7 @@
     <Compile Remove="Migrations\20190318133703_CreateUserTable.cs" />
     <Compile Remove="Migrations\20190318140326_ChangeUserIdType.cs" />
     <Compile Remove="Migrations\20190318142409_DropUserIdColumn.cs" />
+    <Compile Remove="Migrations\20190319163821_ChangeUserTalksTableName.cs" />
   </ItemGroup>
 
   <ItemGroup>

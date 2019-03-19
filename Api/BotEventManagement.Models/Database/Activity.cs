@@ -20,7 +20,7 @@ namespace BotEventManagement.Models.Database
         [ForeignKey("SpeakerId")]
         public string SpeakerId { get; set; }
         public virtual Speaker Speaker { get; set; }
-        public virtual List<UserTalks> UserTalks { get; set; }
+        public virtual List<GuestUserTalks> UserTalks { get; set; }
 
     }
 }

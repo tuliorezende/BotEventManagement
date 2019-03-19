@@ -55,7 +55,7 @@ namespace BotEventManagement.Api.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    new Claim(ClaimTypes.Name, user.UserId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -66,7 +66,7 @@ namespace BotEventManagement.Api.Controllers
             // return basic user info (without password) and token to store client side
             return Ok(new
             {
-                Id = user.Id,
+                Id = user.UserId,
                 Username = user.Username,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -94,6 +94,7 @@ namespace BotEventManagement.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize]
         public IActionResult GetAll()
         {
             var users = _userService.GetAll();
@@ -107,6 +108,7 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("{userId}")]
+        [Authorize]
         public IActionResult GetById(string userId)
         {
             var user = _userService.GetById(userId);
@@ -121,11 +123,12 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="userDto"></param>
         /// <returns></returns>
         [HttpPut("{userId}")]
+        [Authorize]
         public IActionResult Update(string userId, [FromBody]UserRequest userDto)
         {
             // map dto to entity and set id
             var user = _mapper.Map<User>(userDto);
-            user.Id = userId;
+            user.UserId = userId;
 
             // save 
             _userService.Update(user, userDto.Password);
@@ -139,6 +142,7 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{userId}")]
+        [Authorize]
         public IActionResult Delete(string userId)
         {
             _userService.Delete(userId);

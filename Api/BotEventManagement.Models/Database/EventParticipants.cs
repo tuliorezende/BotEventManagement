@@ -6,7 +6,7 @@ namespace BotEventManagement.Models.Database
     public class EventParticipants
     {
 
-        public string Id { get; set; }
+        public string GuestId { get; set; }
         public string Name { get; set; }
 
         [ForeignKey("EventId")]

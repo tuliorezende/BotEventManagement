@@ -51,7 +51,7 @@ namespace BotEventManagement.Services.Service
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            user.Id = Guid.NewGuid().ToString();
+            user.UserId = Guid.NewGuid().ToString();
 
             _botEventManagementContext.Users.Add(user);
             _botEventManagementContext.SaveChanges();
@@ -75,7 +75,7 @@ namespace BotEventManagement.Services.Service
 
         public void Update(User userParam, string password = null)
         {
-            var user = _botEventManagementContext.Users.Find(userParam.Id);
+            var user = _botEventManagementContext.Users.Find(userParam.UserId);
 
             //if (user == null)
             //    throw new AppException("User not found");

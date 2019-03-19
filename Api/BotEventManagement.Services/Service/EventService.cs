@@ -18,34 +18,51 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext = botEventManagementContext;
         }
 
-        public void Create(EventRequest element)
+        public void Create(EventRequest element, string userId)
         {
+            var eventId = Guid.NewGuid().ToString();
+
             Event @event = new Event
             {
                 Address = element.Address,
                 Description = element.Description,
                 EndDate = element.EndDate,
-                EventId = Guid.NewGuid().ToString(),
+                EventId = eventId,
                 Name = element.Name,
                 StartDate = element.StartDate,
             };
 
             _botEventManagementContext.Event.Add(@event);
             _botEventManagementContext.SaveChanges();
+
+            var userEvent = new UserEvents
+            {
+                EventId = eventId,
+                UserId = userId
+            };
+
+            _botEventManagementContext.UserEvents.Add(userEvent);
+            _botEventManagementContext.SaveChanges();
         }
 
-        public void Delete(string elementId)
+        public void Delete(string eventId, string userId)
         {
-            Event @event = _botEventManagementContext.Event.Where(x => x.EventId == elementId).First();
+            UserEvents userEvents = _botEventManagementContext.UserEvents.Where(x => x.EventId == eventId && x.UserId == userId).First();
+            _botEventManagementContext.UserEvents.Remove(userEvents);
+
+            Event @event = _botEventManagementContext.Event.Where(x => x.EventId == eventId).First();
             _botEventManagementContext.Event.Remove(@event);
 
             _botEventManagementContext.SaveChanges();
         }
 
-        public List<EventRequest> GetAll()
+        public List<EventRequest> GetAll(string userId)
         {
             List<EventRequest> eventRequests = new List<EventRequest>();
-            foreach (var item in _botEventManagementContext.Event.ToList())
+
+            var userEvents = _botEventManagementContext.UserEvents.Include(x => x.Event).ThenInclude(x => x.Address).Select(x => x.Event).ToList();
+
+            foreach (var item in userEvents)
             {
                 eventRequests.Add(new EventRequest
                 {
@@ -55,9 +72,9 @@ namespace BotEventManagement.Services.Service
                     Name = item.Name,
                     StartDate = item.StartDate,
                     Id = item.EventId
-
                 });
             }
+
             return eventRequests;
         }
 

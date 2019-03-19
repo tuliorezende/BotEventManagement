@@ -5,10 +5,10 @@ namespace BotEventManagement.Services.Interfaces
 {
     public interface IEventService
     {
-        void Create(EventRequest element);
-        List<EventRequest> GetAll();
+        void Create(EventRequest element, string userId);
+        List<EventRequest> GetAll(string userId);
         EventRequest GetById(string elementId);
-        void Delete(string elementId);
+        void Delete(string userId, string eventId);
         void Update(EventRequest element);
     }
 }

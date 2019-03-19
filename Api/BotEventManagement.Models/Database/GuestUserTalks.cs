@@ -2,9 +2,9 @@
 
 namespace BotEventManagement.Models.Database
 {
-    public class UserTalks
+    public class GuestUserTalks
     {
-        public string UserId { get; set; }
+        public string GuestId { get; set; }
         [ForeignKey("ActivityId")]
         public string ActivityId { get; set; }
         public virtual Activity Activity { get; set; }

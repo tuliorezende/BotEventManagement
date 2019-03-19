@@ -23,7 +23,7 @@ namespace BotEventManagement.Services.Service
             EventParticipants eventParticipants = new EventParticipants
             {
                 EventId = element.EventId,
-                Id = Guid.NewGuid().ToString(),
+                GuestId = Guid.NewGuid().ToString(),
                 Name = element.Name
             };
 
@@ -33,7 +33,7 @@ namespace BotEventManagement.Services.Service
 
         public void Delete(string eventId, string elementId)
         {
-            EventParticipants element = _botEventManagementContext.EventParticipants.Where(x => x.Id == elementId && x.EventId == eventId).First();
+            EventParticipants element = _botEventManagementContext.EventParticipants.Where(x => x.GuestId == elementId && x.EventId == eventId).First();
             _botEventManagementContext.EventParticipants.Remove(element);
 
             _botEventManagementContext.SaveChanges();
@@ -48,7 +48,7 @@ namespace BotEventManagement.Services.Service
             {
                 participantsRequests.Add(new EventParticipantsRequest
                 {
-                    Id = item.Id,
+                    Id = item.GuestId,
                     Name = item.Name,
                     EventId = item.EventId
                 });
@@ -59,10 +59,10 @@ namespace BotEventManagement.Services.Service
 
         public EventParticipantsRequest GetById(string elementId, string eventId)
         {
-            EventParticipants element = _botEventManagementContext.EventParticipants.Where(x => x.Id == elementId && x.EventId == eventId).First();
+            EventParticipants element = _botEventManagementContext.EventParticipants.Where(x => x.GuestId == elementId && x.EventId == eventId).First();
             return new EventParticipantsRequest
             {
-                Id = element.Id,
+                Id = element.GuestId,
                 Name = element.Name,
                 EventId = element.EventId
             };
@@ -70,7 +70,7 @@ namespace BotEventManagement.Services.Service
 
         public void Update(string eventId, EventParticipantsRequest element)
         {
-            var eventParticipants = _botEventManagementContext.EventParticipants.Where(x => x.Id == element.Id && x.EventId == eventId).FirstOrDefault();
+            var eventParticipants = _botEventManagementContext.EventParticipants.Where(x => x.GuestId == element.Id && x.EventId == eventId).FirstOrDefault();
 
             if (element.Name != eventParticipants.Name)
                 eventParticipants.Name = element.Name;

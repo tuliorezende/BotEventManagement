@@ -12,8 +12,9 @@ namespace BotEventManagement.Services.Model.Database
         public virtual DbSet<Event> Event { get; set; }
         public virtual DbSet<EventParticipants> EventParticipants { get; set; }
         public virtual DbSet<Speaker> Speaker { get; set; }
-        public virtual DbSet<UserTalks> UserTalks { get; set; }
+        public virtual DbSet<GuestUserTalks> UserTalks { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserEvents> UserEvents { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -25,11 +26,13 @@ namespace BotEventManagement.Services.Model.Database
                     sa.Property(p => p.Longitude).HasColumnName("Longitude");
                 });
 
-            modelBuilder.Entity<EventParticipants>().HasKey(x => new { x.Id, x.EventId });
-            modelBuilder.Entity<EventParticipants>().HasIndex(x => new { x.Id, x.EventId });
+            modelBuilder.Entity<EventParticipants>().HasKey(x => new { x.GuestId, x.EventId });
+            modelBuilder.Entity<EventParticipants>().HasIndex(x => new { x.GuestId, x.EventId });
 
-            modelBuilder.Entity<UserTalks>().HasKey(x => new { x.UserId, x.ActivityId });
-            modelBuilder.Entity<UserTalks>().HasIndex(x => new { x.UserId, x.ActivityId });
+            modelBuilder.Entity<GuestUserTalks>().HasKey(x => new { x.GuestId, x.ActivityId });
+            modelBuilder.Entity<GuestUserTalks>().HasIndex(x => new { x.GuestId, x.ActivityId });
+
+            modelBuilder.Entity<UserEvents>().HasKey(x => new { x.UserId, x.EventId });
 
             modelBuilder.HasDefaultSchema("BotEventManagement");
 

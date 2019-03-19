@@ -1,6 +1,7 @@
 ﻿using BotEventManagement.Services.Interfaces;
 using BotEventManagement.Models.API;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BotEventManagement.Api.Controllers
 {
@@ -25,9 +26,11 @@ namespace BotEventManagement.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize]
         public IActionResult Get()
         {
-            return Ok(_eventService.GetAll());
+            var userId = User.Identity.Name;
+            return Ok(_eventService.GetAll(userId));
         }
 
         /// <summary>
@@ -67,12 +70,14 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="event"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize]
         public IActionResult Post([FromBody] EventRequest @event)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _eventService.Create(@event);
+            var userId = User.Identity.Name;
+            _eventService.Create(@event, userId);
 
             return Ok();
         }
@@ -83,9 +88,12 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="eventId"></param>
         /// <returns></returns>
         [HttpDelete("{eventId}")]
+        [Authorize]
         public IActionResult Delete([FromRoute] string eventId)
         {
-            _eventService.Delete(eventId);
+            var userId = User.Identity.Name;
+
+            _eventService.Delete(userId, eventId);
             return Ok();
         }
     }

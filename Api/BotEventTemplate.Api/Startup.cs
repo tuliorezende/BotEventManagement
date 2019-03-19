@@ -24,6 +24,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using BotEventManagement.Models.Map;
+using System.Collections.Generic;
+using Swashbuckle.AspNetCore.Filters;
+using BotEventManagement.Api.Filter;
 
 namespace BotEventTemplate.Api
 {
@@ -74,7 +77,23 @@ namespace BotEventTemplate.Api
                 var xmlPath = Path.Combine(basePath, "BotEventManagement.Api.xml");
 
                 c.IncludeXmlComments(xmlPath);
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    In = "header",
+                    Description = "Please insert JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = "apiKey"
+                });
+                //c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                //{
+                //    {"Bearer",new string[]{ } }
+
+                //});
+
+                //c.OperationFilter<Swashbuckle.AspNetCore.Filters.SecurityRequirementsOperationFilter>();
+                c.OperationFilter<AuthorizeCheckOperationFilter>();
             });
+
             services.AddSingleton(Configuration);
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IEventParticipantService, EventParticipantsService>();
@@ -100,7 +119,6 @@ namespace BotEventTemplate.Api
                         var user = userService.GetById(userId);
                         if (user == null)
                         {
-                            // return unauthorized if user no longer exists
                             context.Fail("Unauthorized");
                         }
                         return Task.CompletedTask;
@@ -163,6 +181,7 @@ namespace BotEventTemplate.Api
                 ResponseWriter = WriteResponse
             });
 
+            app.UseAuthentication();
             app.UseMvc();
         }
 
