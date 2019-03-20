@@ -35,7 +35,6 @@ namespace BotEventManagement.Services.Model.Database
             modelBuilder.Entity<UserEvents>().HasKey(x => new { x.UserId, x.EventId });
 
             modelBuilder.HasDefaultSchema("BotEventManagement");
-
             base.OnModelCreating(modelBuilder);
         }
     }

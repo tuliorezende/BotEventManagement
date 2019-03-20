@@ -60,7 +60,12 @@ namespace BotEventManagement.Services.Service
         {
             List<EventRequest> eventRequests = new List<EventRequest>();
 
-            var userEvents = _botEventManagementContext.UserEvents.Include(x => x.Event).ThenInclude(x => x.Address).Select(x => x.Event).ToList();
+            var userEvents = _botEventManagementContext.UserEvents
+                .Join(_botEventManagementContext.Event
+                        , userevent => userevent.EventId
+                        , @event => @event.EventId
+                        , (userevent, @event) => new { Event = @event })               
+                .Select(x => x.Event).ToList();
 
             foreach (var item in userEvents)
             {
