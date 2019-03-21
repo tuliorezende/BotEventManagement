@@ -119,7 +119,7 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Update an User
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userId"></param>
         /// <param name="userDto"></param>
         /// <returns></returns>
         [HttpPut("{userId}")]
@@ -139,7 +139,7 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Delete an user
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         [HttpDelete("{userId}")]
         [Authorize]

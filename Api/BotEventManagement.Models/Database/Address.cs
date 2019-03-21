@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BotEventManagement.Models.Database
 {
-    [Owned]
     public class Address
     {
         public Address(string street, double latitude, double longitude)
