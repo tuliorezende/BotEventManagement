@@ -84,13 +84,7 @@ namespace BotEventTemplate.Api
                     Name = "Authorization",
                     Type = "apiKey"
                 });
-                //c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
-                //{
-                //    {"Bearer",new string[]{ } }
 
-                //});
-
-                //c.OperationFilter<Swashbuckle.AspNetCore.Filters.SecurityRequirementsOperationFilter>();
                 c.OperationFilter<AuthorizeCheckOperationFilter>();
             });
 
