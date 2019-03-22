@@ -1,11 +1,16 @@
-﻿using BotEventManagement.Models.Database;
+﻿using BotEventManagement.Models.API;
+using BotEventManagement.Models.Database;
 using BotEventManagement.Services.Exceptions;
 using BotEventManagement.Services.Interfaces;
 using BotEventManagement.Services.Model.Database;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Text;
 
 namespace BotEventManagement.Services.Service
@@ -13,12 +18,15 @@ namespace BotEventManagement.Services.Service
     public class UserService : IUserService
     {
         private readonly BotEventManagementContext _botEventManagementContext;
+        private readonly IConfiguration _configuration;
 
-        public UserService(BotEventManagementContext botEventManagementContext)
+        public UserService(BotEventManagementContext botEventManagementContext,
+           IConfiguration configuration)
         {
             _botEventManagementContext = botEventManagementContext;
+            _configuration = configuration;
         }
-        public User Authenticate(string username, string password)
+        public UserAuthenticationResponse Authenticate(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;
@@ -34,7 +42,34 @@ namespace BotEventManagement.Services.Service
                 throw new HttpStatusCodeException(HttpStatusCode.Unauthorized, "password is incorrect");
 
             // authentication successful
-            return user;
+            return GenerateUserToken(user);
+        }
+
+        private UserAuthenticationResponse GenerateUserToken(User user)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["Secret"]);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.UserId.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+
+            // return basic user info (without password) and token to store client side
+            return new UserAuthenticationResponse
+            {
+                Id = user.UserId,
+                Username = user.Username,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Token = $"Bearer {tokenString}"
+            };
         }
 
         public User Create(User user, string password)

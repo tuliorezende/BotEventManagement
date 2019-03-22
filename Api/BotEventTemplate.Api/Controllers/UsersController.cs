@@ -47,31 +47,8 @@ namespace BotEventManagement.Api.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]UserAuthenticationRequest userDto)
         {
-            var user = _userService.Authenticate(userDto.Username, userDto.Password);
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Secret"]);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.UserId.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            // return basic user info (without password) and token to store client side
-            return Ok(new
-            {
-                Id = user.UserId,
-                Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Token = tokenString
-            });
+            var authenticatedUser = _userService.Authenticate(userDto.Username, userDto.Password);        
+            return Ok(authenticatedUser);
         }
 
         /// <summary>

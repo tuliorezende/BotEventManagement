@@ -5,6 +5,7 @@ namespace BotEventManagement.Models.Database
 {
     public class Address
     {
+        public Address() { }
         public Address(string street, double latitude, double longitude)
         {
             this.Street = street;

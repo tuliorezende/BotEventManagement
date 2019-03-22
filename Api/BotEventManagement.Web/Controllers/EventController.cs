@@ -20,7 +20,7 @@ namespace BotEventManagement.Web.Controllers
         // GET: Event
         public async Task<ActionResult> Index()
         {
-            var events = await _eventManagerApi.GetAllEventsAsync();
+            var events = await _eventManagerApi.GetAllEventsAsync(TempData.Peek("userToken").ToString());
             return View(events);
         }
 
@@ -45,7 +45,7 @@ namespace BotEventManagement.Web.Controllers
         {
             try
             {
-                await _eventManagerApi.CreateAnEventAsync(eventRequest);
+                await _eventManagerApi.CreateAnEventAsync(TempData.Peek("userToken").ToString(), eventRequest);
                 return RedirectToAction(nameof(Index));
             }
             catch

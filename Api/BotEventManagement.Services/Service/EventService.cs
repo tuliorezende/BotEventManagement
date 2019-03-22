@@ -61,10 +61,11 @@ namespace BotEventManagement.Services.Service
             List<EventRequest> eventRequests = new List<EventRequest>();
 
             var userEvents = _botEventManagementContext.UserEvents
+                .Where(x => x.UserId == userId)
                 .Join(_botEventManagementContext.Event
                         , userevent => userevent.EventId
                         , @event => @event.EventId
-                        , (userevent, @event) => new { Event = @event })               
+                        , (userevent, @event) => new { Event = @event })
                 .Select(x => x.Event).ToList();
 
             foreach (var item in userEvents)

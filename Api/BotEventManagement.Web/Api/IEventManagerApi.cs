@@ -12,13 +12,13 @@ namespace BotEventManagement.Web.Api
         #region Events
 
         [Get("/api/Event")]
-        Task<List<EventRequest>> GetAllEventsAsync();
+        Task<List<EventRequest>> GetAllEventsAsync([Header("Authorization")] string authorization);
         [Get("/api/Event/{eventId}")]
         Task<EventRequest> GetSpecificEventAsync([Path] string eventId);
         [Put("/api/Event/{eventId}")]
         Task UpdateAnEventAsync([Path] string eventId, [Body] EventRequest @event);
         [Post("/api/Event")]
-        Task CreateAnEventAsync([Body] EventRequest @event);
+        Task CreateAnEventAsync([Header("Authorization")] string authorization, [Body] EventRequest @event);
         #endregion
 
         #region Speaker
@@ -46,5 +46,12 @@ namespace BotEventManagement.Web.Api
         [Delete("/api/Activity/{activityId}")]
         Task DeleteActivityOfAnEventAsync([Header("eventId")] string eventId, [Path] string activityId);
         #endregion
+
+        #region Users
+        [Post("/api/Users/register")]
+        Task RegisterUser([Body] UserRequest userRequest);
+        [Post("/api/Users/authenticate")]
+        Task<UserAuthenticationResponse> AuthenticateUser([Body] UserAuthenticationRequest userRequest);
+        #endregion  
     }
 }

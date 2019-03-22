@@ -26,16 +26,18 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav mr-auto">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Event" asp-action="Index">Eventos</a>
+                        </li>
+
                     </ul>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Registrar</a>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                 </div>
             </div>
         </nav>
     </header>
-        @RenderBody()       
+    @RenderBody()
 
     <footer class="border-top footer text-muted">
         <div class="container">
