@@ -5,14 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20180727202433_InitialCreate.cs" />
-    <Compile Remove="Migrations\20190318133703_CreateUserTable.cs" />
-    <Compile Remove="Migrations\20190318140326_ChangeUserIdType.cs" />
-    <Compile Remove="Migrations\20190318142409_DropUserIdColumn.cs" />
-    <Compile Remove="Migrations\20190319163821_ChangeUserTalksTableName.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />

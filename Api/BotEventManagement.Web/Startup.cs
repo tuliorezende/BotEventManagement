@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BotEventManagement.Services.Model.Database;
 using BotEventManagement.Web.Api;
 using Microsoft.AspNetCore.Builder;
@@ -9,12 +6,10 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
-using StackExchange.Redis;
 
 namespace BotEventManagement.Web
 {
@@ -47,17 +42,8 @@ namespace BotEventManagement.Web
 
             Console.WriteLine($"Machine Name: {Environment.MachineName}");
 
-            if (!string.IsNullOrEmpty(Configuration["RedisDatabaseUrl"]) &&
-                !string.IsNullOrEmpty(Configuration["RedisDatabasePort"]) &&
-                !string.IsNullOrEmpty(Configuration["RedisDatabasePassword"]))
-            {
-                Console.WriteLine("Configuring REDIS Connection");
-
-                var redisStringConnection = $"{Configuration["RedisDatabaseUrl"]}:{Configuration["RedisDatabasePort"]},password={Configuration["RedisDatabasePassword"]},ssl=True,abortConnect=False";
-
-                var redis = ConnectionMultiplexer.Connect(redisStringConnection);
-                services.AddDataProtection().PersistKeysToStackExchangeRedis(redis, $"DataProtection-Keys");
-            }
+            services.AddDbContext<DataProtectionKeysContext>(options => options.UseSqlServer(Configuration["DefaultConnection"], x => x.MigrationsHistoryTable("__DataProtectionMigrationsHistory", "DataProtection")));
+            services.AddDataProtection().PersistKeysToDbContext<DataProtectionKeysContext>();
 
             services.AddSingleton(RestEase.RestClient.For<IEventManagerApi>(apiUrl));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -93,12 +79,27 @@ namespace BotEventManagement.Web
 
             app.UseStaticFiles();
 
+            UpdateDatabase(app);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<DataProtectionKeysContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }

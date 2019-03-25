@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BotEventManagement.Services.Migrations
 {
     [DbContext(typeof(BotEventManagementContext))]
-    [Migration("20190319212918_ChangeComplexTypeAgain")]
-    partial class ChangeComplexTypeAgain
+    [Migration("20190325162121_ReInitiateDatabase")]
+    partial class ReInitiateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

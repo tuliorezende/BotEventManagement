@@ -63,7 +63,7 @@ namespace BotEventTemplate.Api
             Mapper.Initialize(m => m.AddProfile<AutoMapperProfile>());
             services.AddAutoMapper();
 
-            services.AddDbContext<BotEventManagementContext>(options => options.UseSqlServer(Configuration["DefaultConnection"]));
+            services.AddDbContext<BotEventManagementContext>(options => options.UseSqlServer(Configuration["DefaultConnection"],x=>x.MigrationsHistoryTable("__EventManagementMigrationsHistory", "BotEventManagement")));
 
             services.AddSwaggerGen(c =>
             {
