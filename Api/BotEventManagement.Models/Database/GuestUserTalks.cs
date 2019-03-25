@@ -2,6 +2,7 @@
 
 namespace BotEventManagement.Models.Database
 {
+    [Table("GuestUserTalks")]
     public class GuestUserTalks
     {
         public string GuestId { get; set; }
