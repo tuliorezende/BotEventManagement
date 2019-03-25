@@ -6,7 +6,7 @@ namespace BotEventManagement.Models.Database
     public class Address
     {
         public Address() { }
-        public Address(string street, double latitude, double longitude)
+        public Address(string street, string latitude, string longitude)
         {
             this.Street = street;
             this.Latitude = latitude;
@@ -16,9 +16,9 @@ namespace BotEventManagement.Models.Database
         [JsonProperty("rua"), Display(Name = "Rua")]
         public string Street { get; set; }
         [JsonProperty("latitude")]
-        public double Latitude { get; set; }
+        public string Latitude { get; set; }
         [JsonProperty("longitude")]
-        public double Longitude { get; set; }
+        public string Longitude { get; set; }
 
     }
 }
