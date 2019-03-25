@@ -23,7 +23,8 @@ namespace BotEventManagement.Services.Service
             Activity activity = new Activity
             {
                 ActivityId = Guid.NewGuid().ToString(),
-                Date = element.Date,
+                StartDate = element.StartDate,
+                EndDate = element.EndDate,
                 Description = element.Description,
                 EventId = eventId,
                 Name = element.Name,
@@ -54,7 +55,8 @@ namespace BotEventManagement.Services.Service
                 activityRequests.Add(new ActivityResponse
                 {
                     ActivityId = item.ActivityId,
-                    Date = item.Date,
+                    StartDate = item.StartDate,
+                    EndDate = item.EndDate,
                     Description = item.Description,
                     Name = item.Name,
                     SpeakerId = item.SpeakerId,
@@ -71,7 +73,8 @@ namespace BotEventManagement.Services.Service
             return new ActivityResponse
             {
                 ActivityId = element.ActivityId,
-                Date = element.Date,
+                StartDate = element.StartDate,
+                EndDate = element.EndDate,
                 Description = element.Description,
                 Name = element.Name,
                 SpeakerId = element.SpeakerId,
@@ -83,8 +86,11 @@ namespace BotEventManagement.Services.Service
         {
             var activity = _botEventManagementContext.Activity.Where(x => x.ActivityId == element.ActivityId && x.EventId == eventId).FirstOrDefault();
 
-            if (element.Date != DateTime.MinValue && element.Date != activity.Date)
-                activity.Date = element.Date;
+            if (element.StartDate != DateTime.MinValue && element.StartDate != activity.StartDate)
+                activity.StartDate = element.StartDate;
+
+            if (element.EndDate != DateTime.MinValue && element.EndDate != activity.EndDate)
+                activity.EndDate = element.EndDate;
 
             if (element.Description != activity.Description)
                 activity.Description = element.Description;

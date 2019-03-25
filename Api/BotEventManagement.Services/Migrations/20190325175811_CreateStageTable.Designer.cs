@@ -4,14 +4,16 @@ using BotEventManagement.Services.Model.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BotEventManagement.Services.Migrations
 {
     [DbContext(typeof(BotEventManagementContext))]
-    partial class BotEventManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20190325175811_CreateStageTable")]
+    partial class CreateStageTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,8 +37,6 @@ namespace BotEventManagement.Services.Migrations
 
                     b.Property<string>("SpeakerId");
 
-                    b.Property<string>("StageId");
-
                     b.Property<DateTime>("StartDate");
 
                     b.HasKey("ActivityId");
@@ -44,8 +44,6 @@ namespace BotEventManagement.Services.Migrations
                     b.HasIndex("EventId");
 
                     b.HasIndex("SpeakerId");
-
-                    b.HasIndex("StageId");
 
                     b.ToTable("Activity");
                 });
@@ -129,13 +127,13 @@ namespace BotEventManagement.Services.Migrations
                     b.Property<string>("StageId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("EventId");
+                    b.Property<string>("ActivityId");
 
                     b.Property<string>("Name");
 
                     b.HasKey("StageId");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("ActivityId");
 
                     b.ToTable("Stages");
                 });
@@ -182,10 +180,6 @@ namespace BotEventManagement.Services.Migrations
                     b.HasOne("BotEventManagement.Models.Database.Speaker", "Speaker")
                         .WithMany("Activity")
                         .HasForeignKey("SpeakerId");
-
-                    b.HasOne("BotEventManagement.Models.Database.Stage", "Stage")
-                        .WithMany("Activities")
-                        .HasForeignKey("StageId");
                 });
 
             modelBuilder.Entity("BotEventManagement.Models.Database.Event", b =>
@@ -243,9 +237,9 @@ namespace BotEventManagement.Services.Migrations
 
             modelBuilder.Entity("BotEventManagement.Models.Database.Stage", b =>
                 {
-                    b.HasOne("BotEventManagement.Models.Database.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId");
+                    b.HasOne("BotEventManagement.Models.Database.Activity", "Activity")
+                        .WithMany("Stage")
+                        .HasForeignKey("ActivityId");
                 });
 
             modelBuilder.Entity("BotEventManagement.Models.Database.UserEvents", b =>

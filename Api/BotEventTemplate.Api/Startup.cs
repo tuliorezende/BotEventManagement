@@ -63,7 +63,7 @@ namespace BotEventTemplate.Api
             Mapper.Initialize(m => m.AddProfile<AutoMapperProfile>());
             services.AddAutoMapper();
 
-            services.AddDbContext<BotEventManagementContext>(options => options.UseSqlServer(Configuration["DefaultConnection"],x=>x.MigrationsHistoryTable("__EventManagementMigrationsHistory", "BotEventManagement")));
+            services.AddDbContext<BotEventManagementContext>(options => options.UseSqlServer(Configuration["DefaultConnection"], x => x.MigrationsHistoryTable("__EventManagementMigrationsHistory", "BotEventManagement")));
 
             services.AddSwaggerGen(c =>
             {
@@ -95,6 +95,8 @@ namespace BotEventTemplate.Api
             services.AddScoped<IUserTalksService, UserTalksService>();
             services.AddScoped<ISpeakerService, SpeakerService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IStageService, StageService>();
+
 
             var key = Encoding.ASCII.GetBytes(Configuration["Secret"]);
             services.AddAuthentication(x =>

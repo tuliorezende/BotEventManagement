@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BotEventManagement.Api.Controllers
 {
     /// <summary>
-    /// Manage activities of an specific event
+    /// Manage activities from an specific event
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -58,7 +58,6 @@ namespace BotEventManagement.Api.Controllers
 
             if (activityId != activity.ActivityId)
                 return BadRequest("This id doesn't correspond with object");
-
 
             _activityService.Update(activity, eventId);
 

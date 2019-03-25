@@ -9,7 +9,8 @@ namespace BotEventManagement.Models.Database
     {
         [Key]
         public string ActivityId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
@@ -20,7 +21,10 @@ namespace BotEventManagement.Models.Database
         [ForeignKey("SpeakerId")]
         public string SpeakerId { get; set; }
         public virtual Speaker Speaker { get; set; }
-        public virtual List<GuestUserTalks> UserTalks { get; set; }
+        [ForeignKey("Stageid")]
+        public string StageId { get; set; }
+        public virtual Stage Stage { get; set; }
 
+        public virtual List<GuestUserTalks> UserTalks { get; set; }
     }
 }

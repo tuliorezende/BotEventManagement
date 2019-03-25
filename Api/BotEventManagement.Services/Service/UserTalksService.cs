@@ -19,7 +19,7 @@ namespace BotEventManagement.Services.Service
 
         public void Create(UserTalksRequest userTalks)
         {
-            _botEventManagementContext.UserTalks.Add(new GuestUserTalks
+            _botEventManagementContext.GuestUserTalks.Add(new GuestUserTalks
             {
                 ActivityId = userTalks.ActivityId,
                 GuestId = userTalks.UserId
@@ -30,9 +30,9 @@ namespace BotEventManagement.Services.Service
 
         public void Delete(string userId, string activityId)
         {
-            GuestUserTalks userTalks = _botEventManagementContext.UserTalks.Where(x => x.GuestId == userId && x.ActivityId == activityId).FirstOrDefault();
+            GuestUserTalks userTalks = _botEventManagementContext.GuestUserTalks.Where(x => x.GuestId == userId && x.ActivityId == activityId).FirstOrDefault();
 
-            _botEventManagementContext.UserTalks.Remove(userTalks);
+            _botEventManagementContext.GuestUserTalks.Remove(userTalks);
 
             _botEventManagementContext.SaveChanges();
         }
@@ -41,7 +41,7 @@ namespace BotEventManagement.Services.Service
         {
             List<UserTalksResponse> userTalksResponses = new List<UserTalksResponse>();
 
-            foreach (var item in _botEventManagementContext.UserTalks.Include(x => x.Activity).Where(x => x.GuestId == userId && x.Activity.EventId == eventId).ToList())
+            foreach (var item in _botEventManagementContext.GuestUserTalks.Include(x => x.Activity).Where(x => x.GuestId == userId && x.Activity.EventId == eventId).ToList())
             {
                 userTalksResponses.Add(new UserTalksResponse
                 {
@@ -49,7 +49,8 @@ namespace BotEventManagement.Services.Service
                     Activity = new ActivityRequest
                     {
                         ActivityId = item.Activity.ActivityId,
-                        Date = item.Activity.Date,
+                        StartDate = item.Activity.StartDate,
+                        EndDate = item.Activity.EndDate,
                         Description = item.Activity.Description,
                         Name = item.Activity.Name,
                         SpeakerId = item.Activity.SpeakerId
