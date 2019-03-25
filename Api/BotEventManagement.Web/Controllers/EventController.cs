@@ -20,6 +20,8 @@ namespace BotEventManagement.Web.Controllers
         // GET: Event
         public async Task<ActionResult> Index()
         {
+            TempData.Remove("EventId");
+
             var events = await _eventManagerApi.GetAllEventsAsync(TempData.Peek("userToken").ToString());
             return View(events);
         }

@@ -38,8 +38,17 @@ namespace BotEventManagement.Web.Controllers
         {
             var authenticatedUser = await _eventManagerApi.AuthenticateUser(userAuthenticationRequest);
             TempData["userToken"] = authenticatedUser.Token;
+            TempData["userName"] = authenticatedUser.FirstName;
 
             return RedirectToAction("Index", "Event");
+        }
+        public IActionResult Logout()
+        {
+            TempData.Remove("userToken");
+            TempData.Remove("userName");
+            TempData.Remove("eventId");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
