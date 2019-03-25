@@ -28,7 +28,7 @@
                 </button>
                 <div class="navbar-collapse collapse">
 
-                    @if (TempData.Peek("userToken") != null && !string.IsNullOrEmpty(TempData.Peek("userToken").ToString()))
+                    @if (TempData.ContainsKey("userToken") && !string.IsNullOrEmpty(TempData.Peek("userToken").ToString()))
                     {
                         <ul class="navbar-nav flex-grow-1 mr-auto">
                             <li class="nav-item">

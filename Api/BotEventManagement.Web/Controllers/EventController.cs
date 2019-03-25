@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BotEventManagement.Models.API;
 using BotEventManagement.Web.Api;
-using Microsoft.AspNetCore.Http;
+using BotEventManagement.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BotEventManagement.Web.Controllers
 {
+    [CustomAuthorization]
     public class EventController : Controller
     {
         private readonly IEventManagerApi _eventManagerApi;
