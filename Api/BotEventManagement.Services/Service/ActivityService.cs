@@ -29,6 +29,7 @@ namespace BotEventManagement.Services.Service
                 EventId = eventId,
                 Name = element.Name,
                 SpeakerId = element.SpeakerId,
+                StageId = element.StageId
 
             };
 
@@ -60,7 +61,8 @@ namespace BotEventManagement.Services.Service
                     Description = item.Description,
                     Name = item.Name,
                     SpeakerId = item.SpeakerId,
-                    SpeakerName = item.Speaker.Name
+                    SpeakerName = item.Speaker.Name,
+                    StageId = item.StageId
                 });
             }
 
@@ -78,7 +80,8 @@ namespace BotEventManagement.Services.Service
                 Description = element.Description,
                 Name = element.Name,
                 SpeakerId = element.SpeakerId,
-                SpeakerName = element.Speaker.Name
+                SpeakerName = element.Speaker.Name,
+                StageId = element.StageId
             };
         }
 
@@ -100,6 +103,9 @@ namespace BotEventManagement.Services.Service
 
             if (element.SpeakerId != activity.SpeakerId)
                 activity.SpeakerId = element.SpeakerId;
+
+            if (element.StageId != activity.StageId)
+                activity.StageId = element.StageId;
 
             _botEventManagementContext.Entry(activity).State = EntityState.Modified;
             _botEventManagementContext.SaveChanges();

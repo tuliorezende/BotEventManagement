@@ -1,0 +1,36 @@
+﻿@model IEnumerable<BotEventManagement.Models.API.StageRequest>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Lista de Palcos</h1>
+
+<p class="align-right">
+    <a class="btn btn-primary" asp-action="Create">Inserir Novo Palco</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a class="btn btn-success" asp-area="" asp-controller="Stage" asp-action="Edit" asp-route-id="@item.StageId">Editar</a>
+                <a class="btn btn-warning" asp-area="" asp-controller="Stage" asp-action="Details" asp-route-id="@item.StageId">Detalhes</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

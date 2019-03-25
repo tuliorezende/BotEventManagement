@@ -1,0 +1,31 @@
+﻿@model BotEventManagement.Models.API.StageRequest
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>StageRequest</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2 align-right">
+            @Html.DisplayNameFor(model => model.StageId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StageId)
+        </dd>
+        <dt class = "col-sm-2 align-right">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-success" asp-area="" asp-controller="Stage" asp-action="Edit" asp-route-id="@Model.StageId">Editar Palco</a>
+    <a class="btn btn-info" asp-area="" asp-controller="Stage" asp-action="Index" asp-route-id="@TempData.Peek("EventId").ToString()">Voltar a Lista</a>
+</div>

@@ -8,7 +8,7 @@ namespace BotEventManagement.Models.API
 {
     public class StageRequest
     {
-        [JsonProperty("id")]
+        [JsonProperty("id"), Display(Name = "Id")]
         public string StageId { get; set; }
         [JsonProperty("nome"), Display(Name = "Nome")]
         public string Name { get; set; }

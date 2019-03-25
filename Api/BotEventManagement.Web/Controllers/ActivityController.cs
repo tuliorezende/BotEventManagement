@@ -41,6 +41,7 @@ namespace BotEventManagement.Web.Controllers
         // GET: Speaker/Create
         public async Task<ActionResult> Create()
         {
+            await CreateStageDropDown();
             await CreateSpeakerDropDown();
             return View();
         }
@@ -58,6 +59,7 @@ namespace BotEventManagement.Web.Controllers
             }
             catch
             {
+                await CreateStageDropDown();
                 await CreateSpeakerDropDown();
                 return View();
             }
@@ -67,6 +69,8 @@ namespace BotEventManagement.Web.Controllers
         public async Task<ActionResult> Edit(string id)
         {
             var details = await _eventManagerApi.GetAnActivityOfAnEventAsync(TempData.Peek("EventId").ToString(), id);
+
+            await CreateStageDropDown();
             await CreateSpeakerDropDown();
 
             return View(details);
@@ -84,6 +88,7 @@ namespace BotEventManagement.Web.Controllers
             }
             catch
             {
+                await CreateStageDropDown();
                 await CreateSpeakerDropDown();
                 return View();
             }
@@ -92,6 +97,10 @@ namespace BotEventManagement.Web.Controllers
         private async Task CreateSpeakerDropDown()
         {
             ViewBag.SpeakerId = new SelectList(await _eventManagerApi.GetAllSpeakersOfAnEventsAsync(TempData.Peek("EventId").ToString()), "SpeakerId", "Name");
+        }
+        private async Task CreateStageDropDown()
+        {
+            ViewBag.StageId = new SelectList(await _eventManagerApi.GetAllStagesOfAnEventsAsync(TempData.Peek("EventId").ToString()), "StageId", "Name");
         }
     }
 }

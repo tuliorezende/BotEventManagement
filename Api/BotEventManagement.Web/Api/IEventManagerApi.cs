@@ -47,6 +47,19 @@ namespace BotEventManagement.Web.Api
         Task DeleteActivityOfAnEventAsync([Header("eventId")] string eventId, [Path] string activityId);
         #endregion
 
+        #region Stage
+        [Get("/api/Stage")]
+        Task<List<StageRequest>> GetAllStagesOfAnEventsAsync([Header("eventId")] string eventId);
+        [Get("/api/Stage/{stageId}")]
+        Task<StageRequest> GetAnStageOfAnEventAsync([Header("eventId")] string eventId, [Path] string stageId);
+        [Post("/api/Stage")]
+        Task CreateStageOfAnEventAsync([Header("eventId")] string eventId, [Body] StageRequest activityRequest);
+        [Put("/api/Stage/{stageId}")]
+        Task UpdateStageOfAnEventAsync([Header("eventId")] string eventId, [Path] string stageId, [Body] StageRequest activityRequest);
+        [Delete("/api/Stage/{stageId}")]
+        Task DeleteStageOfAnEventAsync([Header("eventId")] string eventId, [Path] string stageId);
+        #endregion
+
         #region Users
         [Post("/api/Users/register")]
         Task RegisterUser([Body] UserRequest userRequest);
