@@ -28,6 +28,12 @@ namespace BotEventManagement.Api.Controllers
         private readonly IConfiguration _configuration;
         private IMapper _mapper;
 
+        /// <summary>
+        /// Constructor for user controller
+        /// </summary>
+        /// <param name="userService"></param>
+        /// <param name="mapper"></param>
+        /// <param name="configuration"></param>
         public UsersController(
            IUserService userService,
            IMapper mapper,
