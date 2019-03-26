@@ -14,9 +14,9 @@ namespace BotEventManagement.Models.API
         public string Name { get; set; }
         [JsonProperty("descricao"), Display(Name = "Descrição")]
         public string Description { get; set; }
-        [JsonProperty("dataInicio"), JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy HH:mm"), Display(Name = "Data de Início"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
+        [JsonProperty("dataInicio"), JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy HH:mm"), Display(Name = "Data de Início"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime StartDate { get; set; }
-        [JsonProperty("dataTermino"), JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy HH:mm"), Display(Name = "Data de Término"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
+        [JsonProperty("dataTermino"), JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy HH:mm"), Display(Name = "Data de Término"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime EndDate { get; set; }
         [JsonProperty("endereco"), Display(Name = "Endereço")]
         public Address Address { get; set; }

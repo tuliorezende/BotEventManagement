@@ -9,11 +9,10 @@ namespace BotEventManagement.Models.API
     {
         [JsonProperty("id")]
         public string ActivityId { get; set; }
-        [JsonProperty("dataHoraInicio"), JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy HH:mm"), Display(Name = "Horário de Início"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
+        [JsonProperty("dataHoraInicio"), JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy HH:mm"), Display(Name = "Horário de Início"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime StartDate { get; set; }
-        [JsonProperty("dataHoraFim"), JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy HH:mm"), Display(Name = "Horário de Fim"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
+        [JsonProperty("dataHoraFim"), JsonConverter(typeof(DateFormatConverter), "dd/MM/yyyy HH:mm"), Display(Name = "Horário de Fim"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime EndDate { get; set; }
-
         [JsonProperty("nome"), Display(Name = "Nome")]
         public string Name { get; set; }
         [JsonProperty("descricao"), Display(Name = "Descrição")]
