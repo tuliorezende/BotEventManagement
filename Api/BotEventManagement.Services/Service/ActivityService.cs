@@ -47,11 +47,31 @@ namespace BotEventManagement.Services.Service
 
         }
 
-        public List<ActivityResponse> GetAll(string eventId)
+        public List<ActivityResponse> GetAll(string eventId, string stageId, string day)
         {
             List<ActivityResponse> activityRequests = new List<ActivityResponse>();
 
-            foreach (var item in _botEventManagementContext.Activity.Where(x => x.EventId == eventId).Include(x => x.Speaker).ToList())
+            IOrderedQueryable<Activity> activities = null;
+
+            if (string.IsNullOrEmpty(stageId) && string.IsNullOrEmpty(day))
+            {
+                activities = _botEventManagementContext.Activity
+                                                                   .Where(x => x.EventId == eventId)
+                                                                   .Include(x => x.Speaker)
+                                                                   .OrderBy(x => x.StartDate);
+            }
+            else
+            {
+                var filterDate = DateTime.Parse(day);
+                activities = _botEventManagementContext.Activity
+                                                                   .Where(x => x.EventId == eventId &&
+                                                                   x.StageId == stageId &&
+                                                                   x.StartDate.Date == filterDate.Date)
+                                                                   .Include(x => x.Speaker)
+                                                                   .OrderBy(x => x.StartDate);
+            }
+
+            foreach (var item in activities.ToList())
             {
                 activityRequests.Add(new ActivityResponse
                 {

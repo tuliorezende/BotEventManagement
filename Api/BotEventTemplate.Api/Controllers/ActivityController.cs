@@ -24,11 +24,14 @@ namespace BotEventManagement.Api.Controllers
         /// <summary>
         /// Get activities of an event
         /// </summary>
+        /// <param name="eventId">Event Id</param>
+        /// <param name="stageId">Stage id</param>
+        /// <param name="day">Selected Date</param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Get([FromHeader] string eventId)
+        public IActionResult Get([FromHeader] string eventId, [FromQuery]string stageId, [FromQuery] string day)
         {
-            return Ok(_activityService.GetAll(eventId));
+            return Ok(_activityService.GetAll(eventId, stageId, day));
         }
 
         /// <summary>
