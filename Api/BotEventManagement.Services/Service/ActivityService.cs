@@ -82,7 +82,8 @@ namespace BotEventManagement.Services.Service
                     Name = item.Name,
                     SpeakerId = item.SpeakerId,
                     SpeakerName = item.Speaker.Name,
-                    StageId = item.StageId
+                    StageId = item.StageId,
+                    ActivityImage = item.Speaker.UploadedPhoto
                 });
             }
 
@@ -101,7 +102,8 @@ namespace BotEventManagement.Services.Service
                 Name = element.Name,
                 SpeakerId = element.SpeakerId,
                 SpeakerName = element.Speaker.Name,
-                StageId = element.StageId
+                StageId = element.StageId,
+                ActivityImage = element.Speaker.UploadedPhoto
             };
         }
 
