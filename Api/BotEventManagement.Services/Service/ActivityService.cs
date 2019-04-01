@@ -68,6 +68,7 @@ namespace BotEventManagement.Services.Service
                                                                    x.StageId == stageId &&
                                                                    x.StartDate.Date == filterDate.Date)
                                                                    .Include(x => x.Speaker)
+                                                                   .Include(y => y.Stage)
                                                                    .OrderBy(x => x.StartDate);
             }
 
@@ -83,7 +84,9 @@ namespace BotEventManagement.Services.Service
                     SpeakerId = item.SpeakerId,
                     SpeakerName = item.Speaker.Name,
                     StageId = item.StageId,
-                    ActivityImage = item.Speaker.UploadedPhoto
+                    ActivityImage = item.Speaker.UploadedPhoto,
+                    StageName = item.Stage.Name
+
                 });
             }
 

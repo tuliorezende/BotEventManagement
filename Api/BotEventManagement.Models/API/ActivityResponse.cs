@@ -13,6 +13,8 @@ namespace BotEventManagement.Models.API
         public string SpeakerName { get; set; }
         [JsonProperty("imagem")]
         public string ActivityImage { get; set; }
+        [JsonProperty("palco")]
+        public string StageName { get; set; }
 
     }
 }
