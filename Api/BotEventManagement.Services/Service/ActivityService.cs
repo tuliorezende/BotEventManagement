@@ -58,6 +58,7 @@ namespace BotEventManagement.Services.Service
                 activities = _botEventManagementContext.Activity
                                                                    .Where(x => x.EventId == eventId)
                                                                    .Include(x => x.Speaker)
+                                                                   .Include(y => y.Stage)
                                                                    .OrderBy(x => x.StartDate);
             }
             else

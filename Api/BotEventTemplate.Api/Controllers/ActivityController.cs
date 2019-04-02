@@ -29,7 +29,7 @@ namespace BotEventManagement.Api.Controllers
         /// <param name="day">Selected Date</param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Get([FromHeader] string eventId, [FromQuery]string stageId, [FromQuery] string day)
+        public IActionResult Get([FromHeader] string eventId, [FromQuery]string stageId = "", [FromQuery] string day = "")
         {
             return Ok(_activityService.GetAll(eventId, stageId, day));
         }
