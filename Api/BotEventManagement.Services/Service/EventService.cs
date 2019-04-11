@@ -18,7 +18,7 @@ namespace BotEventManagement.Services.Service
             _botEventManagementContext = botEventManagementContext;
         }
 
-        public void Create(EventRequest element, string userId)
+        public Event Create(EventRequest element, string userId)
         {
             var eventId = Guid.NewGuid().ToString();
 
@@ -43,6 +43,8 @@ namespace BotEventManagement.Services.Service
 
             _botEventManagementContext.UserEvents.Add(userEvent);
             _botEventManagementContext.SaveChanges();
+
+            return @event;
         }
 
         public void Delete(string eventId, string userId)

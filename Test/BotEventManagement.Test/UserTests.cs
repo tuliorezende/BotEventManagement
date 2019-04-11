@@ -10,13 +10,13 @@ using Xunit;
 
 namespace BotEventManagement.Test
 {
-    public class EventTests
+    public class UserTests
     {
         [Theory]
         [InlineData("Tulio", "Rezende", "tuliorezende", "batata")]
         public void Add_NewUser(string firstName, string lastName, string userName, string password)
         {
-            var context = GetInMemoryEventManagerService();
+            var context = GetInMemoryUserService();
 
             var user = CreateUser(firstName, lastName, userName);
 
@@ -31,7 +31,7 @@ namespace BotEventManagement.Test
         [InlineData("Tulio", "Rezende", "tuliorezende")]
         public void Add_NewUserWithoutPassword(string firstName, string lastName, string userName)
         {
-            var context = GetInMemoryEventManagerService();
+            var context = GetInMemoryUserService();
             var user = CreateUser(firstName, lastName, userName);
 
             Assert.Throws<HttpStatusCodeException>(() => context.Create(user, string.Empty));
@@ -41,7 +41,7 @@ namespace BotEventManagement.Test
         [InlineData("Tulio", "Rezende", "tuliorezende", "batata")]
         public void Add_UserWithSameUsername(string firstName, string lastName, string userName, string password)
         {
-            var context = GetInMemoryEventManagerService();
+            var context = GetInMemoryUserService();
             var user = CreateUser(firstName, lastName, userName);
 
             var returnedUser = context.Create(user, password);
@@ -49,7 +49,19 @@ namespace BotEventManagement.Test
             Assert.Throws<HttpStatusCodeException>(() => context.Create(user, password));
         }
 
-        private IUserService GetInMemoryEventManagerService()
+
+
+        private User CreateUser(string firstName, string lastName, string userName)
+        {
+            return new User
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Username = userName
+            };
+        }
+
+        private IUserService GetInMemoryUserService()
         {
             var options = new DbContextOptionsBuilder<BotEventManagementContext>()
                 .UseInMemoryDatabase(databaseName: "create_events")
@@ -63,18 +75,7 @@ namespace BotEventManagement.Test
                             .AddJsonFile("appsettings.json")
                             .Build();
 
-            return new UserService(botEventManagementContext, config);
-
-        }
-
-        private User CreateUser(string firstName, string lastName, string userName)
-        {
-            return new User
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Username = userName
-            };
+            return new UserService(TestUtilities.CreateContext(), config);
         }
     }
 }
