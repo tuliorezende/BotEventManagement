@@ -1,4 +1,5 @@
 using BotEventManagement.Models.Database;
+using BotEventManagement.Services.Exceptions;
 using BotEventManagement.Services.Interfaces;
 using BotEventManagement.Services.Model.Database;
 using BotEventManagement.Services.Service;
@@ -16,18 +17,36 @@ namespace BotEventManagement.Test
         public void Add_NewUser(string firstName, string lastName, string userName, string password)
         {
             var context = GetInMemoryEventManagerService();
-            var user = new User
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Username = userName,
-            };
+
+            var user = CreateUser(firstName, lastName, userName);
 
             var returnedUser = context.Create(user, password);
 
             Assert.Equal(firstName, returnedUser.FirstName);
             Assert.Equal(lastName, returnedUser.LastName);
             Assert.Equal(userName, returnedUser.Username);
+        }
+
+        [Theory]
+        [InlineData("Tulio", "Rezende", "tuliorezende")]
+        public void Add_NewUserWithoutPassword(string firstName, string lastName, string userName)
+        {
+            var context = GetInMemoryEventManagerService();
+            var user = CreateUser(firstName, lastName, userName);
+
+            Assert.Throws<HttpStatusCodeException>(() => context.Create(user, string.Empty));
+        }
+
+        [Theory]
+        [InlineData("Tulio", "Rezende", "tuliorezende", "batata")]
+        public void Add_UserWithSameUsername(string firstName, string lastName, string userName, string password)
+        {
+            var context = GetInMemoryEventManagerService();
+            var user = CreateUser(firstName, lastName, userName);
+
+            var returnedUser = context.Create(user, password);
+
+            Assert.Throws<HttpStatusCodeException>(() => context.Create(user, password));
         }
 
         private IUserService GetInMemoryEventManagerService()
@@ -46,6 +65,16 @@ namespace BotEventManagement.Test
 
             return new UserService(botEventManagementContext, config);
 
+        }
+
+        private User CreateUser(string firstName, string lastName, string userName)
+        {
+            return new User
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Username = userName
+            };
         }
     }
 }
