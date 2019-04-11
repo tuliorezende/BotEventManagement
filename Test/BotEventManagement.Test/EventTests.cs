@@ -9,11 +9,19 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace BotEventManagement.Test
 {
     public class EventTests
     {
+        private readonly ITestOutputHelper _output;
+
+        public EventTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Theory]
         [InlineData("Evento para Teste", "Descrição de Evento para Teste", "21/01/2019 08:00", "23/01/2019 16:00", "-19.938865", "-43.938718", "Rua Sergipe - Savassi, Belo Horizonte - MG")]
         public void Add_CreateEvent(string eventName, string eventDescription, string startDate, string endDate, string latitude, string longitude, string street)
@@ -27,7 +35,7 @@ namespace BotEventManagement.Test
 
             var createdEvent = context.Create(@event, string.Empty);
 
-            var foundEvent = context.GetById(createdEvent.EventId);
+            var foundEvent = context.GetById(createdEvent.EventId.Trim());
 
             Assert.Equal(eventName, foundEvent.Name);
             Assert.Equal(eventDescription, foundEvent.Description);
@@ -73,7 +81,7 @@ namespace BotEventManagement.Test
         private IEventService GetInMemoryUserService()
         {
             var options = new DbContextOptionsBuilder<BotEventManagementContext>()
-                .UseInMemoryDatabase(databaseName: "create_events")
+                .UseInMemoryDatabase(databaseName: $"_events_{Guid.NewGuid().ToString()}")
                 .Options;
 
             BotEventManagementContext botEventManagementContext = new BotEventManagementContext(options);
