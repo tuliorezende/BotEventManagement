@@ -97,5 +97,20 @@ namespace BotEventManagement.Api.Controllers
             _activityService.Delete(eventId, activityId);
             return Ok();
         }
+
+        /// <summary>
+        /// Export talks of an specific event to an excel file
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
+        [HttpGet("export")]
+        public IActionResult Export([FromRoute]string eventId)
+        {
+            //        return File(_talksService.ExportTalksInformations(),tw
+
+            //"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            //"Palestras - Facebook Summit 2018.xlsx");
+            return Ok();
+        }
     }
 }

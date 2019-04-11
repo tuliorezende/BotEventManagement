@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2042
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotEventManagement.Api", "BotEventTemplate.Api\BotEventManagement.Api.csproj", "{9F2A82E6-0E9E-4843-BF7C-28ECEB2BAFA4}"
 EndProject
@@ -21,6 +21,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotEventManagement.Models", "BotEventManagement.Models\BotEventManagement.Models.csproj", "{6117542D-0AB7-4DD3-8567-CB09E6CBEFEB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotEventManagement.Web", "BotEventManagement.Web\BotEventManagement.Web.csproj", "{042740BC-377E-463F-92F5-4C3EAC33E8A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotEventManagement.Test", "..\Test\BotEventManagement.Test\BotEventManagement.Test.csproj", "{C90A5FAD-E7CC-43C9-AD4D-32863916994D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +50,10 @@ Global
 		{042740BC-377E-463F-92F5-4C3EAC33E8A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{042740BC-377E-463F-92F5-4C3EAC33E8A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{042740BC-377E-463F-92F5-4C3EAC33E8A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C90A5FAD-E7CC-43C9-AD4D-32863916994D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C90A5FAD-E7CC-43C9-AD4D-32863916994D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C90A5FAD-E7CC-43C9-AD4D-32863916994D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C90A5FAD-E7CC-43C9-AD4D-32863916994D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
