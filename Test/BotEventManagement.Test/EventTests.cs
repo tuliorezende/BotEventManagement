@@ -98,9 +98,9 @@ namespace BotEventManagement.Test
 
                 },
                 Description = eventDescription,
-                EndDate = startDate,
+                StartDate = startDate,
                 Name = eventName,
-                StartDate = endDate
+                EndDate = endDate
             };
         }
     }
