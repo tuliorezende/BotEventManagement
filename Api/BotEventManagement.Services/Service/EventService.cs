@@ -47,7 +47,7 @@ namespace BotEventManagement.Services.Service
             return @event;
         }
 
-        public void Delete(string eventId, string userId)
+        public void Delete(string userId, string eventId)
         {
             UserEvents userEvents = _botEventManagementContext.UserEvents.Where(x => x.EventId == eventId && x.UserId == userId).First();
             _botEventManagementContext.UserEvents.Remove(userEvents);
@@ -88,7 +88,10 @@ namespace BotEventManagement.Services.Service
 
         public EventRequest GetById(string elementId)
         {
-            Event element = _botEventManagementContext.Event.Where(x => x.EventId == elementId).First();
+            Event element = _botEventManagementContext.Event.Where(x => x.EventId == elementId).FirstOrDefault();
+
+            if (element == null)
+                return null;
 
             return new EventRequest
             {

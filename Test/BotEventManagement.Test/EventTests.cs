@@ -47,8 +47,8 @@ namespace BotEventManagement.Test
         }
 
         [Theory]
-        [InlineData("Evento para Teste", "Descrição de Evento para Teste", "21/01/2019 08:00", "23/01/2019 16:00", "-19.938865", "-43.938718", "Rua Sergipe - Savassi, Belo Horizonte - MG", "Novo Evento - Atualizando", "Rua Firmino Assunção, Betim - MG")]
-        public void Update_ChangeEvent(string eventName, string eventDescription, string startDate, string endDate, string latitude, string longitude, string street, string newEventName, string newStreet)
+        [InlineData("Evento para Teste", "Descrição de Evento para Teste", "21/01/2019 08:00", "23/01/2019 16:00", "-19.938865", "-43.938718", "Rua Sergipe - Savassi, Belo Horizonte - MG", "Novo Evento - Atualizando", "Nova Descrição de Evento", "Rua Firmino Assunção, Betim - MG")]
+        public void Update_ChangeEvent(string eventName, string eventDescription, string startDate, string endDate, string latitude, string longitude, string street, string newEventName, string newEventDescription, string newStreet)
         {
             var context = GetInMemoryUserService();
 
@@ -64,18 +64,57 @@ namespace BotEventManagement.Test
             updateEvent.Id = createdEvent.EventId;
             updateEvent.Address.Street = newStreet;
             updateEvent.Name = newEventName;
+            updateEvent.Description = newEventDescription;
 
             context.Update(updateEvent);
 
             var foundEvent = context.GetById(createdEvent.EventId);
 
             Assert.Equal(newEventName, foundEvent.Name);
-            Assert.Equal(eventDescription, foundEvent.Description);
             Assert.Equal(dateStart, foundEvent.StartDate);
             Assert.Equal(dateEnd, foundEvent.EndDate);
             Assert.Equal(latitude, foundEvent.Address.Latitude);
             Assert.Equal(longitude, foundEvent.Address.Longitude);
             Assert.Equal(newStreet, foundEvent.Address.Street);
+            Assert.Equal(newEventDescription, foundEvent.Description);
+        }
+
+        [Theory]
+        [InlineData("Evento para Teste", "Descrição de Evento para Teste", "21/01/2019 08:00", "23/01/2019 16:00", "-19.938865", "-43.938718", "Rua Sergipe - Savassi, Belo Horizonte - MG")]
+        public void Delete_RemoveEvent(string eventName, string eventDescription, string startDate, string endDate, string latitude, string longitude, string street)
+        {
+            var dateStart = DateTime.ParseExact(startDate, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+            var dateEnd = DateTime.ParseExact(endDate, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+
+            var context = GetInMemoryUserService();
+            var @event = CreateEventObject(eventName, eventDescription, dateStart, dateEnd, latitude, longitude, street);
+            var createdEvent = context.Create(@event, string.Empty);
+
+            context.Delete(string.Empty, createdEvent.EventId);
+
+            var element = context.GetById(createdEvent.EventId);
+
+            Assert.Null(element);
+        }
+
+        [Theory]
+        [InlineData("Evento para Teste 1", "Descrição de Evento para Teste 1", "Evento para Teste 2", "Descrição de Evento para Teste 2", "21/01/2019 08:00", "23/01/2019 16:00", "-19.938865", "-43.938718", "Rua Sergipe - Savassi, Belo Horizonte - MG")]
+        public void Get_GetTwoCreatedEvents(string eventName, string eventDescription, string secondEventName, string secondEventDescription, string startDate, string endDate, string latitude, string longitude, string street)
+        {
+            var dateStart = DateTime.ParseExact(startDate, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+            var dateEnd = DateTime.ParseExact(endDate, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+
+            var context = GetInMemoryUserService();
+            var @event = CreateEventObject(eventName, eventDescription, dateStart, dateEnd, latitude, longitude, street);
+            context.Create(@event, string.Empty);
+
+            @event = CreateEventObject(secondEventName, secondEventDescription, dateStart, dateEnd, latitude, longitude, street);
+            context.Create(@event, string.Empty);
+
+
+            var events = context.GetAll(string.Empty);
+
+            Assert.Equal(2, events.Count);
         }
 
         private IEventService GetInMemoryUserService()
