@@ -18,7 +18,7 @@ namespace BotEventManagement.Services.Service
         {
             _botEventManagementContext = botEventManagementContext;
         }
-        public void Create(StageRequest element, string eventId)
+        public Stage Create(StageRequest element, string eventId)
         {
             Stage stage = new Stage
             {
@@ -28,6 +28,8 @@ namespace BotEventManagement.Services.Service
             };
             _botEventManagementContext.Stages.Add(stage);
             _botEventManagementContext.SaveChanges();
+
+            return stage;
         }
 
         public void Delete(string eventId, string elementId)
@@ -56,7 +58,11 @@ namespace BotEventManagement.Services.Service
 
         public StageRequest GetById(string elementId, string eventId)
         {
-            Stage element = _botEventManagementContext.Stages.Where(x => x.StageId == elementId && x.EventId == eventId).First();
+            Stage element = _botEventManagementContext.Stages.Where(x => x.StageId == elementId && x.EventId == eventId).FirstOrDefault();
+
+            if (element == null)
+                return null;
+
             return new StageRequest
             {
                 StageId = element.StageId,

@@ -13,7 +13,7 @@ using Xunit.Abstractions;
 
 namespace BotEventManagement.Test
 {
-    public class EventTests
+    public class EventTests : BaseTest
     {
         private readonly ITestOutputHelper _output;
 
@@ -28,22 +28,19 @@ namespace BotEventManagement.Test
         {
             var context = GetInMemoryUserService();
 
-            var dateStart = DateTime.ParseExact(startDate, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-            var dateEnd = DateTime.ParseExact(endDate, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-
-            var @event = CreateEventObject(eventName, eventDescription, dateStart, dateEnd, latitude, longitude, street);
+            var @event = CreateEventObject(eventName, eventDescription, startDate, endDate, latitude, longitude, street);
 
             var createdEvent = context.Create(@event, string.Empty);
 
             var foundEvent = context.GetById(createdEvent.EventId.Trim());
 
-            Assert.Equal(eventName, foundEvent.Name);
-            Assert.Equal(eventDescription, foundEvent.Description);
-            Assert.Equal(dateStart, foundEvent.StartDate);
-            Assert.Equal(dateEnd, foundEvent.EndDate);
-            Assert.Equal(latitude, foundEvent.Address.Latitude);
-            Assert.Equal(longitude, foundEvent.Address.Longitude);
-            Assert.Equal(street, foundEvent.Address.Street);
+            Assert.Equal(@event.Name, foundEvent.Name);
+            Assert.Equal(@event.Description, foundEvent.Description);
+            Assert.Equal(@event.StartDate, foundEvent.StartDate);
+            Assert.Equal(@event.EndDate, foundEvent.EndDate);
+            Assert.Equal(@event.Address.Latitude, foundEvent.Address.Latitude);
+            Assert.Equal(@event.Address.Longitude, foundEvent.Address.Longitude);
+            Assert.Equal(@event.Address.Street, foundEvent.Address.Street);
         }
 
         [Theory]
@@ -52,14 +49,17 @@ namespace BotEventManagement.Test
         {
             var context = GetInMemoryUserService();
 
-            var dateStart = DateTime.ParseExact(startDate, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-            var dateEnd = DateTime.ParseExact(endDate, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
 
-            var @event = CreateEventObject(eventName, eventDescription, dateStart, dateEnd, latitude, longitude, street);
+            var @event = CreateEventObject(eventName, eventDescription, startDate, endDate, latitude, longitude, street);
 
             var createdEvent = context.Create(@event, string.Empty);
 
-            var updateEvent = CreateEventObject(createdEvent.Name, createdEvent.Description, createdEvent.StartDate, createdEvent.EndDate, createdEvent.Address.Latitude, createdEvent.Address.Longitude, createdEvent.Address.Street);
+            var updateEvent = CreateEventObject(createdEvent.Name, 
+                createdEvent.Description, 
+                startDate, endDate, 
+                createdEvent.Address.Latitude, 
+                createdEvent.Address.Longitude, 
+                createdEvent.Address.Street);
 
             updateEvent.Id = createdEvent.EventId;
             updateEvent.Address.Street = newStreet;
@@ -71,8 +71,8 @@ namespace BotEventManagement.Test
             var foundEvent = context.GetById(createdEvent.EventId);
 
             Assert.Equal(newEventName, foundEvent.Name);
-            Assert.Equal(dateStart, foundEvent.StartDate);
-            Assert.Equal(dateEnd, foundEvent.EndDate);
+            Assert.Equal(updateEvent.StartDate, foundEvent.StartDate);
+            Assert.Equal(updateEvent.EndDate, foundEvent.EndDate);
             Assert.Equal(latitude, foundEvent.Address.Latitude);
             Assert.Equal(longitude, foundEvent.Address.Longitude);
             Assert.Equal(newStreet, foundEvent.Address.Street);
@@ -83,11 +83,8 @@ namespace BotEventManagement.Test
         [InlineData("Evento para Teste", "Descrição de Evento para Teste", "21/01/2019 08:00", "23/01/2019 16:00", "-19.938865", "-43.938718", "Rua Sergipe - Savassi, Belo Horizonte - MG")]
         public void Delete_RemoveEvent(string eventName, string eventDescription, string startDate, string endDate, string latitude, string longitude, string street)
         {
-            var dateStart = DateTime.ParseExact(startDate, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-            var dateEnd = DateTime.ParseExact(endDate, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-
             var context = GetInMemoryUserService();
-            var @event = CreateEventObject(eventName, eventDescription, dateStart, dateEnd, latitude, longitude, street);
+            var @event = CreateEventObject(eventName, eventDescription, startDate, endDate, latitude, longitude, street);
             var createdEvent = context.Create(@event, string.Empty);
 
             context.Delete(string.Empty, createdEvent.EventId);
@@ -101,14 +98,11 @@ namespace BotEventManagement.Test
         [InlineData("Evento para Teste 1", "Descrição de Evento para Teste 1", "Evento para Teste 2", "Descrição de Evento para Teste 2", "21/01/2019 08:00", "23/01/2019 16:00", "-19.938865", "-43.938718", "Rua Sergipe - Savassi, Belo Horizonte - MG")]
         public void Get_GetTwoCreatedEvents(string eventName, string eventDescription, string secondEventName, string secondEventDescription, string startDate, string endDate, string latitude, string longitude, string street)
         {
-            var dateStart = DateTime.ParseExact(startDate, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-            var dateEnd = DateTime.ParseExact(endDate, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-
             var context = GetInMemoryUserService();
-            var @event = CreateEventObject(eventName, eventDescription, dateStart, dateEnd, latitude, longitude, street);
+            var @event = CreateEventObject(eventName, eventDescription, startDate, endDate, latitude, longitude, street);
             context.Create(@event, string.Empty);
 
-            @event = CreateEventObject(secondEventName, secondEventDescription, dateStart, dateEnd, latitude, longitude, street);
+            @event = CreateEventObject(secondEventName, secondEventDescription, startDate, endDate, latitude, longitude, street);
             context.Create(@event, string.Empty);
 
 
@@ -133,22 +127,6 @@ namespace BotEventManagement.Test
 
             return new EventService(TestUtilities.CreateContext());
         }
-        private EventRequest CreateEventObject(string eventName, string eventDescription, DateTime startDate, DateTime endDate, string latitude, string longitude, string street)
-        {
-            return new EventRequest
-            {
-                Address = new Address
-                {
-                    Latitude = latitude,
-                    Longitude = longitude,
-                    Street = street
 
-                },
-                Description = eventDescription,
-                StartDate = startDate,
-                Name = eventName,
-                EndDate = endDate
-            };
-        }
     }
 }
