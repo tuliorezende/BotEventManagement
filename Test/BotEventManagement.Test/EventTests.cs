@@ -44,8 +44,8 @@ namespace BotEventManagement.Test
         }
 
         [Theory]
-        [InlineData("Evento para Teste", "Descrição de Evento para Teste", "21/01/2019 08:00", "23/01/2019 16:00", "-19.938865", "-43.938718", "Rua Sergipe - Savassi, Belo Horizonte - MG", "Novo Evento - Atualizando", "Nova Descrição de Evento", "Rua Firmino Assunção, Betim - MG")]
-        public void Update_ChangeEvent(string eventName, string eventDescription, string startDate, string endDate, string latitude, string longitude, string street, string newEventName, string newEventDescription, string newStreet)
+        [InlineData("Evento para Teste", "Descrição de Evento para Teste", "21/01/2019 08:00", "23/01/2019 16:00", "-19.938865", "-43.938718", "Rua Sergipe - Savassi, Belo Horizonte - MG", "Novo Evento - Atualizando", "Nova Descrição de Evento", "Rua Firmino Assunção, Betim - MG", "25/01/2019 08:00", "27/01/2019 16:00")]
+        public void Update_ChangeEvent(string eventName, string eventDescription, string startDate, string endDate, string latitude, string longitude, string street, string newEventName, string newEventDescription, string newStreet, string newStartDate, string newEndDate)
         {
             var context = GetInMemoryUserService();
 
@@ -54,11 +54,11 @@ namespace BotEventManagement.Test
 
             var createdEvent = context.Create(@event, string.Empty);
 
-            var updateEvent = CreateEventObject(createdEvent.Name, 
-                createdEvent.Description, 
-                startDate, endDate, 
-                createdEvent.Address.Latitude, 
-                createdEvent.Address.Longitude, 
+            var updateEvent = CreateEventObject(createdEvent.Name,
+                createdEvent.Description,
+                newStartDate, newEndDate,
+                createdEvent.Address.Latitude,
+                createdEvent.Address.Longitude,
                 createdEvent.Address.Street);
 
             updateEvent.Id = createdEvent.EventId;
