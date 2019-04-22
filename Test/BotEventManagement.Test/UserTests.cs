@@ -49,7 +49,40 @@ namespace BotEventManagement.Test
             Assert.Throws<HttpStatusCodeException>(() => context.Create(user, password));
         }
 
+        [Theory]
+        [InlineData("Tulio", "Rezende", "tuliorezende", "batata")]
+        public void Get_ExecuteAuthenticationProcess(string firstName, string lastName, string userName, string password)
+        {
+            var context = GetInMemoryUserService();
 
+            var user = CreateUser(firstName, lastName, userName);
+            context.Create(user, password);
+
+            var authenticatedUser = context.Authenticate(userName, password);
+
+            Assert.Equal(firstName, authenticatedUser.FirstName);
+            Assert.Equal(lastName, authenticatedUser.LastName);
+            Assert.Equal(userName, authenticatedUser.Username);
+
+        }
+
+
+        [Theory]
+        [InlineData("Tulio", "Rezende", "tuliorezende", "batata", "batata2")]
+        public void Update_ChangeUserName(string firstName, string lastName, string userName, string password, string newUsername)
+        {
+            var context = GetInMemoryUserService();
+
+            var user = CreateUser(firstName, lastName, userName);
+            var createdUser = context.Create(user, password);
+
+            user.Username = newUsername;
+            context.Update(user);
+
+            var foundUser = context.GetById(user.UserId);
+
+            Assert.Equal(newUsername, foundUser.Username);
+        }
 
         private User CreateUser(string firstName, string lastName, string userName)
         {
