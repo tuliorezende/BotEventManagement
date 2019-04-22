@@ -15,13 +15,6 @@ namespace BotEventManagement.Test
 {
     public class EventTests : BaseTest
     {
-        private readonly ITestOutputHelper _output;
-
-        public EventTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-
         [Theory]
         [InlineData("Evento para Teste", "Descrição de Evento para Teste", "21/01/2019 08:00", "23/01/2019 16:00", "-19.938865", "-43.938718", "Rua Sergipe - Savassi, Belo Horizonte - MG")]
         public void Add_CreateEvent(string eventName, string eventDescription, string startDate, string endDate, string latitude, string longitude, string street)
