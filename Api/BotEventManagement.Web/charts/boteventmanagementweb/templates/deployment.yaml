@@ -1,0 +1,49 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "boteventmanagementweb.fullname" . }}
+  labels:
+    app: {{ template "boteventmanagementweb.name" . }}
+    chart: {{ template "boteventmanagementweb.chart" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "boteventmanagementweb.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "boteventmanagementweb.name" . }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}/{{ .Chart.Name }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.probes.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          {{- end }}
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: {{ .Values.environments.AspNetCore }}
+            - name: BasePath
+              value: {{ .Values.environments.BasePath }}
+            - name: EventManagerApiUrl
+              value: {{ .Values.environments.EventManagerApiUrl }}
+            - name: DefaultConnection
+              valueFrom:
+               secretKeyRef:
+                name: {{ .Values.secretEventmanagement.Name }}
+                key: {{ .Values.secretEventmanagement.Key }}
+          args: ["$(ASPNETCORE_ENVIRONMENT) $(BasePath) $(EventManagerApiUrl) $(DefaultConnection)"]
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources: {}

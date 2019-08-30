@@ -1,0 +1,19 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2
+ARG BUILD_CONFIGURATION=Debug
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+EXPOSE 8080
+
+WORKDIR /src
+COPY ["BotEventManagement.Models/BotEventManagement.Models.csproj", "BotEventManagement.Models/"]
+COPY ["BotEventManagement.Services/BotEventManagement.Services.csproj", "BotEventManagement.Services/"]
+COPY ["BotEventManagement.Web/BotEventManagement.Web.csproj", "BotEventManagement.Web/"]
+
+RUN dotnet restore "BotEventManagement.Web/BotEventManagement.Web.csproj"
+COPY . .
+WORKDIR "/src/BotEventManagement.Web"
+RUN dotnet build --no-restore "BotEventManagement.Web.csproj" -c $BUILD_CONFIGURATION
+
+RUN echo "exec dotnet run --no-build --no-launch-profile -c $BUILD_CONFIGURATION --" > /entrypoint.sh
+
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]

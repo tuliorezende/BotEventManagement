@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  {{ template "boteventtemplateweb.fullname" . }}-ingress
+  labels:
+    app: {{ template "boteventmanagementweb.name" . }}
+    chart: {{ template "boteventmanagementweb.chart" . }}
+{{- with .Values.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: {{ .Values.ingress.hostName }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ .Values.ingress.serviceName }}
+              servicePort: http
+            path: {{ .values.ingress.path }}

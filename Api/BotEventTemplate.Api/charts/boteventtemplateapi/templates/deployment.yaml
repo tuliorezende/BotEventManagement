@@ -1,0 +1,41 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "boteventtemplateapi.fullname" . }}-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "boteventtemplateapi.name" . }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}/{{ .Chart.Name }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.probes.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          {{- end }}
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: {{ .Values.environments.AspNetCore }}
+            - name: BasePath
+              value: {{ .Values.environments.BasePath }}
+            - name: DefaultConnection
+              valueFrom:
+               secretKeyRef:
+                name: {{ .Values.secretEventmanagement.Name }}
+                key: {{ .Values.secretEventmanagement.Key }}
+          args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection) $(BasePath)"]                
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          resources: {}
