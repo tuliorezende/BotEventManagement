@@ -1,9 +1,9 @@
-FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2 AS base
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 443
 
-FROM microsoft/dotnet:2.2-sdk AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
 WORKDIR /src
 COPY ["BotEventManagement.Web/BotEventManagement.Web.csproj", "BotEventManagement.Web/"]
 COPY ["BotEventManagement.Services/BotEventManagement.Services.csproj", "BotEventManagement.Services/"]
