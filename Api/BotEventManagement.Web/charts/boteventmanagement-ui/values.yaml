@@ -3,9 +3,10 @@
 # Declare variables to be passed into your templates.
 fullnameOverride: boteventmanagement-ui
 replicaCount: 1
+
 image:
   repository: tuliorezende
-  tag: latest
+  tag: #{Build.BuildId}#
   pullPolicy: IfNotPresent
 imagePullSecrets: []
   # Optionally specify an array of imagePullSecrets.
