@@ -18,7 +18,7 @@ install:
       annotations:
         kubernetes.io/ingress.class: traefik-azds
       hosts:
-      # This expands to form the service's public URL: [space.s.][rootSpace.]boteventtemplateapi.<random suffix>.<region>.azds.io
+      # This expands to form the services public URL: [space.s.][rootSpace.]boteventtemplateapi.<random suffix>.<region>.azds.io
       # Customize the public URL by changing the 'boteventtemplateapi' text between the $(rootSpacePrefix) and $(hostSuffix) tokens
       # For more information see https://aka.ms/devspaces/routing
       - $(spacePrefix)$(rootSpacePrefix)boteventtemplateapi$(hostSuffix)
