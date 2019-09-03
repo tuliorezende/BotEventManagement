@@ -5,7 +5,7 @@ fullnameOverride: boteventmanagement-ui
 replicaCount: 1
 image:
   repository: tuliorezende
-  tag: stable
+  tag: latest
   pullPolicy: IfNotPresent
 imagePullSecrets: []
   # Optionally specify an array of imagePullSecrets.
