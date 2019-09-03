@@ -1,9 +1,9 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2 AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-alpine AS base
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2-alpine AS build
 WORKDIR /src
 COPY ["BotEventManagement.Web/BotEventManagement.Web.csproj", "BotEventManagement.Web/"]
 COPY ["BotEventManagement.Services/BotEventManagement.Services.csproj", "BotEventManagement.Services/"]
