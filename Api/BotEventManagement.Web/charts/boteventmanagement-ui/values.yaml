@@ -6,8 +6,10 @@ replicaCount: 1
 
 image:
   repository: tuliorezende
+  name: boteventmanagement-ui
   tag: #{Build.BuildId}#
   pullPolicy: IfNotPresent
+  imagePullSecretName: acr-tuliorezende-secret
 imagePullSecrets: []
   # Optionally specify an array of imagePullSecrets.
   # Secrets must be manually created in the namespace.
@@ -30,7 +32,6 @@ ingress:
   serviceName: boteventmanagement-ui-service
   path: /ui
     # kubernetes.io/tls-acme: "true"
-
   # hosts:
   #   - chart-example.local
   tls: []

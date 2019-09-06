@@ -1,10 +1,9 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ template "boteventmanagementweb.fullname" . }}
+  name: {{ template "boteventmanagementweb.fullname" . }}-deployment
   labels:
     app: {{ template "boteventmanagementweb.name" . }}
-    chart: {{ template "boteventmanagementweb.chart" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -15,9 +14,11 @@ spec:
       labels:
         app: {{ template "boteventmanagementweb.name" . }}
     spec:
+      imagePullSecrets:
+        - name: {{ .Values.image.imagePullSecretName }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}/{{ .Chart.Name }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.probes.enabled }}
           livenessProbe:
