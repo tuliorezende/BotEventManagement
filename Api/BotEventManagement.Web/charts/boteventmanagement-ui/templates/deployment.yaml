@@ -1,18 +1,18 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ template "boteventmanagementweb.fullname" . }}-deployment
+  name: {{ template "boteventmanagementui.fullname" . }}-deployment
   labels:
-    app: {{ template "boteventmanagementweb.name" . }}
+    app: {{ template "boteventmanagementui.name" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "boteventmanagementweb.name" . }}
+      app: {{ template "boteventmanagementui.name" . }}
   template:
     metadata:
       labels:
-        app: {{ template "boteventmanagementweb.name" . }}
+        app: {{ template "boteventmanagementui.name" . }}
     spec:
       imagePullSecrets:
         - name: {{ .Values.image.imagePullSecretName }}

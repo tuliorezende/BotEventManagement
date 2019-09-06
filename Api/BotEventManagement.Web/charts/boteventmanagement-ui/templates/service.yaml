@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "boteventmanagementweb.fullname" . }}-service
+  name: {{ template "boteventmanagementui.fullname" . }}-service
   labels:
-    app: {{ template "boteventmanagementweb.name" . }}
-    chart: {{ template "boteventmanagementweb.chart" . }}
+    app: {{ template "boteventmanagementui.name" . }}
+    chart: {{ template "boteventmanagementui.chart" . }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: {{ template "boteventmanagementweb.name" . }}
+    app: {{ template "boteventmanagementui.name" . }}
