@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  {{ template "boteventmanagementui.fullname" . }}-ingress
+  name: {{ template "boteventmanagementui.fullname" . }}-ingress
   labels:
     app: {{ template "boteventmanagementui.name" . }}
     chart: {{ template "boteventmanagementui.chart" . }}
