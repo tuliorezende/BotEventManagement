@@ -181,6 +181,12 @@ namespace BotEventTemplate.Api
             app.UseMvc();
         }
 
+        /// <summary>
+        /// Write response on health check endpoint
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
         private static Task WriteResponse(HttpContext httpContext, HealthReport result)
         {
             httpContext.Response.ContentType = "application/json";
@@ -197,6 +203,10 @@ namespace BotEventTemplate.Api
                 json.ToString(Formatting.Indented));
         }
 
+        /// <summary>
+        /// Method to apply database migration
+        /// </summary>
+        /// <param name="app"></param>
         private static void UpdateDatabase(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices
