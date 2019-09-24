@@ -41,6 +41,7 @@ namespace BotEventManagement.Web
             var apiUrl = $"http://{Configuration["EventManagerApiUrl"]}";
 
             Console.WriteLine($"Machine Name: {Environment.MachineName}");
+            Console.WriteLine($"Api URL: {apiUrl}");
 
             services.AddDbContext<DataProtectionKeysContext>(options => options.UseSqlServer(Configuration["DefaultConnection"], x => x.MigrationsHistoryTable("__DataProtectionMigrationsHistory", "DataProtection")));
             services.AddDataProtection().PersistKeysToDbContext<DataProtectionKeysContext>();
