@@ -20,6 +20,10 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+          - name: config
+            mountPath: {{ .Values.appSettings.path }}
+            subPath: {{ .Values.appSettings.subPath }}
           {{- if .Values.probes.enabled }}
           livenessProbe:
             httpGet:
@@ -46,3 +50,7 @@ spec:
               containerPort: 80
               protocol: TCP
           resources: {}
+      volumes: 
+      - name: config
+        configMap:
+          name: {{ .Values.appSettings.configMap }}

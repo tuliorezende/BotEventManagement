@@ -31,6 +31,11 @@ ingress:
   hostName: eventmanager.eastus.cloudapp.azure.com
   serviceName: boteventmanagement-api-service
   path: /eventapi
+
+appSettings:
+  configMap: boteventmanagement-api
+  path: /app/appsettings.json
+  subPath: appsettings.json
     # kubernetes.io/tls-acme: "true"
   # hosts:
   #   - chart-example.local
