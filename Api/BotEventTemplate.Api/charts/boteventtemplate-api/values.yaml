@@ -33,7 +33,7 @@ ingress:
   path: /eventapi
 
 appSettings:
-  configMap: boteventmanagement-api
+  configMap: boteventtemplate-api
   path: /app/appsettings.json
   subPath: appsettings.json
     # kubernetes.io/tls-acme: "true"
@@ -76,7 +76,3 @@ affinity: {}
 environments:
     AspNetCore: Production
     BasePath: /eventapi
-
-secretEventmanagement:
-    Name: secret-eventmanagement
-    Key: DEFAULTCONNECTION

@@ -77,7 +77,3 @@ environments:
     AspNetCore: Production
     BasePath: /ui
     EventManagerApiUrl: boteventmanagement-api-service
-
-secretEventmanagement:
-    Name: secret-eventmanagement
-    Key: DEFAULTCONNECTION

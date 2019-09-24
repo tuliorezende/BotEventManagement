@@ -41,12 +41,7 @@ spec:
               value: {{ .Values.environments.BasePath }}
             - name: EventManagerApiUrl
               value: {{ .Values.environments.EventManagerApiUrl }}
-            - name: DefaultConnection
-              valueFrom:
-               secretKeyRef:
-                name: {{ .Values.secretEventmanagement.Name }}
-                key: {{ .Values.secretEventmanagement.Key }}
-          args: ["$(ASPNETCORE_ENVIRONMENT) $(BasePath) $(EventManagerApiUrl) $(DefaultConnection)"]
+          args: ["$(ASPNETCORE_ENVIRONMENT) $(BasePath) $(EventManagerApiUrl)"]
           ports:
             - name: http
               containerPort: 80

@@ -39,12 +39,7 @@ spec:
               value: {{ .Values.environments.AspNetCore }}
             - name: BasePath
               value: {{ .Values.environments.BasePath }}
-            - name: DefaultConnection
-              valueFrom:
-               secretKeyRef:
-                name: {{ .Values.secretEventmanagement.Name }}
-                key: {{ .Values.secretEventmanagement.Key }}
-          args: ["$(ASPNETCORE_ENVIRONMENT) $(DefaultConnection) $(BasePath)"]                
+          args: ["$(ASPNETCORE_ENVIRONMENT) $(BasePath)"]
           ports:
             - name: http
               containerPort: 80
